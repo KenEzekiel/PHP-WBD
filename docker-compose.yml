@@ -1,6 +1,39 @@
-version: '3.3'
+version: "3.3"
 services:
   web:
+    container_name: tubes-1-letterpaw
+    build: .
     image: tubes-1:latest
+    command: --default-authentification-plugin=mysql_native_password
+    depends_on:
+      - db
     ports:
       - 8008:80
+    environment:
+      - MYSQL_ROOT_PASSWORD=#password
+      - MYSQL_DATABASE=mysql_database
+      - MYSQL_USER=#nama
+      - MYSQL_PASSWORD=#password
+      - USE_DOCKER_CONFIG=true
+  db:
+    container_name: tubes-1-database
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=#password
+      - MYSQL_DATABASE=mysql_database
+      - MYSQL_USER=#nama
+      - MYSQL_PASSWORD=#password
+      - USE_DOCKER_CONFIG=true
+    ports:
+      - "9907:3306"
+  phpmyadmin:
+    container_name: tubes-1-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+    restart: unless-stopped
+    ports:
+      - "8080:80"
