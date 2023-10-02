@@ -4,6 +4,7 @@ namespace app;
 
 use app\controllers;
 use app\Request as AppRequest;
+use Exception;
 
 class Router
 {
@@ -11,7 +12,6 @@ class Router
 
   function addRoute(string $route, $controller)
   {
-    var_dump($controller);
     $this->routes[$route] = $controller;
   }
 
@@ -21,12 +21,14 @@ class Router
     $method = AppRequest::getMethod();
     $params = AppRequest::getParams();
 
-    var_dump($this->routes);
     if (isset($this->routes[$uri])) {
-      // var_dump($this->routes[$uri]);
       $controllerClass = $this->routes[$uri];
       $class = new $controllerClass();
-      return $class->handle($method, $params);
+      try {
+        return $class->handle($method, $params);
+      } catch (Exception $e) {
+        echo $e->getMessage();
+      }
     }
   }
 }

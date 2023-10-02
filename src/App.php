@@ -25,6 +25,5 @@ class App
 
     $this->router->addRoute('/', MainController::class);
     $this->router->addRoute('/login', LoginController::class);
-    // $this->router->addRoute('/', new BaseController(new UserService(new UserRepository())));
   }
 }
