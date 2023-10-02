@@ -3,11 +3,11 @@
 namespace app\controllers;
 
 use app\base\BaseController;
+use app\services\UserService;
 use Exception;
 
-class MainController extends BaseController
+class LoginController extends BaseController
 {
-
   public function __construct()
   {
     parent::__construct(null);
@@ -16,11 +16,7 @@ class MainController extends BaseController
   protected function get($urlParams)
   {
     try {
-      // parent::get($urlParams);
-
-      // echo "params is ";
-      // var_dump($urlParams);
-      parent::render($urlParams, "home", "layouts/base");
+      parent::render($urlParams, "login", "layouts/base");
     } catch (Exception $e) {
       echo $e;
     }

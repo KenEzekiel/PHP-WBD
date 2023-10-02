@@ -6,22 +6,11 @@ use app\exceptions\MethodNotAllowedException;
 
 abstract class BaseController
 {
-  // ngasih tau layoutnya pake apa
-
-  protected static $instance;
   protected $service;
 
   protected function __construct($service)
   {
     $this->service = $service;
-  }
-
-  public static function getInstance()
-  {
-    if (!isset(self::$instance)) {
-      self::$instance = new static(null);
-    }
-    return self::$instance;
   }
 
   protected function get($urlParams)
