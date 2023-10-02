@@ -1,7 +1,12 @@
 <?php
 
+namespace app\base;
+
+use PDO;
+use app\database\DatabaseConnection;
+
 // Using PHP Data Objects Extension
-require_once PROJECT_ROOT_PATH . "/src/db/PDOInstance.php";
+
 
 abstract class BaseRepository
 {
@@ -13,7 +18,7 @@ abstract class BaseRepository
 
   protected function __construct()
   {
-    $this->pdo = PDOInstance::getInstance()->getPDO();
+    $this->pdo = DatabaseConnection::getInstance()->getPDO();
   }
 
   public static function getInstance()
@@ -37,7 +42,8 @@ abstract class BaseRepository
 
   // Where (key: column name, value(0: value, 1: data type, 2: type of comparison either LIKE or =)) 
 
-  public function countRow($where = []) {
+  public function countRow($where = [])
+  {
     $sql = "SELECT COUNT(*) FROM $this->tableName";
 
     if (count($where) > 0) {
@@ -106,7 +112,7 @@ abstract class BaseRepository
 
     // Hydrating statement, for sanitizing
     $stmt = $this->pdo->prepare($sql);
-    
+
     foreach ($where as $key => $value) {
       if ($value[2] == 'LIKE') {
         $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
@@ -129,6 +135,8 @@ abstract class BaseRepository
 
   public function findOne($where)
   {
+    $sql = "SELECT * FROM $this->tableName";
+
     if (count($where) > 0) {
       $sql .= " WHERE";
       $sql .= implode(" AND ", array_map(function ($key, $value) {
@@ -142,7 +150,7 @@ abstract class BaseRepository
 
     // Hydrating statement, for sanitizing
     $stmt = $this->pdo->prepare($sql);
-    
+
     foreach ($where as $key => $value) {
       if ($value[2] == 'LIKE') {
         $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
@@ -168,16 +176,15 @@ abstract class BaseRepository
 
     $stmt = $this->pdo->prepare($sql);
     // Hydrating and sanitizing
-    foreach($arrParams as $key => $value) {
+    foreach ($arrParams as $key => $value) {
       $stmt->bindValue(":$key", $model->get($key), $value);
     }
 
     $stmt->execute();
     return $this->pdo->lastInsertId();
-    
   }
 
-  public function update($model, $where)
+  public function update($model, $arrParams)
   {
     $sql = "UPDATE $this->tableName SET ";
     $sql .= implode(", ", array_map(function ($key, $value) {
@@ -186,10 +193,10 @@ abstract class BaseRepository
     $sql .= ")";
     $primaryKey = $model->get('_primary_key');
     $sql .= " WHERE $primaryKey = :primaryKey";
-    
+
     $stmt = $this->pdo->prepare($sql);
     // Hydrating and sanitizing
-    foreach($arrParams as $key => $value) {
+    foreach ($arrParams as $key => $value) {
       $stmt->bindValue(":$key", $model->get($key), $value);
     }
 

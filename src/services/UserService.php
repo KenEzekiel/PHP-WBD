@@ -1,9 +1,12 @@
 <?php
 
-require_once PROJECT_ROOT_PATH . "/src/bases/BaseService.php";
-require_once PROJECT_ROOT_PATH . "/src/repositories/UserRepository.php";
-require_once PROJECT_ROOT_PATH . "/src/models/UserModel.php";
-require_once PROJECT_ROOT_PATH . "/src/exceptions/BadRequestException.php";
+namespace app\services;
+
+use app\base\BaseService;
+use app\exceptions\BadRequestException;
+use app\models\UserModel;
+use app\repositories\UserRepository;
+use PDO;
 
 class UserService extends BaseService
 {
@@ -61,7 +64,6 @@ class UserService extends BaseService
     } else {
       throw new BadRequestException("Username or Email already exists!");
     }
-
   }
 
   public function login($email_or_username, $password)
@@ -85,9 +87,9 @@ class UserService extends BaseService
     if (is_null($user)) {
       throw new BadRequestException("Email or Username is not found!");
     }
-    
+
     if (!password_verify($password, $user->get('password'))) {
-      throw new BadRequestException("Password is incorrect!"); 
+      throw new BadRequestException("Password is incorrect!");
     }
 
     $_SESSION["user_id"] = $user->get('user_id');
@@ -155,13 +157,14 @@ class UserService extends BaseService
     return !is_null($user->get('user_id'));
   }
 
-  public function getById($id) {
+  public function getById($id)
+  {
     $user = $this->repository->getById($id);
 
     if ($user) {
       $userModel = new UserModel();
       $userModel->constructFromArray($user);
-      return $userModel;  
+      return $userModel;
     }
 
     return null;

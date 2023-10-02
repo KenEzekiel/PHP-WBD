@@ -1,20 +1,25 @@
 <?php
 
-require_once PROJECT_ROOT_PATH . "/src/bases/BaseModel.php";
+namespace app\models;
 
-class UserModel extends BaseModel {
+use app\base\BaseModel;
+
+class UserModel extends BaseModel
+{
   public $user_id;
   public $email;
   public $username;
   public $password;
   public $role;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->_primary_key = 'user_id';
     return $this;
   }
 
-  public function constructFromArray($array) {
+  public function constructFromArray($array)
+  {
     $this->user_id = $array['user_id'];
     $this->email = $array['email'];
     $this->username = $array['username'];
@@ -23,7 +28,8 @@ class UserModel extends BaseModel {
     return $this;
   }
 
-  public function toResponse() {
+  public function toResponse()
+  {
     return array(
       'user_id' => $this->user_id,
       'email' => $this->email,
@@ -31,5 +37,4 @@ class UserModel extends BaseModel {
       'role' => $this->role,
     );
   }
-
 }

@@ -10,20 +10,22 @@ services:
     ports:
       - 8008:80
     environment:
-      - MYSQL_ROOT_PASSWORD=#password
+      - MYSQL_ROOT_PASSWORD=${password}
       - MYSQL_DATABASE=mysql_database
-      - MYSQL_USER=#nama
-      - MYSQL_PASSWORD=#password
+      - MYSQL_USER=${nama}
+      - MYSQL_PASSWORD=${password}
       - USE_DOCKER_CONFIG=true
+    volumes:
+      - .:/var/www/html/
   db:
     container_name: tubes-1-database
     image: mysql:latest
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=#password
+      - MYSQL_ROOT_PASSWORD=${password}
       - MYSQL_DATABASE=mysql_database
-      - MYSQL_USER=#nama
-      - MYSQL_PASSWORD=#password
+      - MYSQL_USER=${nama}
+      - MYSQL_PASSWORD=${password}
       - USE_DOCKER_CONFIG=true
     ports:
       - "9907:3306"

@@ -1,37 +1,48 @@
 <?php
 
-require_once PROJECT_ROOT_PATH . "/src/exceptions/BadRequestException.php";
-require_once PROJECT_ROOT_PATH . "/src/exceptions/MethodNotAllowedException.php";
+namespace app\base;
 
-abstract class BaseController {
+use app\exceptions\MethodNotAllowedException;
+
+abstract class BaseController
+{
+  // ngasih tau layoutnya pake apa
+
   protected static $instance;
   protected $service;
 
-  protected function __construct($service) {
+  protected function __construct($service)
+  {
     $this->service = $service;
   }
 
-  public static function getInstance() {
+  public static function getInstance()
+  {
     if (!isset(self::$instance)) {
       self::$instance = new static(null);
     }
     return self::$instance;
   }
 
-  protected function get($urlParams) {
-    throw new MethodNotAllowedException("Method not allowed");  
+  protected function get($urlParams)
+  {
+    throw new MethodNotAllowedException("Method not allowed");
   }
-  protected function post($urlParams) {
-    throw new MethodNotAllowedException("Method not allowed");  
+  protected function post($urlParams)
+  {
+    throw new MethodNotAllowedException("Method not allowed");
   }
-  protected function put($urlParams) {
-    throw new MethodNotAllowedException("Method not allowed");  
+  protected function put($urlParams)
+  {
+    throw new MethodNotAllowedException("Method not allowed");
   }
-  protected function delete($urlParams) {
+  protected function delete($urlParams)
+  {
     throw new MethodNotAllowedException("Method not allowed");
   }
 
-  public function handle($method, $urlParams) {
+  public function handle($method, $urlParams)
+  {
     $lowMethod = strtolower($method);
     echo $this->$lowMethod($urlParams);
   }
