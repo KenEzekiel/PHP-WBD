@@ -1,0 +1,191 @@
+.background {
+  background-color: rgb(56, 55, 55); /* Ganti dengan URL latar belakang Anda */
+  background-size: cover;
+  filter: blur(5px); /* Ubah nilai blur sesuai keinginan Anda */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.card {
+  background-color: #365563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 80%;
+  gap: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: gray;
+}
+
+.close-button:hover {
+  color: white;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.back-btn {
+  background-color: #5b7c8f;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+.back-btn:hover {
+  transform: translateY(1px);
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-review {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.select-movie {
+  gap: 1.5 rem;
+}
+
+.input-review label {
+  color: #d8e3e9;
+}
+
+.select-input {
+  background-color: #d8e3e9;
+  padding: 5 10;
+  appearance: none;
+  border: none;
+  margin: 0;
+  width: 100%;
+  z-index: 1;
+  outline: none;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.write-review {
+  background-color: #d8e3e9;
+  min-height: 15rem;
+  min-width: 20rem;
+  display: flex;
+  align-items: start;
+}
+
+.review label {
+  color: white;
+}
+
+.rating {
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+}
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.rating label:last-child {
+  position: static;
+}
+
+.rating label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+  color: #09f;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f;
+}
+
+.save-button-conf {
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  align-items: center;
+}
+
+.save-btn {
+  background-color: #00c06a;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  width: fit-content;
+  padding: 5 10;
+  font-weight: bold;
+  color: white;
+}
+
+.save-btn:hover {
+  transform: translateY(1px);
+}
