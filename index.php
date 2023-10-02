@@ -1,5 +1,6 @@
 <?php
 
+use app\App;
 use app\base\BaseController;
 
 spl_autoload_register(function ($className) {
@@ -12,3 +13,5 @@ spl_autoload_register(function ($className) {
   $class = __DIR__ . "/src/" . "{$className}.php";
   include_once($class);
 });
+
+$app = new App();
