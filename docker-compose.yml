@@ -1,6 +1,8 @@
 version: "3.3"
 services:
   web:
+    env_file:
+      - .env
     container_name: tubes-1-letterpaw
     build: .
     image: tubes-1:latest
@@ -18,6 +20,8 @@ services:
     volumes:
       - .:/var/www/html/
   db:
+    env_file:
+      - .env
     container_name: tubes-1-database
     image: mysql:latest
     restart: unless-stopped
