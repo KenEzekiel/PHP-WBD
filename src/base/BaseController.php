@@ -43,7 +43,19 @@ abstract class BaseController
 
   public function handle($method, $urlParams)
   {
-    $lowMethod = strtolower($method);
-    echo $this->$lowMethod($urlParams);
+    $to_lower_method = strtolower($method);
+    echo $this->$to_lower_method($urlParams);
+  }
+
+  protected static function render($data, $view, $layout)
+  {
+    extract($data);
+    ob_start();
+    include_once __DIR__ . "/../../views/{$view}.php";
+    $content = ob_get_clean();
+
+    $data["__content"] = $content;
+    extract($data);
+    include_once __DIR__ . "/../../views/{$layout}.php";
   }
 }
