@@ -6,7 +6,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean \
     && apt-get update \
     && apt install libxml2-dev -y 
 
-RUN docker-php-ext-install pdo pdo_mysql soap
+RUN docker-php-ext-install pdo pdo_mysql
 
 COPY ./php.ini /usr/local/etc/php/php.ini
 RUN a2enmod rewrite

@@ -101,8 +101,6 @@ abstract class BaseRepository
 
     if ($isDesc) {
       $sql .= " DESC";
-    } else {
-      $sql .= " ASC";
     }
 
     if ($pageSize && $pageNo) {

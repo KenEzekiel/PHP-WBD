@@ -12,7 +12,7 @@ class DatabaseConnection
 
   private function __construct()
   {
-    $DB_HOST = $_ENV['DB_HOST'] ? $_ENV['DB_HOST'] : "db";
+    $DB_HOST = "db";
     $DB_USERNAME = $_ENV['MYSQL_USER'];
     $DB_PASSWORD = $_ENV['MYSQL_PASSWORD'];
     $DB_NAME = $_ENV['MYSQL_DATABASE'];
