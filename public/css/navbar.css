@@ -17,10 +17,6 @@ li {
   color: #fff;
 }
 
-.nav-links {
-  color: white;
-}
-
 .navbar h1 {
   color: white;
   font-size: 32px;
@@ -36,10 +32,6 @@ li {
   display: flex;
   gap: 1rem;
   font-size: 18px;
-}
-
-.menu li {
-  color: white;
 }
 
 .menu li:hover {
@@ -73,4 +65,10 @@ li {
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+@media screen and (max-width: 800px) {
+  .menu li {
+    font-size: 10px;
+  }
 }
