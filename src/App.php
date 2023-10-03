@@ -2,6 +2,7 @@
 
 namespace app;
 
+use app\controllers\FilmsController;
 use app\Router;
 use app\base\BaseController;
 use app\controllers\LoginController;
@@ -28,5 +29,7 @@ class App
     $this->router->addRoute('/login', LoginController::class);
     $this->router->addRoute('/logout', LoginController::class);
     $this->router->addRoute('/register', RegisterController::class);
+    $this->router->addRoute('/films', FilmsController::class);
+    $this->router->addRoute('/search', FilmsController::class);
   }
 }
