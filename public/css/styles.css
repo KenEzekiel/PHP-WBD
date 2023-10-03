@@ -63,12 +63,11 @@ table {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10%;
-  width: 30%;
+  padding: 30px 0px 30px 0px;
+  width: 50%;
   border-radius: 60px;
   border: 1px solid #CBD5E1;
   background: #FFF;
-  padding: 5%;
   margin-top: 5%;
 }
 
@@ -78,11 +77,11 @@ table {
   align-items: center;
   justify-content: center;
   margin: auto;
-
+  width: 70%;
 }
 
 .form-group {
-  padding: 5%;
+  padding: 7px;
   width: 100%;
 }
 
@@ -103,8 +102,8 @@ table {
   border: 1px solid #CBD5E1;
   background: #FFF;
   width: 100%;
-  padding: 5%;
-  margin-top: 5%;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .button {
@@ -112,8 +111,8 @@ table {
   background: teal;
   color: white;
   width: 100%;  
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 10px;
+  padding-bottom: 10px;
   transition: all 0.5s;
   cursor: pointer;
 }
@@ -128,4 +127,10 @@ table {
 .error-msg {
   color: red;
   font-size: small;
+}
+
+@media only screen and (max-width: 800px) {
+  .form-container {
+    width: 100%;
+  } 
 }

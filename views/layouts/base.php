@@ -32,29 +32,26 @@
 
         if (!isset($_SESSION['user_id'])) {
           if (Request::getURL() != "/login") {
-            echo "<li><a href='/login'>Sign In  </a></li>";
+            echo "<li class='menu-item'><a href='/login'>Sign In  </a></li>";
           }
           if (Request::getURL() != "/register") {
-            echo "<li><a href='/register'>Register</a></li>";
+            echo "<li class='menu-item' ><a href='/register'>Register</a></li>";
           }
         } else {
           $username = $_SESSION['username'];
-          echo "<li><a href='/'>$username</a></li>";
-          echo "<li><a href='/logout'>LOG OUT</a></li>";
+          echo "<li class='menu-item'><a href='/'>$username</a></li>";
+          echo "<li class='menu-item'><a href='/logout'>LOG OUT</a></li>";
         }
         ?>
-        <li><a href='/'>Films</a></li>
-        <li><a href='/'>Lists</a></li>
-        <li><a href='/'>Members</a></li>
-        <li><a href='/'>Journal</a></li>
+        <li class='menu-item'><a href='/film'>Films</a></li>
+        <li class='menu-item'><a href='/'>Lists</a></li>
+        <li class='menu-item'><a href='/'>Members</a></li>
+        <li class='menu-item'><a href='/'>Journal</a></li>
       </div>
     </ul>
-    <form method='get'>
-      <div class='input-search'>
-        <input class='' placeholder='Search...' />
-        <img src='/public/assets/search-icon.svg' alt='search icon' />
-      </div>
-    </form>
+    <!-- <div class='menu'>
+      <button class='nav-toggler burger-menu'><span>☰</span></button>
+    </div> -->
   </nav>
 
   <main>
