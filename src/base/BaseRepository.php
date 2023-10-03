@@ -46,27 +46,42 @@ abstract class BaseRepository
   {
     $sql = "SELECT COUNT(*) FROM $this->tableName";
 
+    // Mapping where
     if (count($where) > 0) {
-      // WHERE Query Building
-      $sql .= " WHERE ";
-      // Append Conditions
-      $sql .= implode(" AND ", array_map(function ($key, $value) {
-        if ($value[2] == 'LIKE') {
-          return "$key LIKE :$key";
-        }
+      foreach ($where as $key => $value) {
+          $columns = [$key];
+          if (isset($value[3]) and is_array(($value[3]))) {
+              $columns = [$key] + $value[3];
+          }
+          $subConditions = [];
+          foreach ($columns as $column) {
+              if (isset($value[2]) and $value[2] == 'LIKE') {
+                  $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
+              }
+              else {
+                  $subConditions[] = "$column = :$column";
+              }
+          }
+          $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
+      }
 
-        return "$key = :$key";
-      }, array_keys($where), array_values($where)));
+      $sql .= " WHERE " . implode(" AND ", $conditions);
     }
+
     // Hydrating statement, for sanitizing
     $stmt = $this->pdo->prepare($sql);
     // Bind values
     foreach ($where as $key => $value) {
-      // Binds parameter with appropriate data type 
-      if ($value[2] == 'LIKE') {
-        $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
-      } else {
-        $stmt->bindValue(":$key", $value[0], $value[1]);
+      $columns = [$key];
+      if (isset($value[3]) and is_array(($value[3]))) {
+          $columns = [$key] + $value[3];
+      }
+      foreach ($columns as $column) {
+          if (isset($value[2]) and $value[2] == 'LIKE') {
+              $stmt->bindValue(":$column", "%$value[0]%", $value[1]);
+          } else {
+              $stmt->bindValue(":$column", $value[0], $value[1]);
+          }
       }
     }
 
@@ -83,16 +98,28 @@ abstract class BaseRepository
   ) {
     $sql = "SELECT * FROM $this->tableName";
 
+    $conditions = [];
+
     // Mapping where
     if (count($where) > 0) {
-      $sql .= " WHERE ";
-      $sql .= implode(" AND ", array_map(function ($key, $value) {
-        if ($value[2] == 'LIKE') {
-          return "$key LIKE :$key";
+        foreach ($where as $key => $value) {
+            $columns = [$key];
+            if (isset($value[3]) and is_array(($value[3]))) {
+                $columns = [$key] + $value[3];
+            }
+            $subConditions = [];
+            foreach ($columns as $column) {
+                if (isset($value[2]) and $value[2] == 'LIKE') {
+                    $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
+                }
+                else {
+                    $subConditions[] = "$column = :$column";
+                }
+            }
+            $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
         }
 
-        return "$key = :$key";
-      }, array_keys($where), array_values($where)));
+      $sql .= " WHERE " . implode(" AND ", $conditions);
     }
 
     if ($order) {
@@ -112,11 +139,17 @@ abstract class BaseRepository
     $stmt = $this->pdo->prepare($sql);
 
     foreach ($where as $key => $value) {
-      if ($value[2] == 'LIKE') {
-        $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
-      } else {
-        $stmt->bindValue(":$key", $value[0], $value[1]);
-      }
+        $columns = [$key];
+        if (isset($value[3]) and is_array(($value[3]))) {
+            $columns = [$key] + $value[3];
+        }
+        foreach ($columns as $column) {
+            if (isset($value[2]) and $value[2] == 'LIKE') {
+                $stmt->bindValue(":$column", "%$value[0]%", $value[1]);
+            } else {
+                $stmt->bindValue(":$column", $value[0], $value[1]);
+            }
+        }
     }
 
     if ($pageSize && $pageNo) {
@@ -136,9 +169,9 @@ abstract class BaseRepository
     $sql = "SELECT * FROM $this->tableName";
 
     if (count($where) > 0) {
-      $sql .= " WHERE";
+      $sql .= " WHERE ";
       $sql .= implode(" AND ", array_map(function ($key, $value) {
-        if ($value[2] == 'LIKE') {
+        if (isset($value[2]) and $value[2] == 'LIKE') {
           return "$key LIKE :$key";
         }
 
@@ -147,10 +180,13 @@ abstract class BaseRepository
     }
 
     // Hydrating statement, for sanitizing
+    // echo $sql;
+    // var_dump($where);
+
     $stmt = $this->pdo->prepare($sql);
 
     foreach ($where as $key => $value) {
-      if ($value[2] == 'LIKE') {
+      if (isset($value[2]) and $value[2] == 'LIKE') {
         $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
       } else {
         $stmt->bindValue(":$key", $value[0], $value[1]);
@@ -235,5 +271,10 @@ abstract class BaseRepository
     $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();
+  }
+  public function getDistinctValues($columnName)
+  {
+    $sql = "SELECT DISTINCT $columnName FROM $this->tableName";
+    return $this->pdo->query($sql);
   }
 }

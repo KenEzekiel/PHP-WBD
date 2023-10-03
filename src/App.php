@@ -7,6 +7,7 @@ use app\base\BaseController;
 use app\controllers\LoginController;
 use app\controllers\MainController;
 use app\controllers\ReviewController;
+use app\controllers\RegisterController;
 use app\repositories\UserRepository;
 use app\repositories\ReviewRepository;
 use app\services\UserService;
@@ -29,5 +30,7 @@ class App
     $this->router->addRoute('/', MainController::class);
     $this->router->addRoute('/login', LoginController::class);
     $this->router->addRoute('/review', ReviewController::class);
+    $this->router->addRoute('/logout', LoginController::class);
+    $this->router->addRoute('/register', RegisterController::class);
   }
 }
