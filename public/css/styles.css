@@ -23,6 +23,12 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
+
+* {
+  box-sizing: border-box;
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -51,3 +57,70 @@ table {
   font-family: 'Open Sans', sans-serif;
 }
 
+.form-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10%;
+  width: 30%;
+  border-radius: 60px;
+  border: 1px solid #CBD5E1;
+  background: #FFF;
+  padding: 5%;
+  margin-top: 5%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+
+}
+
+.form-group {
+  padding: 5%;
+  width: 100%;
+}
+
+
+.header-title {
+  color: #414141;
+  text-align: center;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 36px; /* 120% */
+  letter-spacing: -0.225px;
+  margin-bottom: 10%;
+}
+
+.input {
+  border-radius: 6px;
+  border: 1px solid #CBD5E1;
+  background: #FFF;
+  width: 100%;
+  padding: 5%;
+  margin-top: 5%;
+}
+
+.button {
+  border-radius: 6px;
+  background: teal;
+  color: white;
+  width: 100%;  
+  padding-top: 3%;
+  padding-bottom: 3%;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.button:hover {background-color: #08bc4d}
+
+.button:active {
+  background-color: #2b5c02;
+  transform: translateY(4px);
+}

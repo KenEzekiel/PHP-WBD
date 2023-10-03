@@ -50,8 +50,11 @@
 
   <main>
     <h1>hai!!!</h1>
-    <?= $__content ?>
+    <div class="content">
+      <?= $__content ?>
+    </div>
   </main>
+
 
 </body>
 
