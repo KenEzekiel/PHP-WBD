@@ -27,7 +27,7 @@ class LoginController extends BaseController
       }
     } else if ($uri == "/logout") {
       $this->service->logout();
-      parent::redirect("/login");
+      parent::redirect("/");
     }
   }
   protected function post($urlParams)

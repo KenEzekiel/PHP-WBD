@@ -27,14 +27,13 @@
         <?php
         if (!isset($_SESSION['user_id'])) {
           echo "<li><a href='/login'>SIGN IN</a></li>";
+          echo "<li><a href='/register'>CREATE ACCOUNT</a></li>";
         } else {
-          $user_id = $_SESSION['user_id'];
-          echo "<li><a href='/'>$user_id</a></li>";
+          $username = $_SESSION['username'];
+          echo "<li><a href='/'>$username</a></li>";
           echo "<li><a href='/logout'>LOG OUT</a></li>";
         }
-
         ?>
-        <li><a href='/'>CREATE ACCOUNT</a></li>
         <li><a href='/'>FILMS</a></li>
         <li><a href='/'>LISTS</a></li>
         <li><a href='/'>MEMBERS</a></li>

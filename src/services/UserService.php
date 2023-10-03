@@ -46,8 +46,11 @@ class UserService extends BaseService
       throw new BadRequestException("Password does not match");
     }
 
-    if ($this->isUsernameExist($username) and $this->isEmailExist($email)) {
+    if (!$this->isUsernameExist($username) and !$this->isEmailExist($email)) {
       $user = new UserModel();
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new BadRequestException("Email is not valid!");
+      }
       $user->set('email', $email)->set('username', $username)->set('password', password_hash($password, PASSWORD_DEFAULT))->set('role', 'User');
 
       $id = $this->repository->insert($user, array(
@@ -94,6 +97,7 @@ class UserService extends BaseService
 
     $_SESSION["user_id"] = $user->get('user_id');
     $_SESSION["role"] = $user->get('role');
+    $_SESSION["username"] = $user->get('username');
 
     return $user;
   }
