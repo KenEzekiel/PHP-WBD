@@ -124,3 +124,8 @@ table {
   background-color: #2b5c02;
   transform: translateY(4px);
 }
+
+.error-msg {
+  color: red;
+  font-size: small;
+}

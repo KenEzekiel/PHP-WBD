@@ -28,7 +28,12 @@ class RegisterController extends BaseController
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm-password'];
-    $response = $this->service->register($username, $email, $password, $confirm_password);
+    try {
+      $response = $this->service->register($username, $email, $password, $confirm_password);
+    } catch (Exception $e) {
+      $msg = $e->getMessage();
+      parent::render(["errorMsg" => $msg], "register", "layouts/base");
+    }
     parent::redirect("/login");
   }
 }

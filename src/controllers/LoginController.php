@@ -34,7 +34,12 @@ class LoginController extends BaseController
   {
     $username_email = $_POST['username-email'];
     $password = $_POST['password'];
-    $this->service->login($username_email, $password);
+    try {
+      $this->service->login($username_email, $password);
+    } catch (Exception $e) {
+      $msg = $e->getMessage();
+      parent::render(["errorMsg" => $msg], "login", "layouts/base");
+    }
     if (isset($_SESSION['user_id'])) {
       // redirect
       parent::redirect("/");

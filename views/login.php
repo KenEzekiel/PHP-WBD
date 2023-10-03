@@ -1,5 +1,8 @@
 <div class="form-container">
   <h2 class="header-title">Login</h2>
+  <p class="error-msg"><?php if (isset($errorMsg)) {
+                          echo "$errorMsg";
+                        } ?></p>
   <form class="form" method="post">
     <div class="form-group">
       <label for="username-email">Username or Email</label>
