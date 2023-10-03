@@ -42,13 +42,13 @@ li {
 }
 
 .navbar input {
-  background-color: #444444;
+  background-color: white;
   border-radius: 25px;
   padding: 9px 10px;
 }
 
 .navbar input:hover {
-  background-color: white;
+  background-color: #e7e7e7;
 }
 
 .input-search {

@@ -18,26 +18,35 @@
 
 <body class='text'>
   <nav class='navbar'>
-    <div class='logo' href='/'>
-      <img src='/public/assets/logo.svg' alt='logo' width="45" height="45" draggable='false' />
+    <div class='logo'>
+      <a href="/">
+        <img src='/public/assets/logo.svg' alt='logo' width="45" height="45" draggable='false' />
+      </a>
       <h1>Letterpaw</h1>
     </div>
     <ul class='nav-links'>
       <div class='menu'>
         <?php
+
+        use app\Request;
+
         if (!isset($_SESSION['user_id'])) {
-          echo "<li><a href='/login'>SIGN IN</a></li>";
-          echo "<li><a href='/register'>CREATE ACCOUNT</a></li>";
+          if (Request::getURL() != "/login") {
+            echo "<li><a href='/login'>Sign In  </a></li>";
+          }
+          if (Request::getURL() != "/register") {
+            echo "<li><a href='/register'>Register</a></li>";
+          }
         } else {
           $username = $_SESSION['username'];
           echo "<li><a href='/'>$username</a></li>";
           echo "<li><a href='/logout'>LOG OUT</a></li>";
         }
         ?>
-        <li><a href='/'>FILMS</a></li>
-        <li><a href='/'>LISTS</a></li>
-        <li><a href='/'>MEMBERS</a></li>
-        <li><a href='/'>JOURNAL</a></li>
+        <li><a href='/'>Films</a></li>
+        <li><a href='/'>Lists</a></li>
+        <li><a href='/'>Members</a></li>
+        <li><a href='/'>Journal</a></li>
       </div>
     </ul>
     <form method='get'>
@@ -49,7 +58,6 @@
   </nav>
 
   <main>
-    <h1>hai!!!</h1>
     <div class="content">
       <?= $__content ?>
     </div>
