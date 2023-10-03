@@ -98,6 +98,14 @@ class UserService extends BaseService
     return $user;
   }
 
+  public function logout()
+  {
+    if (isset($_SESSION['user_id']) and isset($_SESSION['role'])) {
+      unset($_SESSION['user_id']);
+      unset($_SESSION['role']);
+    }
+  }
+
   public function create($email, $username, $password, $role)
   {
     // $user = (new UserModel())->set('nama', $nama)->set('username', $username)->set('email', $email)->set('password', password_hash($password, PASSWORD_DEFAULT));

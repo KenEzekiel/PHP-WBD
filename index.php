@@ -14,4 +14,5 @@ spl_autoload_register(function ($className) {
   include_once($class);
 });
 
+session_start();
 $app = new App();

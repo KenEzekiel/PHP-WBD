@@ -25,5 +25,6 @@ class App
 
     $this->router->addRoute('/', MainController::class);
     $this->router->addRoute('/login', LoginController::class);
+    $this->router->addRoute('/logout', LoginController::class);
   }
 }

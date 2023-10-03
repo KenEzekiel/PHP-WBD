@@ -51,7 +51,7 @@ abstract class BaseRepository
       $sql .= " WHERE ";
       // Append Conditions
       $sql .= implode(" AND ", array_map(function ($key, $value) {
-        if ($value[2] == 'LIKE') {
+        if (isset($value[2]) and $value[2] == 'LIKE') {
           return "$key LIKE :$key";
         }
 
@@ -63,7 +63,7 @@ abstract class BaseRepository
     // Bind values
     foreach ($where as $key => $value) {
       // Binds parameter with appropriate data type 
-      if ($value[2] == 'LIKE') {
+      if (isset($value[2]) and $value[2] == 'LIKE') {
         $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
       } else {
         $stmt->bindValue(":$key", $value[0], $value[1]);
@@ -87,7 +87,7 @@ abstract class BaseRepository
     if (count($where) > 0) {
       $sql .= " WHERE ";
       $sql .= implode(" AND ", array_map(function ($key, $value) {
-        if ($value[2] == 'LIKE') {
+        if (isset($value[2]) and $value[2] == 'LIKE') {
           return "$key LIKE :$key";
         }
 
@@ -112,7 +112,7 @@ abstract class BaseRepository
     $stmt = $this->pdo->prepare($sql);
 
     foreach ($where as $key => $value) {
-      if ($value[2] == 'LIKE') {
+      if (isset($value[2]) and $value[2] == 'LIKE') {
         $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
       } else {
         $stmt->bindValue(":$key", $value[0], $value[1]);
@@ -136,9 +136,9 @@ abstract class BaseRepository
     $sql = "SELECT * FROM $this->tableName";
 
     if (count($where) > 0) {
-      $sql .= " WHERE";
+      $sql .= " WHERE ";
       $sql .= implode(" AND ", array_map(function ($key, $value) {
-        if ($value[2] == 'LIKE') {
+        if (isset($value[2]) and $value[2] == 'LIKE') {
           return "$key LIKE :$key";
         }
 
@@ -147,10 +147,13 @@ abstract class BaseRepository
     }
 
     // Hydrating statement, for sanitizing
+    // echo $sql;
+    // var_dump($where);
+
     $stmt = $this->pdo->prepare($sql);
 
     foreach ($where as $key => $value) {
-      if ($value[2] == 'LIKE') {
+      if (isset($value[2]) and $value[2] == 'LIKE') {
         $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
       } else {
         $stmt->bindValue(":$key", $value[0], $value[1]);
