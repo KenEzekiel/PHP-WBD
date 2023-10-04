@@ -71,10 +71,16 @@ class FilmService extends BaseService
       }
       $data['films'] = $films;
 
-      $row_count = $this->repository->countRowBySearchAndFilter($word, $genre, $released_year);
-      $total_page = ceil($row_count/PAGINATION_LIMIT);
-      $data['total_page'] = $total_page;
+        $row_count = $this->repository->countRowBySearchAndFilter($word, $genre, $released_year);
+        $total_page = ceil($row_count/10);
+        $data['total_page'] = $total_page;
 
-      return $data;
-  }
+        return $data;
+    }
+
+    public function getAllCategoryValues($category)
+    {
+        return $this->repository->getAllCategoryValues($category);
+    }
+
 }

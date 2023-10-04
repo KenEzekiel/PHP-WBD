@@ -29,7 +29,7 @@ class FilmRepository extends BaseRepository
   }
 
   public function getAllBySearchAndFilter($word, $order = 'title', $isDesc= false, $genre = 'all',
-                                          $released_year = 'all', $pageNo = 1, $limit = PAGINATION_LIMIT)
+                                          $released_year = 'all', $pageNo = 1, $limit = 10)
   {
       $where = [];
 
