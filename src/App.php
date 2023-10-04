@@ -2,7 +2,7 @@
 
 namespace app;
 
-use app\controllers\FilmsController;
+use app\controllers\FilmController;
 use app\Router;
 use app\base\BaseController;
 use app\controllers\CreateFilmController;
