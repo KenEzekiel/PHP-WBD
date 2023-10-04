@@ -9,6 +9,7 @@ use app\controllers\LoginController;
 use app\controllers\MainController;
 use app\controllers\ReviewController;
 use app\controllers\RegisterController;
+use app\controllers\UpdateFilmController;
 use app\repositories\UserRepository;
 use app\repositories\ReviewRepository;
 use app\services\UserService;
@@ -34,5 +35,6 @@ class App
     $this->router->addRoute('/logout', LoginController::class);
     $this->router->addRoute('/register', RegisterController::class);
     $this->router->addRoute('/add-film', CreateFilmController::class);
+    $this->router->addRoute('/update-film', UpdateFilmController::class);
   }
 }

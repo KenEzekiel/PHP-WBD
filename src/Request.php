@@ -16,11 +16,9 @@ class Request
 
   public static function getParams()
   {
-    $params = $_SERVER['REQUEST_URI'];
-    $params = explode("?", $params);
-    $params = array_slice($params, 1);
-    if (empty($params)) {
-      return [];
+    $params = [];
+    foreach ($_GET as $key => $value) {
+      $params[$key] = $value;
     }
     return $params;
   }

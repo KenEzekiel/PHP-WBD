@@ -28,27 +28,32 @@ class FilmRepository extends BaseRepository
     return $this->findOne(['film_id' => [$film_id, PDO::PARAM_INT]]);
   }
 
-  public function getAllBySearchAndFilter($word, $order = 'title', $isDesc= false, $genre = 'all',
-                                          $released_year = 'all', $pageNo = 1, $limit = PAGINATION_LIMIT)
-  {
-      $where = [];
+  public function getAllBySearchAndFilter(
+    $word,
+    $order = 'title',
+    $isDesc = false,
+    $genre = 'all',
+    $released_year = 'all',
+    $pageNo = 1,
+    $limit = PAGINATION_LIMIT
+  ) {
+    $where = [];
 
-      if (isset($genre) and !empty($genre) and $genre != 'all') {
-          $where['genre'] = [$genre, PDO::PARAM_STR, 'LIKE'];
-      }
-      if (isset($released_year) and !empty($released_year) and $released_year != 'all') {
-          $where['released_year'] = [$released_year, PDO::PARAM_INT];
-      }
-      if (isset($word) and !empty($word)) {
-          $where['title'] = [$genre, PDO::PARAM_STR, 'LIKE', ['director']];
-      }
+    if (isset($genre) and !empty($genre) and $genre != 'all') {
+      $where['genre'] = [$genre, PDO::PARAM_STR, 'LIKE'];
+    }
+    if (isset($released_year) and !empty($released_year) and $released_year != 'all') {
+      $where['released_year'] = [$released_year, PDO::PARAM_INT];
+    }
+    if (isset($word) and !empty($word)) {
+      $where['title'] = [$genre, PDO::PARAM_STR, 'LIKE', ['director']];
+    }
 
-      return $this->findAll($where, $order, $pageNo, $limit, $isDesc);
-
+    return $this->findAll($where, $order, $pageNo, $limit, $isDesc);
   }
 
   public function getAllCategoryValues($category)
   {
-      return $this->getDistinctValues($category);
+    return $this->getDistinctValues($category);
   }
 }
