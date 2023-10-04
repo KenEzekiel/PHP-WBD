@@ -48,8 +48,12 @@ abstract class BaseController
     include_once __DIR__ . "/../../views/{$layout}.php";
   }
 
-  protected static function redirect($url, $statusCode = 303)
+  protected static function redirect($url, $data = [], $statusCode = 303)
   {
-    header('Location: ' . $url, true, $statusCode);
+    $params = "";
+    foreach ($data as $key => $value) {
+      $params .= "$key=$value&";
+    }
+    header('Location: ' . $url . "?" . $params, true, $statusCode);
   }
 }

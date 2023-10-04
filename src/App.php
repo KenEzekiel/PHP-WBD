@@ -7,6 +7,7 @@ use app\base\BaseController;
 use app\controllers\CreateFilmController;
 use app\controllers\LoginController;
 use app\controllers\MainController;
+use app\controllers\ProfileController;
 use app\controllers\ReviewController;
 use app\controllers\RegisterController;
 use app\controllers\UpdateFilmController;
@@ -36,5 +37,6 @@ class App
     $this->router->addRoute('/register', RegisterController::class);
     $this->router->addRoute('/add-film', CreateFilmController::class);
     $this->router->addRoute('/update-film', UpdateFilmController::class);
+    $this->router->addRoute('/profile', ProfileController::class);
   }
 }

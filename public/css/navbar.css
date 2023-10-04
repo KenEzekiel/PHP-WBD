@@ -128,6 +128,10 @@ li {
   display: none;
 }
 
+.logo {
+  font-weight: bolder;
+}
+
 @media screen and (max-width: 800px) {
   .mobile-view {
     display: flex;

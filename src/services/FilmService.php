@@ -59,7 +59,15 @@ class FilmService extends BaseService
 
   public function getById($film_id)
   {
-    return $this->repository->getById($film_id);
+    $film = $this->repository->getById($film_id);
+
+    if ($film) {
+      $filmModel = new filmModel();
+      $filmModel->constructFromArray($film);
+      return $filmModel;
+    }
+
+    return null;
   }
 
   public function update($film)

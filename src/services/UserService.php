@@ -119,7 +119,11 @@ class UserService extends BaseService
   {
     // $user = (new UserModel())->set('nama', $nama)->set('username', $username)->set('email', $email)->set('password', password_hash($password, PASSWORD_DEFAULT));
     $user = new UserModel();
-    $user->set('email', $email)->set('username', $username)->set('password', password_hash($password, PASSWORD_DEFAULT))->set('role', $role);
+    $user
+      ->set('email', $email)
+      ->set('username', $username)
+      ->set('password', password_hash($password, PASSWORD_DEFAULT))
+      ->set('role', $role);
 
     $id = $this->repository->insert($user, array(
       'email' => PDO::PARAM_STR,
@@ -186,5 +190,16 @@ class UserService extends BaseService
     }
 
     return null;
+  }
+
+  public function update($user)
+  {
+    $arrParams = [];
+    $arrParams['user_id'] = PDO::PARAM_INT;
+    $arrParams['email'] = PDO::PARAM_STR;
+    $arrParams['username'] = PDO::PARAM_STR;
+    $arrParams['password'] = PDO::PARAM_STR;
+    $arrParams['role'] = PDO::PARAM_STR;
+    $this->repository->update($user, $arrParams);
   }
 }
