@@ -10,6 +10,7 @@ use app\controllers\LoginController;
 use app\controllers\MainController;
 use app\controllers\ReviewController;
 use app\controllers\RegisterController;
+use app\controllers\UpdateFilmController;
 use app\repositories\UserRepository;
 use app\repositories\ReviewRepository;
 use app\services\UserService;
@@ -37,5 +38,6 @@ class App
     $this->router->addRoute('/films', FilmsController::class);
     $this->router->addRoute('/search', FilmsController::class);
     $this->router->addRoute('/add-film', CreateFilmController::class);
+    $this->router->addRoute('/update-film', UpdateFilmController::class);
   }
 }

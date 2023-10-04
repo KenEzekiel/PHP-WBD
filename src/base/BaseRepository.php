@@ -49,20 +49,19 @@ abstract class BaseRepository
     // Mapping where
     if (count($where) > 0) {
       foreach ($where as $key => $value) {
-          $columns = [$key];
-          if (isset($value[3]) and is_array(($value[3]))) {
-              $columns = [$key] + $value[3];
+        $columns = [$key];
+        if (isset($value[3]) and is_array(($value[3]))) {
+          $columns = [$key] + $value[3];
+        }
+        $subConditions = [];
+        foreach ($columns as $column) {
+          if (isset($value[2]) and $value[2] == 'LIKE') {
+            $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
+          } else {
+            $subConditions[] = "$column = :$column";
           }
-          $subConditions = [];
-          foreach ($columns as $column) {
-              if (isset($value[2]) and $value[2] == 'LIKE') {
-                  $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
-              }
-              else {
-                  $subConditions[] = "$column = :$column";
-              }
-          }
-          $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
+        }
+        $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
       }
 
       $sql .= " WHERE " . implode(" AND ", $conditions);
@@ -74,14 +73,14 @@ abstract class BaseRepository
     foreach ($where as $key => $value) {
       $columns = [$key];
       if (isset($value[3]) and is_array(($value[3]))) {
-          $columns = [$key] + $value[3];
+        $columns = [$key] + $value[3];
       }
       foreach ($columns as $column) {
-          if (isset($value[2]) and $value[2] == 'LIKE') {
-              $stmt->bindValue(":$column", "%$value[0]%", $value[1]);
-          } else {
-              $stmt->bindValue(":$column", $value[0], $value[1]);
-          }
+        if (isset($value[2]) and $value[2] == 'LIKE') {
+          $stmt->bindValue(":$column", "%$value[0]%", $value[1]);
+        } else {
+          $stmt->bindValue(":$column", $value[0], $value[1]);
+        }
       }
     }
 
@@ -102,22 +101,21 @@ abstract class BaseRepository
 
     // Mapping where
     if (count($where) > 0) {
-        foreach ($where as $key => $value) {
-            $columns = [$key];
-            if (isset($value[3]) and is_array(($value[3]))) {
-                $columns = [$key] + $value[3];
-            }
-            $subConditions = [];
-            foreach ($columns as $column) {
-                if (isset($value[2]) and $value[2] == 'LIKE') {
-                    $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
-                }
-                else {
-                    $subConditions[] = "$column = :$column";
-                }
-            }
-            $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
+      foreach ($where as $key => $value) {
+        $columns = [$key];
+        if (isset($value[3]) and is_array(($value[3]))) {
+          $columns = [$key] + $value[3];
         }
+        $subConditions = [];
+        foreach ($columns as $column) {
+          if (isset($value[2]) and $value[2] == 'LIKE') {
+            $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
+          } else {
+            $subConditions[] = "$column = :$column";
+          }
+        }
+        $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
+      }
 
       $sql .= " WHERE " . implode(" AND ", $conditions);
     }
@@ -139,17 +137,17 @@ abstract class BaseRepository
     $stmt = $this->pdo->prepare($sql);
 
     foreach ($where as $key => $value) {
-        $columns = [$key];
-        if (isset($value[3]) and is_array(($value[3]))) {
-            $columns = [$key] + $value[3];
+      $columns = [$key];
+      if (isset($value[3]) and is_array(($value[3]))) {
+        $columns = [$key] + $value[3];
+      }
+      foreach ($columns as $column) {
+        if (isset($value[2]) and $value[2] == 'LIKE') {
+          $stmt->bindValue(":$column", "%$value[0]%", $value[1]);
+        } else {
+          $stmt->bindValue(":$column", $value[0], $value[1]);
         }
-        foreach ($columns as $column) {
-            if (isset($value[2]) and $value[2] == 'LIKE') {
-                $stmt->bindValue(":$column", "%$value[0]%", $value[1]);
-            } else {
-                $stmt->bindValue(":$column", $value[0], $value[1]);
-            }
-        }
+      }
     }
 
     if (isset($pageSize) && isset($pageNo)) {
@@ -222,7 +220,6 @@ abstract class BaseRepository
     $sql .= implode(", ", array_map(function ($key, $value) {
       return "$key = :$key";
     }, array_keys($arrParams), array_values($arrParams)));
-    $sql .= ")";
     $primaryKey = $model->get('_primary_key');
     $sql .= " WHERE $primaryKey = :primaryKey";
 

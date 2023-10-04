@@ -47,7 +47,6 @@ class FilmService extends BaseService
       'title' => PDO::PARAM_STR,
       'released_year' => PDO::PARAM_INT,
       'director' => PDO::PARAM_STR,
-      'trailer_path' => PDO::PARAM_STR,
       'description' => PDO::PARAM_STR,
       'cast' => PDO::PARAM_STR,
       'genre' => PDO::PARAM_STR,
@@ -56,6 +55,26 @@ class FilmService extends BaseService
     $response = $this->repository->getById($id);
 
     return $film->constructFromArray($response);
+  }
+
+  public function getById($film_id)
+  {
+    return $this->repository->getById($film_id);
+  }
+
+  public function update($film)
+  {
+    $arrParams = [];
+    $arrParams['image_path'] = PDO::PARAM_STR;
+    $arrParams['trailer_path'] = PDO::PARAM_STR;
+    $arrParams['title'] = PDO::PARAM_STR;
+    $arrParams['released_year'] = PDO::PARAM_INT;
+    $arrParams['director'] = PDO::PARAM_STR;
+    $arrParams['description'] = PDO::PARAM_STR;
+    $arrParams['cast'] = PDO::PARAM_STR;
+    $arrParams['genre'] = PDO::PARAM_STR;
+
+    return $this->repository->update($film, $arrParams);
   }
 
 
