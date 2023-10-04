@@ -7,6 +7,7 @@
   text-decoration: none;
   position: relative;
   padding-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .menu-item a::before {
@@ -59,6 +60,7 @@
   color: #d0d0d0;
   text-decoration: none;
   position: relative;
+  font-weight: bold;
 }
 
 .profile a:hover {
@@ -116,6 +118,8 @@ li {
 .logo {
   display: flex;
   align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
   gap: 0.5rem;
 }
 
@@ -127,7 +131,7 @@ li {
 }
 
 .menu-item {
-  padding: 5px;
+  padding-top: 0.9rem;
 }
 
 .mobile-menu {

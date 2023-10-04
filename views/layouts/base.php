@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel='stylesheet' href='/public/css/navbar.css'>
+  <link rel='stylesheet' href='/public/css/home.css'>
   <link rel='stylesheet' href='/public/css/styles.css'>
   <link rel='stylesheet' href='/public/css/filmList.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +29,7 @@
     <ul class='nav-links'>
       <div class='menu'>
         <li class='menu-item'><a href='/'>Home</a></li>
-        <li class='menu-item'><a href='/add-film'>Films</a></li>
+        <li class='menu-item'><a href='/films'>Films</a></li>
 
         <?php
 

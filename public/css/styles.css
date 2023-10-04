@@ -59,9 +59,25 @@ table {
 	border-spacing: 0;
 }
 
+body {
+  background: var(--neutral-black, #17181D);
+}
+
+h1 {
+  font-size: xx-large;
+  font-weight: 600;
+}
+
 .text {
   font-family: Poppins, sans-serif;
+  color: var(--neutral-white, #FCFCFC);
 }
+
+.form-group label {
+  color: var(--neutral-white, #FCFCFC);
+  font-weight: 700;
+}
+
 
 .form-container {
   margin: auto;
@@ -70,10 +86,9 @@ table {
   justify-content: center;
   align-items: center;
   padding: 30px 0px 30px 0px;
-  width: 50%;
-  border-radius: 60px;
-  border: 1px solid #CBD5E1;
-  background: #FFF;
+  width: 25%;
+  border-radius: 8px;
+  background: var(--neutral-grey-dark, #21252C);
   margin-top: 5%;
 }
 
@@ -83,17 +98,18 @@ table {
   align-items: center;
   justify-content: center;
   margin: auto;
-  width: 70%;
+  width: 80%;
 }
 
 .form-group {
   padding: 7px;
   width: 100%;
+  justify-content: center;
 }
 
 
 .header-title {
-  color: #414141;
+  color: var(--primary-base, #5360DC);
   text-align: center;
   font-size: 30px;
   font-style: normal;
@@ -103,36 +119,63 @@ table {
   margin-bottom: 10%;
 }
 
-.input {
+input {
   border-radius: 6px;
-  border: 1px solid #CBD5E1;
-  background: #FFF;
+  background: var(--neutral-grey-base, #404650);
   width: 100%;
   padding: 10px;
   margin-top: 10px;
+  border: none;
 }
 
 .button {
-  border-radius: 6px;
-  background: teal;
+  border:none;
+  border-radius: 8px;
+  background: var(--primary-base, #5360DC);
   color: white;
-  width: 100%;  
+  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   transition: all 0.5s;
   cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-self: stretch;
 }
 
-.button:hover {background-color: #08bc4d}
+.button:hover {background-color: #7580e3}
 
 .button:active {
-  background-color: #2b5c02;
-  transform: translateY(4px);
+  background-color: #313c9f;
 }
 
 .error-msg {
   color: red;
   font-size: small;
+}
+
+.nav-here {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-here p {
+  color: var(--neutral-white, #FCFCFC);
+  font-size: small;
+  margin-right: 5px;
+}
+
+.text-link {
+  color: var(--primary-base, #5360DC);
+  font-size: small;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 800px) {
