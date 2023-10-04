@@ -21,13 +21,13 @@ class ReviewController extends BaseController {
                 $reviews = $this->service->getAllReviewByFilmId($film_id);
                 // var_dump($reviews);
                 $urlParams["reviews"] = $reviews;
+                // $user = $this->service->getById($user_id);
+                // $username = $user->$username;
+                // $urlParams["username"] = $username;
             } catch (Exception $e) {
                 echo $e;
             }
         }
-            // $user_id = $urlParams['film_id'];
-            // $reviews = $this->service->findAllByFlilmId($user_id);
-            // $urlParams["reviews"] = $reviews;
         parent::render($urlParams, 'film-detail', 'layouts/base');
     }
 

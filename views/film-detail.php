@@ -46,26 +46,54 @@
             <br>
             <input class='input' type='text' id='notes' name='notes' placeholder='Write review here...' required>
             <br>
-            <div class='submit-btn'>
-                <button type='submit'>Submit Review</button>
-            </div>
+        </div>
+        <div class='submit-btn'>
+            <button type='submit'>Submit Review</button>
         </div>
     </form>
 </div>
 
 <div class='insert-review'>
     <h2>What people say</h2>
+    <h3>
     <?php 
     foreach ($reviews as $review) {
-        $rating = $_GET['rating'];
-        $notes = $_GET['notes'];
-        echo $rating;
-        echo $notes;
+        $rating = $review->rating;
+        $notes = $review->notes;
+        $film_id = $review->film_id;
+        $published_time = $review->published_time;
+        $timestamp = strtotime($published_time);
+        $formatted_time = date("j F Y H:i", $timestamp);
+        $user_id = $review->user_id;
     ?>
+    </h3>
     <form class='review-form' method='get'>
         <div class='review-group'>
-            <br>
-            <h2 class='input' type='text' id='notes' name='rating'></h2>
+            <div class='review-info'>
+                <div class='loop'>
+                    <?php 
+                    for ($i=0; $i<5; $i++) {
+                        if ($i < $rating) {
+                            echo '<span class="icon-rating">★</span>';
+                        } else {
+                            echo '<span class="icon-rating-non">★</span>';
+                        }
+                    }
+                    ?>
+                </div>
+                <p?>by </p>
+                <!-- <?php
+                // $user = $this->service->getById($film_id);
+                // $username = $user->$username;
+                // $data = getById($user_id);
+                // $username = $data->$username;
+                // echo "<span>$username</span>"
+                // Cari nama user dengan user_id
+                ?></p> -->
+            </div>
+            <h3 class='review-result'><?php echo $notes; ?></h3>
+            <h3 class='time'><?php echo $formatted_time; ?></h3>
+            
             <!-- <label name='rating'></label>
             <label name='notes'></label> -->
         </div>

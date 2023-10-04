@@ -46,10 +46,17 @@ class UpdateFilmController extends BaseController
       return;
     }
 
-    $film_id = $urlParams['film-id'];
+    $film_id = $urlParams['film_id'];
     $film = $this->service->getById($film_id);
+    $data = [];
+    $data['title'] = $film->title;
+    $data['released_year'] = $film->released_year;
+    $data['director'] = $film->director;
+    $data['description'] = $film->description;
+    $data['cast'] = $film->cast;
+    $data['genre'] = $film->genre;
 
-    parent::render($film, "update_film", "layouts/base");
+    parent::render($data, "update_film", "layouts/base");
   }
 
   protected function post($urlParams)
@@ -59,20 +66,22 @@ class UpdateFilmController extends BaseController
       return;
     }
     try {
-      $film_id = $urlParams['film-id'];
+      $film_id = $urlParams['film_id'];
       $film = $this->service->getById($film_id);
 
       // Get data
-      $film['title'] = $_POST['title'];
-      $film['released_year'] = $_POST['released-year'];
-      $film['director'] = $_POST['director'];
-      $film['description'] = $_POST['description'];
-      $film['cast'] = $_POST['cast'];
-      $film['genre'] = $_POST['genre'];
+      $data = [];
+      $data['film_id'] = $film->film_id;
+      $data['title'] = $_POST['title'];
+      $data['released_year'] = $_POST['released-year'];
+      $data['director'] = $_POST['director'];
+      $data['description'] = $_POST['description'];
+      $data['cast'] = $_POST['cast'];
+      $data['genre'] = $_POST['genre'];
 
       // Check if file is valid
       if ($_FILES['image-path']['error'] == UPLOAD_ERR_NO_FILE) {
-        $image_path = $film['image_path'];
+        $data['image_path'] = $film->image_path;
       } else {
         if ($_FILES['image-path']['error'] == UPLOAD_ERR_OK) {
           $image_tmp = $_FILES['image-path']['tmp_name'];
@@ -89,7 +98,7 @@ class UpdateFilmController extends BaseController
       }
 
       if ($_FILES['trailer-path']['error'] == UPLOAD_ERR_NO_FILE) {
-        $trailer_path = $film['trailer_path'];
+        $data['trailer_path'] = $film->trailer_path;
       } else {
         if ($_FILES['trailer-path']['error'] == UPLOAD_ERR_OK) {
           $trailer_tmp = $_FILES['trailer-path']['tmp_name'];
@@ -107,15 +116,14 @@ class UpdateFilmController extends BaseController
 
       // Call service
       $filmModel = new FilmModel();
-      $filmModel->constructFromArray($film);
+      $filmModel->constructFromArray($data);
       $response = $this->service->update($filmModel);
       if ($response) {
-        var_dump($response);
         $msg = "Successfully updated film!";
       }
 
       // Render response
-      parent::render(["Msg" => $msg], "home", "layouts/base");
+      parent::redirect("/", ["Msg" => $msg]);
     } catch (Exception $e) {
       $msg = $e->getMessage();
       parent::render(["errorMsg" => $msg], "create_film", "layouts/base");

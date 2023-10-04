@@ -28,7 +28,7 @@
     <ul class='nav-links'>
       <div class='menu'>
         <li class='menu-item'><a href='/'>Home</a></li>
-        <li class='menu-item'><a href='/film'>Films</a></li>
+        <li class='menu-item'><a href='/add-film'>Films</a></li>
 
         <?php
 
@@ -43,11 +43,11 @@
           }
         } else {
           $username = $_SESSION['username'];
-          echo "<p class='profile'><a href='/'> <img src='/public/assets/person.svg'></img> <span>$username</span></a></p>";
+          echo "<p class='profile'><a href='/profile'> <img src='/public/assets/person.svg'></img> <span>$username</span></a></p>";
           echo "<button class='logout-button'><a href='/logout'>Logout</a></button>";
         }
         ?>
-        
+
       </div>
     </ul>
     <!-- <div class='mobile-view'>

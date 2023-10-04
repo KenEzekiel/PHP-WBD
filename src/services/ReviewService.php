@@ -40,10 +40,18 @@ class ReviewService extends BaseService {
         $review = new ReviewModel();
         $review->set('user_id', $user_id)->set('film_id', $film_id)->set('rating', $rating)->set('notes', $notes)->set('published_time', $published_time);
 
-        $response = $this->repository->getById($user_id, $film_id);
-        $reviewArray = $review->constructFromArray($response);
+        $id = $this->repository->insert($review, array(
+            'user_id' => PDO::PARAM_INT,
+            'film_id' => PDO::PARAM_INT,
+            'rating' => PDO::PARAM_INT,
+            'notes' => PDO::PARAM_STR,
+            'published_time' => PDO::PARAM_STR,
+        ));
 
-        return $reviewArray;
+        $response = $this->repository->getById($user_id, $film_id);
+        // $reviewArray = $review->constructFromArray($response);
+
+        return $review->constructFromArray($response);
     }
 
     // Wrapper get by from repository
