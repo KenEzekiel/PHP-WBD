@@ -150,11 +150,11 @@ abstract class BaseRepository
       }
     }
 
-    if ($pageSize && $pageNo) {
+    if (isset($pageSize) && isset($pageNo)) {
       $offset = $pageSize * ($pageNo - 1);
 
       $stmt->bindValue(":pageSize", $pageSize, PDO::PARAM_INT);
-      $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+      $stmt->bindValue(":pageNo", $offset, PDO::PARAM_INT);
     }
 
     $stmt->execute();
@@ -178,7 +178,6 @@ abstract class BaseRepository
     }
 
     // Hydrating statement, for sanitizing
-    // echo $sql;
 
     $stmt = $this->pdo->prepare($sql);
 
@@ -271,6 +270,12 @@ abstract class BaseRepository
   public function getDistinctValues($columnName)
   {
     $sql = "SELECT DISTINCT $columnName FROM $this->tableName";
-    return $this->pdo->query($sql);
+    $stmt = $this->pdo->query($sql);
+
+    if ($stmt) {
+      return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else {
+      return [];
+    }
   }
 }
