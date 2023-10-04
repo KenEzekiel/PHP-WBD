@@ -28,16 +28,10 @@ class FilmRepository extends BaseRepository
     return $this->findOne(['film_id' => [$film_id, PDO::PARAM_INT]]);
   }
 
-  public function getAllBySearchAndFilter(
-    $word,
-    $order = 'title',
-    $isDesc = false,
-    $genre = 'all',
-    $released_year = 'all',
-    $pageNo = 1,
-    $limit = PAGINATION_LIMIT
-  ) {
-    $where = [];
+  public function getAllBySearchAndFilter($word, $order = 'title', $isDesc= false, $genre = 'all',
+                                          $released_year = 'all', $pageNo = 1, $limit = 10)
+  {
+      $where = [];
 
     if (isset($genre) and !empty($genre) and $genre != 'all') {
       $where['genre'] = [$genre, PDO::PARAM_STR, 'LIKE'];
@@ -50,6 +44,23 @@ class FilmRepository extends BaseRepository
     }
 
     return $this->findAll($where, $order, $pageNo, $limit, $isDesc);
+  }
+
+  public function countRowBySearchAndFilter($word, $genre = 'all', $released_year = 'all')
+  {
+      $where = [];
+
+      if (isset($genre) and !empty($genre) and $genre != 'all') {
+          $where['genre'] = [$genre, PDO::PARAM_STR, 'LIKE'];
+      }
+      if (isset($released_year) and !empty($released_year) and $released_year != 'all') {
+          $where['released_year'] = [$released_year, PDO::PARAM_INT];
+      }
+      if (isset($word) and !empty($word)) {
+          $where['title'] = [$genre, PDO::PARAM_STR, 'LIKE', ['director']];
+      }
+
+      return $this->countRow($where);
   }
 
   public function getAllCategoryValues($category)

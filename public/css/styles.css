@@ -24,9 +24,15 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
+:root {
+    --neutral-grey-dark: #21252C;
+    --neutral-white: #FCFCFC;
+    --neutral-grey-base: #404650;
+}
 
 * {
   box-sizing: border-box;
+  font-family: Poppins, sans-serif;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -54,7 +60,7 @@ table {
 }
 
 .text {
-  font-family: 'Open Sans', sans-serif;
+  font-family: Poppins, sans-serif;
 }
 
 .form-container {
