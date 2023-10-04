@@ -4,6 +4,7 @@ namespace app;
 
 use app\Router;
 use app\base\BaseController;
+use app\controllers\CreateFilmController;
 use app\controllers\LoginController;
 use app\controllers\MainController;
 use app\controllers\ReviewController;
@@ -32,5 +33,6 @@ class App
     $this->router->addRoute('/review', ReviewController::class);
     $this->router->addRoute('/logout', LoginController::class);
     $this->router->addRoute('/register', RegisterController::class);
+    $this->router->addRoute('/add-film', CreateFilmController::class);
   }
 }
