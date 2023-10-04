@@ -52,15 +52,21 @@
 }
 
 .profile {
-  padding-top: 0.5rem;
+  padding-top: 0.2rem;  
 }
 
 .profile a {
-  color: white;
+  color: #d0d0d0;
   text-decoration: none;
+  position: relative;
+}
+
+.profile a:hover {
+  color: white;
 }
 
 .profile img {
+  color: #d0d0d0;
   vertical-align: middle;
 }
 
