@@ -51,7 +51,11 @@ class UserService extends BaseService
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new BadRequestException("Email is not valid!");
       }
-      $user->set('email', $email)->set('username', $username)->set('password', password_hash($password, PASSWORD_DEFAULT))->set('role', 'User');
+      $user
+        ->set('email', $email)
+        ->set('username', $username)
+        ->set('password', password_hash($password, PASSWORD_DEFAULT))
+        ->set('role', 'User');
 
       $id = $this->repository->insert($user, array(
         'email' => PDO::PARAM_STR,
@@ -106,6 +110,7 @@ class UserService extends BaseService
   {
     if (isset($_SESSION['user_id']) and isset($_SESSION['role'])) {
       unset($_SESSION['user_id']);
+      unset($_SESSION['username']);
       unset($_SESSION['role']);
     }
   }
@@ -128,6 +133,7 @@ class UserService extends BaseService
     $userArray = $user->constructFromArray($response);
 
     $_SESSION["user_id"] = $userArray->user_id;
+    $_SESSION["username"] = $userArray->username;
     $_SESSION["role"] = $userArray->role;
 
     return $userArray;

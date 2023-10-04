@@ -2,7 +2,9 @@
   <h1>
     HOME <?php
 
-
+          if (isset($Msg)) {
+            echo "<p>$Msg</p>";
+          }
 
           if (isset($_SESSION['user_id'])) {
             if ($_SESSION['role'] == "admin") {

@@ -6,7 +6,7 @@
     <nav class='navbar'>
         <div class='logo' href='/'>
             <img src='/public/assets/logo.svg' alt='logo' width="45" height="45" draggable='false'/>
-            <h1>Letterpaw</h1>
+            <h1>letterpaw</h1>
         </div>
         <ul class='nav-links'>
             <div class='menu'>
