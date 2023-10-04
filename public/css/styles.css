@@ -90,6 +90,7 @@ h1 {
   border-radius: 8px;
   background: var(--neutral-grey-dark, #21252C);
   margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .form {
@@ -122,6 +123,17 @@ h1 {
 input {
   border-radius: 6px;
   background: var(--neutral-grey-base, #404650);
+  color: var(--neutral-grey-light, #BABDC3);
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+}
+
+textarea {
+  border-radius: 6px;
+  background: var(--neutral-grey-base, #404650);
+  color: var(--neutral-grey-light, #BABDC3);
   width: 100%;
   padding: 10px;
   margin-top: 10px;
