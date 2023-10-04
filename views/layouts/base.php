@@ -22,10 +22,13 @@
       <a href="/">
         <img src='/public/assets/logo.svg' alt='logo' width="45" height="45" draggable='false' />
       </a>
-      <h1>Letterpaw</h1>
+      <h1>letterpaw</h1>
     </div>
     <ul class='nav-links'>
       <div class='menu'>
+        <li class='menu-item'><a href='/'>Home</a></li>
+        <li class='menu-item'><a href='/film'>Films</a></li>
+
         <?php
 
         use app\Request;
@@ -35,20 +38,41 @@
             echo "<li class='menu-item'><a href='/login'>Sign In  </a></li>";
           }
           if (Request::getURL() != "/register") {
-            echo "<li class='menu-item' ><a href='/register'>Register</a></li>";
+            echo "<button class='reg-button'><a href='/register'>Register</a></button>";
           }
         } else {
           $username = $_SESSION['username'];
-          echo "<li class='menu-item'><a href='/'>$username</a></li>";
-          echo "<li class='menu-item'><a href='/logout'>LOG OUT</a></li>";
+          echo "<p class='profile'><a href='/'> <img src='/public/assets/person.svg'></img> <span>username</span></a></p>";
+          echo "<button class='logout-button'><a href='/logout'>Logout</a></button>";
         }
         ?>
-        <li class='menu-item'><a href='/film'>Films</a></li>
-        <li class='menu-item'><a href='/'>Lists</a></li>
-        <li class='menu-item'><a href='/'>Members</a></li>
-        <li class='menu-item'><a href='/'>Journal</a></li>
+        
       </div>
     </ul>
+    <!-- <div class='mobile-view'>
+      <button class='hamburger-menu'>
+        <img src='/public/assets/hamburger-menu.svg'></img>
+      </button>
+      <nav class='mobile-menu'>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/">Films</a></li>
+
+          // if (!isset($_SESSION['user_id'])) {
+          //   if (Request::getURL() != "/login") {
+          //     echo "<li class='menu-item'><a href='/login'>Sign In  </a></li>";
+          //   }
+          //   if (Request::getURL() != "/register") {
+          //     echo "<li class='menu-item'><a href='/register'>Register</a></li>";
+          //     // echo "<button class='reg-button'><a href='/register'>Register</a></button>";
+          //   }
+          // } else {
+          //   $username = $_SESSION['username'];
+          //   // echo "<button class='logout-button'><a href='/logout'>Logout</a></button>";
+          //   echo "<p class='profile'><a href='/'> <img src='/public/assets/person.svg'></img> <span>username</span></a></p>";
+          //   echo "<li class='menu-item'><a href='/logout'>Logout</a></li>";
+          // }
+    //   </nav>
     <!-- <div class='menu'>
       <button class='nav-toggler burger-menu'><span>☰</span></button>
     </div> -->
