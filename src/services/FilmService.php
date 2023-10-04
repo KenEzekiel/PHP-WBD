@@ -47,7 +47,6 @@ class FilmService extends BaseService
       'title' => PDO::PARAM_STR,
       'released_year' => PDO::PARAM_INT,
       'director' => PDO::PARAM_STR,
-      'trailer_path' => PDO::PARAM_STR,
       'description' => PDO::PARAM_STR,
       'cast' => PDO::PARAM_STR,
       'genre' => PDO::PARAM_STR,
@@ -57,4 +56,50 @@ class FilmService extends BaseService
 
     return $film->constructFromArray($response);
   }
+
+  public function getById($film_id)
+  {
+    return $this->repository->getById($film_id);
+  }
+
+  public function update($film)
+  {
+    $arrParams = [];
+    $arrParams['image_path'] = PDO::PARAM_STR;
+    $arrParams['trailer_path'] = PDO::PARAM_STR;
+    $arrParams['title'] = PDO::PARAM_STR;
+    $arrParams['released_year'] = PDO::PARAM_INT;
+    $arrParams['director'] = PDO::PARAM_STR;
+    $arrParams['description'] = PDO::PARAM_STR;
+    $arrParams['cast'] = PDO::PARAM_STR;
+    $arrParams['genre'] = PDO::PARAM_STR;
+
+    return $this->repository->update($film, $arrParams);
+  }
+
+
+  public function searchAndFilter($word, $order, $isDesc, $genre, $released_year, $page = 1)
+  {
+      $data = null;
+      $word = strtolower(trim($word));
+      $response = $this->repository->getAllBySearchAndFilter($word, $order, $isDesc, $genre, $released_year , $page);
+      $films = [];
+      foreach ($response as $resp) {
+          $film = new FilmModel();
+          $films[] = $film->constructFromArray($resp);
+      }
+      $data['films'] = $films;
+
+        $row_count = $this->repository->countRowBySearchAndFilter($word, $genre, $released_year);
+        $total_page = ceil($row_count/10);
+        $data['total_page'] = $total_page;
+
+        return $data;
+    }
+
+    public function getAllCategoryValues($category)
+    {
+        return $this->repository->getAllCategoryValues($category);
+    }
+
 }

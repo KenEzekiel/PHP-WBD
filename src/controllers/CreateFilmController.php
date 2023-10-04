@@ -38,7 +38,7 @@ class CreateFilmController extends BaseController
 
   protected function get($urlParams)
   {
-    if ($_SESSION['role'] != 'Admin') {
+    if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
       // TODO: make error controller
       parent::redirect("/error", 401);
       return;
@@ -48,7 +48,7 @@ class CreateFilmController extends BaseController
 
   protected function post($urlParams)
   {
-    if ($_SESSION['role'] != 'Admin') {
+    if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
       parent::redirect("/error", 401);
       return;
     }
