@@ -63,23 +63,6 @@ class FilmRepository extends BaseRepository
       return $this->countRow($where);
   }
 
-  public function countRowBySearchAndFilter($word, $genre = 'all', $released_year = 'all')
-  {
-      $where = [];
-
-      if (isset($genre) and !empty($genre) and $genre != 'all') {
-          $where['genre'] = [$genre, PDO::PARAM_STR, 'LIKE'];
-      }
-      if (isset($released_year) and !empty($released_year) and $released_year != 'all') {
-          $where['released_year'] = [$released_year, PDO::PARAM_INT];
-      }
-      if (isset($word) and !empty($word)) {
-          $where['title'] = [$genre, PDO::PARAM_STR, 'LIKE', ['director']];
-      }
-
-      return $this->countRow($where);
-  }
-
   public function getAllCategoryValues($category)
   {
     return $this->getDistinctValues($category);

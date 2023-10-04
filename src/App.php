@@ -35,8 +35,8 @@ class App
     $this->router->addRoute('/review', ReviewController::class);
     $this->router->addRoute('/logout', LoginController::class);
     $this->router->addRoute('/register', RegisterController::class);
-    $this->router->addRoute('/films', FilmsController::class);
-    $this->router->addRoute('/search', FilmsController::class);
+    $this->router->addRoute('/films', FilmController::class);
+    $this->router->addRoute('/search', FilmController::class);
     $this->router->addRoute('/add-film', CreateFilmController::class);
     $this->router->addRoute('/update-film', UpdateFilmController::class);
   }
