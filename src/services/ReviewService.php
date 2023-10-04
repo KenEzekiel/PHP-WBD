@@ -25,8 +25,9 @@ class ReviewService extends BaseService {
         return self::$instance;
     }
 
-    public function getAllReview() {
-        $allReview = $this->repository->findAll();
+    public function getAllReviewByFilmId($film_id) {
+        $allReview = $this->repository->getByFilmId($film_id);
+        // cek film_id nya harus sama
         $reviews = [];
         foreach ($allReview as $reviewData) {
             $review = new ReviewModel();

@@ -1,0 +1,114 @@
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.insert-review {
+  background-color: black;
+  padding: 1rem 4rem;
+}
+
+.insert-review h2 {
+  color: white;
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.review-group {
+  background-color: #21252c;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+
+.input {
+  background-color: #404650;
+  height: 4rem;
+  padding: 0.75rem;
+  text-align: top;
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+}
+
+.submit-btn button {
+  background-color: #5360dc;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  color: white;
+}
+
+.stars {
+  display: inline-block;
+  position: relative;
+  height: 35px;
+  line-height: 35px;
+  font-size: 35px;
+}
+
+.stars label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5%;
+  cursor: pointer;
+}
+
+.stars label:last-child {
+  position: static;
+}
+
+.stars label:nth-child(1) {
+  z-index: 5;
+}
+
+.stars label:nth-child(2) {
+  z-index: 4;
+}
+
+.stars label:nth-child(3) {
+  z-index: 3;
+}
+
+.stars label:nth-child(4) {
+  z-index: 2;
+}
+
+.stars label:nth-child(5) {
+  z-index: 1;
+}
+
+.stars label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.stars label .icon {
+  float: left;
+  color: transparent;
+}
+
+.stars label:last-child .icon {
+  color: #000;
+}
+
+.stars:not(:hover) label input:checked ~ .icon,
+.stars:hover label:hover input ~ .icon {
+  color: #fbde46;
+}
+
+.stars label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #fbde46;
+}

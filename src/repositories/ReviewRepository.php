@@ -24,6 +24,10 @@ class ReviewRepository extends BaseRepository {
         return $this->findOne(['user_id' => [$user_id, PDO::PARAM_INT], 'film_id' => [$film_id, PDO::PARAM_INT]]);
     }
 
+    public function getByFilmId($film_id) {
+        return $this->findAll(['film_id' => [$film_id, PDO::PARAM_INT]]);
+    }
+
     public function getByRating($rating) {
         return $this->findAll(['rating' => [$rating, PDO::PARAM_INT]], null, null, null, false);
         // return $this->findOne(['rating' => [$rating, PDO::PARAM_INT]]);        
