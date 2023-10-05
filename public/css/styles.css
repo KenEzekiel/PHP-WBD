@@ -197,6 +197,97 @@ textarea {
   text-decoration: none;
 }
 
+.overlay {
+  /* Position the overlay to cover the entire viewport */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Add background image or color for the overlay */
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.overlay .form {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 30px 40px 30px 40px;
+  width: 30%;
+  border-radius: 8px;
+  background: var(--neutral-grey-dark, #21252C);
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.popup p {
+  color: var(--neutral-grey-light, #BABDC3);
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+}
+
+.popup div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.button-delete {
+  border:none;
+  border-radius: 8px;
+  background: #eb5050;
+  color: white;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-self: stretch;
+}
+
+.button-delete:hover {background-color: #ff9898}
+
+.button-delete:active {
+  background-color: #b63131;
+}
+
+.button-cancel {
+  border:none;
+  border-radius: 8px;
+  background: var(--primary-base, #5360DC);
+  color: white;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-self: stretch;
+}
+
+.button-cancel:hover {background-color: #7580e3}
+
+.button-cancel:active {
+  background-color: #313c9f;
+}
+
 @media only screen and (max-width: 800px) {
   .form-container {
     width: 100%;

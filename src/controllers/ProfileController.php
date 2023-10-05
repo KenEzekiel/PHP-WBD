@@ -57,11 +57,12 @@ class ProfileController extends BaseController
 
       // Call service
       $response = $this->service->update($user);
-      echo $response;
       $msg = "";
 
-      $_SESSION['username'] = $username;
-      $msg = "Successfully updated profile!";
+      if ($response != null) {
+        $_SESSION['username'] = $username;
+        $msg = "Successfully updated profile!";
+      }
 
       // Render response
       parent::redirect("/", ["Msg" => $msg]);

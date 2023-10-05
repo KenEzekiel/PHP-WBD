@@ -242,7 +242,8 @@ abstract class BaseRepository
     $sql .= "$primaryKey = :primaryKey";
 
     $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(":primaryKey", $model->get('$primaryKey'), PDO::PARAM_INT);
+    $stmt->bindValue(":primaryKey", $model->get($primaryKey), PDO::PARAM_INT);
+
 
     $stmt->execute();
     return $stmt->rowCount();

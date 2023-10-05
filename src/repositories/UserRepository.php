@@ -3,6 +3,7 @@
 namespace app\repositories;
 
 use app\base\BaseRepository;
+use app\models\UserModel;
 use PDO;
 
 class UserRepository extends BaseRepository
@@ -35,5 +36,13 @@ class UserRepository extends BaseRepository
   public function getByUsername($username)
   {
     return $this->findOne(['username' => [$username, PDO::PARAM_STR]]);
+  }
+
+  public function deleteById($user_id)
+  {
+    $user = $this->getById($user_id);
+    $userModel = new UserModel();
+    $userModel->constructFromArray($user);
+    return $this->delete($userModel);
   }
 }
