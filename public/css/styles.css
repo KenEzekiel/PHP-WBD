@@ -25,9 +25,16 @@ time, mark, audio, video {
 }
 
 :root {
+    --neutral-black: #17181D;
     --neutral-grey-dark: #21252C;
-    --neutral-white: #FCFCFC;
     --neutral-grey-base: #404650;
+    --neutral-grey-light: #BABDC3;
+    --neutral-white: #FCFCFC;
+    --primary-base: #5360DC;
+    --primary-dark: #3141DC;
+    --utils-rating: #FBDE46;
+    --utils-success: #4ADE32;
+    --utils-error: #FB4646;
 }
 
 * {
