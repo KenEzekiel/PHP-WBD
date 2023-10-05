@@ -7,6 +7,7 @@
   text-decoration: none;
   position: relative;
   padding-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .menu-item a::before {
@@ -52,15 +53,22 @@
 }
 
 .profile {
-  padding-top: 0.5rem;
+  padding-top: 0.9rem;  
 }
 
 .profile a {
-  color: white;
+  color: #d0d0d0;
   text-decoration: none;
+  position: relative;
+  font-weight: bold;
+}
+
+.profile a:hover {
+  color: white;
 }
 
 .profile img {
+  color: #d0d0d0;
   vertical-align: middle;
 }
 
@@ -110,6 +118,8 @@ li {
 .logo {
   display: flex;
   align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
   gap: 0.5rem;
 }
 
@@ -121,11 +131,15 @@ li {
 }
 
 .menu-item {
-  padding: 5px;
+  padding-top: 0.9rem;
 }
 
 .mobile-menu {
   display: none;
+}
+
+.logo {
+  font-weight: bolder;
 }
 
 @media screen and (max-width: 800px) {

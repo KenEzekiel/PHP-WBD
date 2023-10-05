@@ -40,7 +40,7 @@ class CreateFilmController extends BaseController
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
       // TODO: make error controller
-      parent::redirect("/error", 401);
+      parent::redirect("/error", [], 401);
       return;
     }
     parent::render($urlParams, "create_film", "layouts/base");
