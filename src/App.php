@@ -12,6 +12,7 @@ use app\controllers\ProfileController;
 use app\controllers\ReviewController;
 use app\controllers\RegisterController;
 use app\controllers\UpdateFilmController;
+use app\controllers\UserDashboardController;
 use app\repositories\UserRepository;
 use app\repositories\ReviewRepository;
 use app\services\UserService;
@@ -41,5 +42,6 @@ class App
     $this->router->addRoute('/add-film', CreateFilmController::class);
     $this->router->addRoute('/update-film', UpdateFilmController::class);
     $this->router->addRoute('/profile', ProfileController::class);
+    $this->router->addRoute('/user-dashboard', UserDashboardController::class);
   }
 }

@@ -202,4 +202,9 @@ class UserService extends BaseService
     $arrParams['role'] = PDO::PARAM_STR;
     $this->repository->update($user, $arrParams);
   }
+
+  public function deleteById($user_id)
+  {
+    $this->repository->deleteById($user_id);
+  }
 }

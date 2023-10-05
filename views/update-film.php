@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h2 class="header-title">Add Film</h2>
+  <h2 class="header-title">Update Film</h2>
   <p class="error-msg"><?php if (isset($errorMsg)) {
                           echo "$errorMsg";
                         } ?></p>
