@@ -28,7 +28,7 @@
     </div>
     <ul class='nav-links'>
       <div class='menu'>
-        <li class='menu-item'><a href='/'>Home</a></li>
+        <li class='menu-item' id='home'><a href='/'>Home</a></li>
         <li class='menu-item'><a href='/films'>Films</a></li>
 
         <?php
