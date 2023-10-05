@@ -43,7 +43,7 @@ class CreateFilmController extends BaseController
       parent::redirect("/error", [], 401);
       return;
     }
-    parent::render($urlParams, "create_film", "layouts/base");
+    parent::render($urlParams, "create-film", "layouts/base");
   }
 
   protected function post($urlParams)

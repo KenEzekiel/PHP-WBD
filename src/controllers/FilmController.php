@@ -30,7 +30,7 @@ class FilmController extends BaseController
           $data['genres'] = $this->service->getAllCategoryValues('genre');
           $data['released_years'] = $this->service->getAllCategoryValues('released_year');
 
-          parent::render($data, 'filmList', "layouts/base");
+          parent::render($data, 'films', "layouts/base");
       }
       else
       {
