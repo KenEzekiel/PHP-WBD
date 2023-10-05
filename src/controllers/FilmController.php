@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\base\BaseController;
+use app\controllers\utils\response;
 use app\Request;
 use app\services\FilmService;
 
@@ -41,7 +42,7 @@ class FilmController extends BaseController
           }
           $data['films'] = $films;
 
-          send_json_response($data);
+          response::send_json_response($data);
       }
   }
 
