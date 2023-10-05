@@ -6,51 +6,97 @@
 <body>
 <div class='insert-review'>
     <h2>Write your review</h2>
-    <p class='error-msg'><?php if (isset($errorMsg)) {
-        echo "$errorMsg";
-    } ?></p>
-    <form class='review-form' method='post'>
-        <div class='review-group'>
-            <div class='stars'>
-                <label>
-                    <input type="radio" name="rating" value="1" />
-                    <span class="icon">★</span>
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="2" />
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="3" />
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>   
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="4" />
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="5" />
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                    <span class="icon">★</span>
-                </label>
-            </div>
-            <br>
-            <input class='input' type='text' id='notes' name='notes' placeholder='Write review here...' required>
-            <br>
-        </div>
-        <div class='submit-btn'>
-            <button type='submit'>Submit Review</button>
-        </div>
-    </form>
+    <p class='error-msg'>
+        <?php if (isset($errorMsg)) {
+            echo $errorMsg;
+        } ?>
+    </p>
+    <?php 
+    if (!isset($user_review)) {
+        echo '<form class="review-form" method="post">';
+        echo '<div class="review-group">';
+        echo '<div class="stars">';
+        echo '<label>';
+        echo '<input type="radio" name="rating" value="1" />';
+        echo '<span class="icon">★</span>';
+        echo '</label>';
+        echo '<label>';
+        echo '<input type="radio" name="rating" value="2" />';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '</label>';
+        echo '<label>';
+        echo '<input type="radio" name="rating" value="3" />';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '</label>';
+        echo '<label>';
+        echo '<input type="radio" name="rating" value="4" />';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '</label>';
+        echo '<label>';
+        echo '<input type="radio" name="rating" value="5" />';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '<span class="icon">★</span>';
+        echo '</label>';
+        echo '</div>';
+        echo '<br>';
+        echo '<input class="input" type="text" id="notes" name="notes" placeholder="Write review here..." required>';
+        echo '<br>';
+        echo '</div>';
+        echo '<div class="submit-btn">';
+        echo '<button type="submit">Submit Review</button>';
+        echo '</div>';
+        echo '</form>';
+    } else {
+        $rating = $user_review->rating;
+        $notes = $user_review->notes;
+        $film_id = $user_review->film_id;
+        $published_time = $user_review->published_time;
+        $timestamp = strtotime($published_time);
+        $formatted_time = date("j F Y H:i", $timestamp);
+        $user_id = $user_review->user_id;
+        $username = $_SESSION['username'];
+        // echo '<pre>';
+        // var_dump($user_review);
+        // echo '<pre>';
+        echo '<form class="review-form" method="get">';
+        echo '<div class="review-group">';
+        echo '<div class="review-info">';
+        echo '<div class="loop">';
+        
+        for ($i = 0; $i < 5; $i++) {
+            if ($i < $rating) {
+                echo '<span class="icon-rating">★</span>';
+            } else {
+                echo '<span class="icon-rating-non">★</span>';
+            }
+        }
+        
+        echo '</div>';
+        echo '<p>by ' . $username . '</p>'; // Ubah $username sesuai kebutuhan Anda
+        echo '</div>';
+        echo '<h3 class="review-result">' . $notes . '</h3>';
+        echo '<h3 class="time">' . $formatted_time . '</h3>';
+        echo '</div>';
+        echo '<div class="buttons">';
+        echo '<div class="delete-btn">';
+        echo '<button type="submit">Delete Review</button>';
+        echo '</div>';
+        echo '<div class="submit-btn">';
+        echo '<button type="submit">Edit Review</button>';
+        echo '</div>';
+        echo '</div>';
+        echo '</form>';
+    }
+    ?>
 </div>
 
 <div class='insert-review'>
@@ -65,6 +111,7 @@
         $timestamp = strtotime($published_time);
         $formatted_time = date("j F Y H:i", $timestamp);
         $user_id = $review->user_id;
+        $username = $review->username;
     ?>
     </h3>
     <form class='review-form' method='get'>
@@ -81,7 +128,7 @@
                     }
                     ?>
                 </div>
-                <p?>by </p>
+                <p?>by <?php echo $username; ?></p>
                 <!-- <?php
                 // $user = $this->service->getById($film_id);
                 // $username = $user->$username;

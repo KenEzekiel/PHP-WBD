@@ -34,7 +34,6 @@
 .submit-btn {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   padding-top: 0.5rem;
 }
 
@@ -46,6 +45,28 @@
   font-style: normal;
   font-weight: 500;
   color: white;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  display: flex;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.delete-btn button {
+  background-color: #404650;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  color: #FB4646;
 }
 
 .stars {

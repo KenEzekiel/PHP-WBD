@@ -25,10 +25,18 @@ class ReviewService extends BaseService {
         return self::$instance;
     }
 
+    public function getReviewByUserFilmId($user_id, $film_id) {
+        $response = $this->repository->getById($user_id, $film_id);
+        $review = new ReviewModel();
+        // var_dump($response);
+        return $review->constructFromArray($response);
+    }
+
     public function getAllReviewByFilmId($film_id) {
         $allReview = $this->repository->getByFilmId($film_id);
         // cek film_id nya harus sama
         $reviews = [];
+        // var_dump($allReview);
         foreach ($allReview as $reviewData) {
             $review = new ReviewModel();
             $reviews[] = $review->constructFromArray($reviewData);
