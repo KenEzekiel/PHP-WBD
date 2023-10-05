@@ -14,11 +14,10 @@ async function searchFilterHandler() {
     try
     {
         const httpClient = new HttpClient();
-        const search = search_bar.value !== undefined ? search_bar.value : "tesss";
-        let isDesc = sort_order.value !== 'asc';
-        console.log(isDesc)
+        const search = search_bar.value !== undefined ? search_bar.value : "";
+        let url = `/search?q=${search_bar.value}&genre=${genre.value}&year=${released_year.value}&order=${sort_by.value}&sort=${sort_order.value}&page=${currentPage}`
 
-        httpClient.get(`/search?q=${search}&genre=${genre.value}&year=${released_year.value}&order=${sort_by.value}&desc=${isDesc}&page=${currentPage}`).then(
+        httpClient.get(url).then(
             (response) => {
                 console.log(response)
                 if (response.status === 200) {

@@ -93,7 +93,7 @@ abstract class BaseRepository
     $order = null,
     $pageNo = null,
     $pageSize = null,
-    $isDesc = false,
+    $sort = "asc",
   ) {
     $sql = "SELECT * FROM $this->tableName";
 
@@ -124,7 +124,7 @@ abstract class BaseRepository
       $sql .= " ORDER BY $order";
     }
 
-    if ($isDesc) {
+    if ($sort == "desc") {
       $sql .= " DESC";
     }
 

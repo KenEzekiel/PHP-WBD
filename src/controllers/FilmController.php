@@ -21,7 +21,7 @@ class FilmController extends BaseController
       $word = $_GET['q'] ?? "";
       $genre = $_GET['genre'] ?? 'all';
       $released_year = $_GET['year'] ?? 'all';
-      $isDesc = $_GET['desc'] ?? false;
+      $isDesc = $_GET['sort'] ?? "asc";
       $order = $_GET['order'] ?? 'title';
       $data = $this->service->searchAndFilter($word, $order, $isDesc, $genre, $released_year, $page);
 

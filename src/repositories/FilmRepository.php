@@ -28,7 +28,7 @@ class FilmRepository extends BaseRepository
     return $this->findOne(['film_id' => [$film_id, PDO::PARAM_INT]]);
   }
 
-  public function getAllBySearchAndFilter($word, $order = 'title', $isDesc= false, $genre = 'all',
+  public function getAllBySearchAndFilter($word, $order = 'title', $isDesc= "asc", $genre = 'all',
                                           $released_year = 'all', $pageNo = 1, $limit = 10)
   {
       $where = [];
