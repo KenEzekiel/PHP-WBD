@@ -56,7 +56,7 @@ class UpdateFilmController extends BaseController
     $data['cast'] = $film->cast;
     $data['genre'] = $film->genre;
 
-    parent::render($data, "update_film", "layouts/base");
+    parent::render($data, "update-film", "layouts/base");
   }
 
   protected function post($urlParams)
@@ -126,7 +126,7 @@ class UpdateFilmController extends BaseController
       parent::redirect("/", ["Msg" => $msg]);
     } catch (Exception $e) {
       $msg = $e->getMessage();
-      parent::render(["errorMsg" => $msg], "create_film", "layouts/base");
+      parent::render(["errorMsg" => $msg], "create-film", "layouts/base");
     }
   }
 }

@@ -1,21 +1,21 @@
 <div>
-    <div class="search-bar">
+    <div class="search-bar" id="search-bar">
         <input type="text" id="search-input" placeholder="Search film title or director">
     </div>
 
     <div class="sort-filter">
         <select id="sort-by">
             <option value="title">Sort by Title</option>
-            <option value="released-year">Sort by Released Year</option>
+            <option value="released_year">Sort by Released Year</option>
         </select>
 
         <select id="sort-order">
-            <option value="ascending">Ascending</option>
-            <option value="descending">Descending</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
         </select>
 
         <select id="filter-genre">
-            <option value="" disabled selected>Choose Genre</option>
+            <option value="all">All Genre</option>
             <?php
             if (isset($data['genres']))
             {
@@ -27,7 +27,7 @@
         </select>
 
         <select id="filter-year">
-            <option value="" disabled selected>Choose Released Year</option>
+            <option value="all" >All Released Year</option>
             <?php
             if (isset($data['released_years']))
             {
@@ -39,7 +39,7 @@
         </select>
     </div>
 
-    <div class="film-card-container">
+    <div class="film-card-container" id="film-card-list">
         <?php
         if (isset($data['films']))
         {
@@ -65,5 +65,7 @@
         ?>
         <button id="next-page">Next</button>
     </div>
-    <script></script>
+    <script defer src="/public/js/httpClient.js"></script>
+    <script defer src="/public/js/utils.js"></script>
+    <script defer src="/public/js/filmList.js"></script>
 </div>

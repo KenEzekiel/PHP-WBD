@@ -28,5 +28,8 @@
       <button class="button" type="submit">Register</button>
     </div>
   </form>
-</div>
+  <div class="nav-here">
+    <p>Don't have account yet?</p>
+    <a class="text-link" href="/login">Log In here</p>
+  </div>
 </div>
