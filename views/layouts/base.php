@@ -37,12 +37,15 @@
 
         if (!isset($_SESSION['user_id'])) {
           if (Request::getURL() != "/login") {
-            echo "<li class='menu-item'><a href='/login'>Sign In  </a></li>";
+            echo "<li class='menu-item'><a href='/login'>Sign In</a></li>";
           }
           if (Request::getURL() != "/register") {
             echo "<button class='reg-button'><a href='/register'>Register</a></button>";
           }
         } else {
+          if ($_SESSION['role'] == 'admin') {
+            echo "<li class='menu-item'><a href='/user-dashboard'>Users</a></li>";
+          }
           $username = $_SESSION['username'];
           echo "<p class='profile'><a href='/profile'> <img src='/public/assets/person.svg'></img> <span>$username</span></a></p>";
           echo "<button class='logout-button'><a href='/logout'>Logout</a></button>";

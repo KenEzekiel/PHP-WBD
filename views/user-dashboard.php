@@ -27,18 +27,18 @@
           $user->role
         </td>
         <td>
+          <div class='buttons-form'>
           <form method='post'>
             <input type='hidden' name='action' value='edit'>
             <input type='hidden' name='user_id' value='$user->user_id'>
-            <button type='submit'>edit</button>
+            <button type='submit' class='button-cancel'>Edit</button>
           </form>
-        </td>
-        <td>
           <form method='post'>
             <input type='hidden' name='action' value='delete'>
             <input type='hidden' name='user_id' value='$user->user_id'>
-            <button type='submit'>delete</button>
+            <button type='submit' class='button-delete'>Delete</button>
           </form>
+          </div>
         </td>
       </tr>";
     }

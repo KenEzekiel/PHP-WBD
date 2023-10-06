@@ -240,8 +240,7 @@ textarea {
 .popup div {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  gap: 30px;
+  justify-content: center;
 }
 
 .button-delete {
@@ -257,6 +256,7 @@ textarea {
   font-weight: bold;
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-right: 5px;
   align-self: stretch;
 }
 
@@ -279,6 +279,7 @@ textarea {
   font-weight: bold;
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-left: 5px;
   align-self: stretch;
 }
 
@@ -286,6 +287,70 @@ textarea {
 
 .button-cancel:active {
   background-color: #313c9f;
+}
+
+.user-list {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.user-list td, .user-list th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.user-list tr:nth-child(even){background-color: #21252C;}
+
+.user-list tr:hover {background-color: #393c43;}
+
+.user-list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #252a28;
+}
+
+.buttons-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.buttons-form button {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.update-film {
+  width: 50%;
+}
+
+.button-delete-update {
+  border:none;
+  border-radius: 8px;
+  background: #eb5050;
+  color: white;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 20px;
+  align-self: stretch;
+}
+
+.button-delete-update:hover {background-color: #ff9898}
+
+.button-delete-update:active {
+  background-color: #b63131;
+}
+
+.no-margin-bot {
+  margin-bottom: 0px;
 }
 
 @media only screen and (max-width: 800px) {
