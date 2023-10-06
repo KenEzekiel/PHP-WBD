@@ -154,6 +154,7 @@ class UpdateFilmController extends BaseController
         $filmModel = new FilmModel();
         $filmModel->constructFromArray($data);
         $response = $this->service->update($filmModel);
+        $msg = "Update unsuccessful!";
         if ($response) {
           $msg = "Successfully updated film!";
         }

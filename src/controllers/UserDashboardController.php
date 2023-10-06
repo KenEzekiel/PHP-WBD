@@ -87,6 +87,7 @@ class UserDashboardController extends BaseController
           unset($urlParams['context']);
           unset($urlParams['action']);
           unset($urlParams['user_id']);
+          unset($urlParams['errorMsg']);
           // Redirect to own link, but with no params
           parent::redirect("/user-dashboard", $urlParams);
         } catch (Exception $e) {
@@ -111,6 +112,7 @@ class UserDashboardController extends BaseController
             unset($urlParams['action']);
             unset($urlParams['user_id']);
             unset($urlParams['delete_confirm']);
+            unset($urlParams['errorMsg']);
             // Redirect to own link, but with no params
             parent::redirect("/user-dashboard", $urlParams);
           } else {
@@ -119,6 +121,7 @@ class UserDashboardController extends BaseController
             unset($urlParams['action']);
             unset($urlParams['user_id']);
             unset($urlParams['delete_confirm']);
+            unset($urlParams['errorMsg']);
             // Redirect to own link, but with no params
             parent::redirect("/user-dashboard", $urlParams);
           }
