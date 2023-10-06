@@ -38,6 +38,7 @@ class ProfileController extends BaseController
       $password = $_POST['password'] ? $_POST['password'] : $old_pass;
       $confirm_password = $_POST['confirm-password'] ? $_POST['confirm-password'] : $old_pass;
 
+      // Check validity
       if ($this->service->isEmailExist($email) and $user->email != $email) {
         throw new BadRequestException("Email Already Exists!");
       }
@@ -65,7 +66,7 @@ class ProfileController extends BaseController
       }
 
       // Render response
-      parent::redirect("/", ["Msg" => $msg]);
+      parent::redirect("/", ["msg" => $msg]);
     } catch (Exception $e) {
       $msg = $e->getMessage();
       parent::render(["errorMsg" => $msg], "profile", "layouts/base");

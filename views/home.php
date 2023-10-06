@@ -12,7 +12,7 @@
           echo "<br> Hi, User!";
         }
       }
-      if (isset($Msg)) {
+      if (isset($msg)) {
         echo "<br><br><p>$Msg</p>";
       }
       ?></p>

@@ -200,11 +200,11 @@ class UserService extends BaseService
     $arrParams['username'] = PDO::PARAM_STR;
     $arrParams['password'] = PDO::PARAM_STR;
     $arrParams['role'] = PDO::PARAM_STR;
-    $this->repository->update($user, $arrParams);
+    return $this->repository->update($user, $arrParams);
   }
 
   public function deleteById($user_id)
   {
-    $this->repository->deleteById($user_id);
+    return $this->repository->deleteById($user_id);
   }
 }
