@@ -65,5 +65,14 @@ class ReviewService extends BaseService {
         return $review;
     }
 
+    public function getByFilmId($film_id) {
+        $allReview = $this->repository->getByFilmId($film_id);
+        $reviews = [];
+        foreach ($allReview as $reviewData) {
+            $review = new ReviewModel();
+            $reviews[] = $review->constructFromArray($reviewData);
+        }
+        return $reviews;
+    }
 
 }

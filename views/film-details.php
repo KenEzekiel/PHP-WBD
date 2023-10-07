@@ -10,5 +10,14 @@
     <h3>Cast: <?php echo $film->cast?></h3>
     <p><?php echo $film->description?></p>
 
-    <h1 id="peopleComment">What people say<h1>
+    <h1 id="peopleComment">What people say</h1>
+    <div id="reviews">
+        <?php $i = 0; foreach ($reviews as $review) {  ?>
+            <div class="review">
+                <div id="reviewer"><?php echo $commenting_user[$i]->username?></div> <div id="reviewScore"><?php echo $review->rating?>/5</div>
+                <p><?php echo $review->notes?></p>
+                <p><?php echo $review->published_time?></p>
+            </div>
+        <?php $i++;} ?>
+    </div>
 </div>

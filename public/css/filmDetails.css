@@ -16,3 +16,13 @@ h1#title{
     max-width: 50%;
     height: auto;
 }
+
+#reviews{
+    font-size: medium;
+}
+
+
+#reviewer #reviewScore{
+    width:25%;
+}
+
