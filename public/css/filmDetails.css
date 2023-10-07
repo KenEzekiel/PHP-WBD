@@ -1,5 +1,14 @@
+#goBack:hover{
+    cursor:pointer;
+}
+
 #filmDetails {
-    text-align: center;
+    text-align: left;
+    padding-left: 100px;
+}
+
+h1#title{
+    text-decoration: underline;
 }
 
 #poster {
