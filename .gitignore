@@ -3,3 +3,5 @@ migrations/db/files/img/*
 !migrations/db/files/img/.gitkeep
 migrations/db/files/trailer/*
 !migrations/db/files/trailer/.gitkeep
+.vscode
+test.php

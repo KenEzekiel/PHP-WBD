@@ -32,6 +32,13 @@ class FilmController extends BaseController
 
           parent::render($data, 'films', "layouts/base");
       }
+      elseif($uri == '/film-details')
+      {
+          $data['film'] = $this->service->getById($_GET['film_id']);
+          // $data['reviews'] = $this->service->getReviewsByFilmId($_GET['film_id']);
+
+          parent::render($data, 'film-details', "layouts/base");
+      }
       else
       {
           $films = [];
