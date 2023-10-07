@@ -240,15 +240,13 @@ abstract class BaseRepository
     $sql = "DELETE FROM $this->tableName WHERE ";
     $primaryKey = $model->get('_primary_key');
     if (is_array($primaryKey)) {
-      foreach ($primaryKey as $key => $value) {
-        $sql .= " primaryKey$key = :primaryKey$key";
-      }
+      $sql .= implode(" AND ", array_map(function ($key, $value) {
+        return "$value = :key$key";
+      }, array_keys($primaryKey), array_values($primaryKey)));
       $stmt = $this->pdo->prepare($sql);
       foreach ($primaryKey as $key => $value) {
-        $stmt->bindValue(" :primaryKey$key ", $model->get($value), PDO::PARAM_INT);
-        // echo $model->get($value);
+        $stmt->bindValue(":key$key", $model->get($value), PDO::PARAM_STR);
       }
-      // var_dump($stmt);
     } else {
       $sql .= "$primaryKey = :primaryKey";
       $stmt = $this->pdo->prepare($sql);
