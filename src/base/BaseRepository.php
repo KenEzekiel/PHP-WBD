@@ -241,12 +241,14 @@ abstract class BaseRepository
     $primaryKey = $model->get('_primary_key');
     if (is_array($primaryKey)) {
       $sql .= implode(" AND ", array_map(function ($key, $value) {
-        return "$value = :key$key";
-      }, array_keys($primaryKey), array_values($primaryKey)));
-      $stmt = $this->pdo->prepare($sql);
-      foreach ($primaryKey as $key => $value) {
-        $stmt->bindValue(":key$key", $model->get($value), PDO::PARAM_STR);
-      }
+        return "$value = :$value"; // Menggunakan nama parameter yang sesuai
+    }, array_keys($primaryKey), array_values($primaryKey)));
+    
+    $stmt = $this->pdo->prepare($sql);
+    
+    foreach ($primaryKey as $key => $value) {
+        $stmt->bindValue(":$value", $model->get($value), PDO::PARAM_STR); // Menggunakan nama parameter yang sesuai
+    }    
     } else {
       $sql .= "$primaryKey = :primaryKey";
       $stmt = $this->pdo->prepare($sql);
