@@ -71,8 +71,9 @@ class ReviewController extends BaseController {
                         $user_id = $_SESSION['user_id'];
                         $film_id = 1;
                         $notes = $this->service->getReviewByUserFilmId($user_id, $film_id);
+                        // var_dump($notes);
                         $response = $this->service->deleteByUserFilmId($notes->user_id, $notes->film_id);
-                        echo ($response);
+                        // echo ($response);
                         if ($response == 1) {
                             $msg = "Review deleted successfully";
                             $urlParams['msg'] = $msg;

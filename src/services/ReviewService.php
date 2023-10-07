@@ -83,7 +83,7 @@ class ReviewService extends BaseService {
     }
 
     public function deleteByUserFilmId($user_id, $film_id) {
-        $this->repository->deleteByUserFilmId($user_id, $film_id);
+        return $this->repository->deleteByUserFilmId($user_id, $film_id);
     }
 
     public function update($review) {
