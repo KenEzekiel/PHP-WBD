@@ -82,5 +82,19 @@ class ReviewService extends BaseService {
         return $review;
     }
 
+    public function deleteByUserFilmId($user_id, $film_id) {
+        $this->repository->deleteByUserFilmId($user_id, $film_id);
+    }
+
+    public function update($review) {
+        $arrParams = [];
+        $arrParams['user_id'] = PDO::PARAM_INT;
+        $arrParams['film_id'] = PDO::PARAM_INT;
+        $arrParams['rating'] = PDO::PARAM_INT;
+        $arrParams['notes'] = PDO::PARAM_STR;
+        $arrParams['published_time'] = PDO::PARAM_STR;
+        $this->repository->update($review, $arrParams);
+    }
+
 
 }

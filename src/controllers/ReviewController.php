@@ -19,18 +19,9 @@ class ReviewController extends BaseController {
     protected function get($urlParams) {
         $film_id = 1;
         $reviews = $this->service->getAllReviewByFilmId($film_id);
-        // Saya mau dari reviews ditambah attribut username untuk masing-masing user_id 
-        // dengan memanggil $userService->get
-        // $users = $userService->getById($reviews->'user_id');
-        // $username = $users->username;
-        // Pasangkan username dengan user_id yang sesuai & isi ke reviews
-        // Sehingga nanti saat di passing di urlParams, reviews memiliki data username
         foreach ($reviews as $review) {
             $user_id = $review->user_id;
             $user = $this->userService->getById($user_id);
-            // echo '<pre>';
-            // var_dump($user->username);
-            // echo '<pre>';
             $review->username = $user->username;
         }
         $urlParams["reviews"] = $reviews;
@@ -48,6 +39,52 @@ class ReviewController extends BaseController {
 
     protected function post($urlParams) {
         if (isset($_SESSION['user_id'])) {
+            if (isset($_POST['action'])) {
+                $action = $_POST['action'];
+                if ($action == 'edit') {
+                    echo 'EDIT';
+                    try {
+                        $user_id = $_SESSION['user_id'];
+                        $film_id = 1;
+                        $review = $this->service->getReviewByUserFilmId($user_id, $film_id);
+                        // GET DATA
+                        $rating = $review->rating;
+                        $notes = $review->notes;
+                        $published_time = $review->published_time;
+
+                        $review ->set('rating', $rating) ->set('notes', $notes)->set('published_time', $published_time);
+                        $response = $this->service->update($review);
+                        if ($response == 1) {
+                            $msg = "Review updated successfully!";
+                            $urlParams['msg'] = $msg;
+                        }
+                        parent::redirect('/film-detail', $urlParams);
+
+                    } catch (Exception $e) {
+                        $msg = $e->getMessage();
+                        $urlParams['errorMsg'] = $msg;
+                        parent::redirect("/review", $urlParams);
+                    }
+                } elseif ($action == 'delete') {
+                    echo "DELETEE";
+                    try {
+                        $user_id = $_SESSION['user_id'];
+                        $film_id = 1;
+                        $notes = $this->service->getReviewByUserFilmId($user_id, $film_id);
+                        $response = $this->service->deleteByUserFilmId($notes->user_id, $notes->film_id);
+                        echo ($response);
+                        if ($response == 1) {
+                            $msg = "Review deleted successfully";
+                            $urlParams['msg'] = $msg;
+                        }
+                        parent::redirect("/review", $urlParams);
+                    } catch (Exception $e){
+                        $msg = $e->getMessage();
+                        $urlParams['errorMsg'] = $msg;
+                        parent::redirect("/review", $urlParams);
+                    }
+                }
+            } else {
             try {
                 // GET DATA
                 $user_id = $_SESSION['user_id'];
@@ -62,25 +99,11 @@ class ReviewController extends BaseController {
                 $msg = $e->getMessage();
                 parent::render(['errorMsg' => $msg], 'film-detail', 'layouts/base');
             }
+        }
             parent::render($urlParams, 'film-detail', 'layouts/base');
         } else {
-            parent::render($urlParams, 'login', 'layouts/base');
-        }
-    }
-
-    protected function put($urlParams) {
-        try {
-            parent::put($urlParams);
-        } catch (Exception $e) {
-            echo $e;
-        }
-    }
-
-    protected function delete($urlParams) {
-        try {
-            parent::delete($urlParams);
-        } catch (Exception $e) {
-            echo $e;
+            // parent::render($urlParams, 'login', 'layouts/base');
+            parent::redirect("/login");
         }
     }
 }

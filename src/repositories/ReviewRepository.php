@@ -3,6 +3,7 @@
 namespace app\repositories;
 
 use app\base\BaseRepository;
+use app\models\ReviewModel;
 use PDO;
 
 class ReviewRepository extends BaseRepository {
@@ -35,5 +36,12 @@ class ReviewRepository extends BaseRepository {
 
     public function getByPublishedTime($published_time) {
         return $this->findAll(['published_time' => [$published_time, PDO::PARAM_STR]], null, null, null, false);
+    }
+
+    public function deleteByUserFilmId($user_id, $film_id) {
+        $review = $this->getById($user_id, $film_id);
+        $reviewModel = new ReviewModel();
+        $reviewModel->constructFromArray($review);
+        return $this->delete($reviewModel);
     }
 }
