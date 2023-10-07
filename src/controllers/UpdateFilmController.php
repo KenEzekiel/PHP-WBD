@@ -42,7 +42,7 @@ class UpdateFilmController extends BaseController
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
       // If not admin
-      parent::redirect("/error", 401);
+      parent::redirect("/error", [], 401);
       return;
     }
 
@@ -80,7 +80,7 @@ class UpdateFilmController extends BaseController
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
       // If not admin
-      parent::redirect("/error", 401);
+      parent::redirect("/error", [], 401);
       return;
     }
     try {

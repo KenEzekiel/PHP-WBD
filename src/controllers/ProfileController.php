@@ -20,10 +20,9 @@ class ProfileController extends BaseController
   {
 
     $user = $this->service->getById($_SESSION['user_id']);
-    $data = [];
-    $data['email'] = $user->email;
-    $data['username'] = $user->username;
-    parent::render($data, "profile", "layouts/base");
+    $urlParams['email'] = $user->email;
+    $urlParams['username'] = $user->username;
+    parent::render($urlParams, "profile", "layouts/base");
   }
 
   protected function post($urlParams)
@@ -31,6 +30,9 @@ class ProfileController extends BaseController
     try {
       $user = $this->service->getById($_SESSION['user_id']);
       $old_pass = $user->password;
+
+      $urlParams['email'] = $user->email;
+      $urlParams['username'] = $user->username;
 
       // Get data
       $email = $_POST['email'];
@@ -43,6 +45,10 @@ class ProfileController extends BaseController
         throw new BadRequestException("Email Already Exists!");
       }
 
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new BadRequestException("Email is not valid!");
+      }
+
       if ($this->service->isUsernameExist($username) and $user->username != $username) {
         throw new BadRequestException("Username Already Exists!");
       }
@@ -50,6 +56,7 @@ class ProfileController extends BaseController
       if ($password != $confirm_password) {
         throw new BadRequestException("Password does not match!");
       }
+
 
       $user
         ->set('email', $email)
@@ -69,7 +76,8 @@ class ProfileController extends BaseController
       parent::redirect("/", ["msg" => $msg]);
     } catch (Exception $e) {
       $msg = $e->getMessage();
-      parent::render(["errorMsg" => $msg], "profile", "layouts/base");
+      $urlParams['errorMsg'] = $msg;
+      parent::render($urlParams, "profile", "layouts/base");
     }
   }
 }

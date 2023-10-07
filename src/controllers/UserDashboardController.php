@@ -70,6 +70,10 @@ class UserDashboardController extends BaseController
             throw new BadRequestException("Email Already Exists!");
           }
 
+          if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new BadRequestException("Email is not valid!");
+          }
+
           if ($this->service->isUsernameExist($username) and $user->username != $username) {
             throw new BadRequestException("Username Already Exists!");
           }

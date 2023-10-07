@@ -17,8 +17,7 @@
         <select id="filter-genre">
             <option value="all">All Genre</option>
             <?php
-            if (isset($data['genres']))
-            {
+            if (isset($data['genres'])) {
                 foreach ($data['genres'] as $genre) {
                     echo "<option value='$genre'>$genre</option>";
                 }
@@ -27,10 +26,9 @@
         </select>
 
         <select id="filter-year">
-            <option value="all" >All Released Year</option>
+            <option value="all">All Released Year</option>
             <?php
-            if (isset($data['released_years']))
-            {
+            if (isset($data['released_years'])) {
                 foreach ($data['released_years'] as $year) {
                     echo "<option value='$year'>$year</option>";
                 }
@@ -41,12 +39,13 @@
 
     <div class="film-card-container" id="film-card-list">
         <?php
-        if (isset($data['films']))
-        {
+        if (isset($data['films'])) {
             foreach ($data['films'] as $film) {
                 echo "<div class='film-card'>
+                    <a href='/update-film?film_id=$film->film_id'>
                     <div class='film-image' style='background-image: url($film->image_path);'></div>
                     <div class='film-title'> $film->title </div>
+                    </a>
                 </div>";
             }
         }

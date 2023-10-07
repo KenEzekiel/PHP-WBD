@@ -117,8 +117,11 @@ class UserService extends BaseService
 
   public function create($email, $username, $password, $role)
   {
-    // $user = (new UserModel())->set('nama', $nama)->set('username', $username)->set('email', $email)->set('password', password_hash($password, PASSWORD_DEFAULT));
     $user = new UserModel();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      throw new BadRequestException("Email is not valid!");
+    }
+
     $user
       ->set('email', $email)
       ->set('username', $username)

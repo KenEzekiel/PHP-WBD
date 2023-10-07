@@ -13,7 +13,7 @@
         }
       }
       if (isset($msg)) {
-        echo "<br><br><p>$Msg</p>";
+        echo "<br><br><p>$msg</p>";
       }
       ?></p>
   <div>

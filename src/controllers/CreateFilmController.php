@@ -49,7 +49,7 @@ class CreateFilmController extends BaseController
   protected function post($urlParams)
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
-      parent::redirect("/error", 401);
+      parent::redirect("/error", [], 401);
       return;
     }
     try {
