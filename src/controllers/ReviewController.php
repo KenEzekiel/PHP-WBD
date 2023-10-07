@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\base\BaseController;
 use app\Request;
 use app\services\ReviewService;
-<<<<<<< HEAD
 use app\services\UserService;
 use Exception;
 
@@ -24,23 +23,6 @@ class ReviewController extends BaseController {
             $user_id = $review->user_id;
             $user = $this->userService->getById($user_id);
             $review->username = $user->username;
-=======
-use Exception;
-
-class ReviewController extends BaseController
-{
-    public function __construct()
-    {
-        parent::__construct(null);
-    }
-
-    protected function get($urlParams)
-    {
-        try {
-            parent::render($urlParams, 'give-review', 'layouts/base');
-        } catch (Exception $e) {
-            echo $e;
->>>>>>> f12bc5e1ed51b90b199629890adf8d651dcde37b
         }
         $urlParams["reviews"] = $reviews;
         if (isset($_SESSION['user_id'])) {
