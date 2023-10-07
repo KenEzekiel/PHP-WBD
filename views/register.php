@@ -29,7 +29,7 @@
     </div>
   </form>
   <div class="nav-here">
-    <p>Don't have account yet?</p>
+    <p>Already have an account?</p>
     <a class="text-link" href="/login">Log In here</p>
   </div>
 </div>

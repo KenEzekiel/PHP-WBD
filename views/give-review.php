@@ -1,20 +1,22 @@
 <html>
+
 <head>
     <link rel='stylesheet' href='/public/css/give-review.css'>
 </head>
+
 <body>
     <div class="background">
-        
+
     </div>
     <div class='card'>
         <button class='close-button' onclick="closeCard()">X</button>
         <!-- Image of the movie -->
         <div class='movie-info'>
             <button class="back-btn">
-                <img src='/public/assets/back-icon.svg' width='30' height='30' />
-                 BACK
+                <img src='/public/assets/back-icon.svg' width='30' height='30' alt='back button' />
+                BACK
             </button>
-            <img src='/public/assets/placeholder-image.svg' width='20rem' height='50rem'/>
+            <img src='/public/assets/placeholder-image.svg' width='20rem' height='50rem' alt='placeholder' />
         </div>
         <!-- Main Info -->
         <div class='review'>
@@ -46,7 +48,7 @@
                     <input type="radio" name="stars" value="3" />
                     <span class="icon">★</span>
                     <span class="icon">★</span>
-                    <span class="icon">★</span>   
+                    <span class="icon">★</span>
                 </label>
                 <label>
                     <input type="radio" name="stars" value="4" />
@@ -65,12 +67,13 @@
                 </label>
             </form>
             <div class='save-button-conf'>
-            <button class='save-btn'>
-                SAVE
-            </button>
-            </div>
+                <button class='save-btn'>
+                    SAVE
+                </button>
             </div>
         </div>
     </div>
+    </div>
 </body>
+
 </html>

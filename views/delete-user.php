@@ -40,7 +40,7 @@
       </tr>";
     }
     ?>
-
+  </table>
 </div>
 <div class="overlay">
   <div class="popup">

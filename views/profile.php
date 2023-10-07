@@ -25,7 +25,7 @@
       <input class="input" type="password" id="confirm-password" name="confirm-password">
     </div>
     <div class="form-group">
-      <button class="button" ctype="submit">Add</button>
+      <button class="button" ctype="submit">Update</button>
     </div>
   </form>
 </div>

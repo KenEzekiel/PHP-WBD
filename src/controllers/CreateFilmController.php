@@ -39,7 +39,7 @@ class CreateFilmController extends BaseController
   protected function get($urlParams)
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
-      // TODO: make error controller
+      // If not admin
       parent::redirect("/error", [], 401);
       return;
     }
@@ -49,7 +49,7 @@ class CreateFilmController extends BaseController
   protected function post($urlParams)
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
-      parent::redirect("/error", 401);
+      parent::redirect("/error", [], 401);
       return;
     }
     try {
@@ -90,12 +90,13 @@ class CreateFilmController extends BaseController
 
       // Call service
       $response = $this->service->add($image_path, $trailer_path, $title, $released_year, $director, $description, $cast, $genre);
+      $msg = "Create film unsuccessful!";
       if ($response) {
         $msg = "Successfully created film!";
       }
 
       // Render response
-      parent::render(["Msg" => $msg], "home", "layouts/base");
+      parent::render(["msg" => $msg], "home", "layouts/base");
     } catch (Exception $e) {
       $msg = $e->getMessage();
       parent::render(["errorMsg" => $msg], "create_film", "layouts/base");

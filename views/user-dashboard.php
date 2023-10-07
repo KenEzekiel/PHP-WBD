@@ -1,7 +1,13 @@
-<div>
-  <p class="error-msg"><?php if (isset($errorMsg)) {
-                          echo "$errorMsg";
-                        } ?></p>
+<div class="center">
+  <?php
+  if (isset($errorMsg)) {
+    echo "<p class=\"error-msg\">$errorMsg</p>";
+  }
+  if (isset($msg)) {
+    echo "<p class=\"notification\">$msg</p>";
+  }
+
+  ?>
   <table class='user-list'>
     <tr>
       <th>User Id</th>
@@ -43,4 +49,5 @@
       </tr>";
     }
     ?>
+  </table>
 </div>

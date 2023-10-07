@@ -41,19 +41,22 @@ class UpdateFilmController extends BaseController
   protected function get($urlParams)
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
-      // TODO: make error controller
-      parent::redirect("/error", 401);
+      // If not admin
+      parent::redirect("/error", [], 401);
       return;
     }
 
     if (!isset($urlParams['film_id'])) {
+      // If there is no film_id parameter
       parent::redirect("/");
     }
     $film_id = $urlParams['film_id'];
     $film = $this->service->getById($film_id);
     if (!$film) {
+      // If no film
       parent::redirect("/");
     }
+    // Get all data
     $data = [];
     $data['film_id'] = $film_id;
     $data['title'] = $film->title;
@@ -64,9 +67,11 @@ class UpdateFilmController extends BaseController
     $data['genre'] = $film->genre;
 
     if (isset($urlParams['action'])) {
+      // Deletion
       $data['action'] = $urlParams['action'];
       parent::render($data, 'delete-film', 'layouts/base');
     } else {
+      // Update
       parent::render($data, "update-film", "layouts/base");
     }
   }
@@ -74,7 +79,8 @@ class UpdateFilmController extends BaseController
   protected function post($urlParams)
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
-      parent::redirect("/error", 401);
+      // If not admin
+      parent::redirect("/error", [], 401);
       return;
     }
     try {
@@ -85,7 +91,7 @@ class UpdateFilmController extends BaseController
       if (isset($_POST['delete_confirm'])) {
         // Delete page
         if ($_POST['delete_confirm'] == 'yes') {
-          // Confirm delete
+          // Confirm deletion
           $response = $this->service->deleteById($film->film_id);
           if ($response == 1) {
             $msg = "film $film->title deleted successfully";
@@ -94,11 +100,13 @@ class UpdateFilmController extends BaseController
           unset($urlParams['action']);
           unset($urlParams['film_id']);
           unset($urlParams['delete_confirm']);
+          // Redirect back to home or films page
           parent::redirect("/", ["Msg" => $msg]);
         } else {
           unset($urlParams['action']);
           unset($urlParams['delete_confirm']);
           unset($urlParams['title']);
+          // Redirect to own link
           parent::redirect("/update-film", $urlParams);
         }
       } else if (isset($_POST['action'])) {
@@ -117,13 +125,16 @@ class UpdateFilmController extends BaseController
         $data['genre'] = $_POST['genre'];
         // Check if file is valid
         if ($_FILES['image-path']['error'] == UPLOAD_ERR_NO_FILE) {
+          // No file uploaded, use current
           $data['image_path'] = $film->image_path;
         } else {
           if ($_FILES['image-path']['error'] == UPLOAD_ERR_OK) {
+            // Use uploaded file
             $image_tmp = $_FILES['image-path']['tmp_name'];
             $image_name = $_FILES['image-path']['name'];
             move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/images/" . $image_name);
             $image_path = "/public/files/images/" . $image_name;
+            $data['image_path'] = $image_path;
 
             if (!$this->is_image($image_name)) {
               throw new BadRequestException("Image file format is not valid");
@@ -134,13 +145,16 @@ class UpdateFilmController extends BaseController
         }
 
         if ($_FILES['trailer-path']['error'] == UPLOAD_ERR_NO_FILE) {
+          // No file uploaded, use current
           $data['trailer_path'] = $film->trailer_path;
         } else {
           if ($_FILES['trailer-path']['error'] == UPLOAD_ERR_OK) {
+            // Use uploaded file
             $trailer_tmp = $_FILES['trailer-path']['tmp_name'];
             $trailer_name = $_FILES['trailer-path']['name'];
             move_uploaded_file($trailer_tmp, __DIR__ . "/../../public/files/trailers/" . $trailer_name);
             $trailer_path = "/public/files/trailers/" . $trailer_name;
+            $data['trailer_path'] = $trailer_path;
 
             if (!$this->is_trailer($trailer_name)) {
               throw new BadRequestException("Trailer file format is not valid");
@@ -154,15 +168,17 @@ class UpdateFilmController extends BaseController
         $filmModel = new FilmModel();
         $filmModel->constructFromArray($data);
         $response = $this->service->update($filmModel);
+        $msg = "Update unsuccessful!";
         if ($response) {
           $msg = "Successfully updated film!";
         }
         // Render response
-        parent::redirect("/", ["Msg" => $msg]);
+        parent::redirect("/", ["msg" => $msg]);
       }
     } catch (Exception $e) {
       $msg = $e->getMessage();
-      parent::render(["errorMsg" => $msg], "update-film", "layouts/base");
+      $data['errorMsg'] = $msg;
+      parent::render($data, "update-film", "layouts/base");
     }
   }
 }

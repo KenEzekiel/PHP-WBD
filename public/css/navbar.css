@@ -73,7 +73,7 @@
 }
 
 .logout-button {
-  background-color: #ff6347;
+  background-color: #c61e00;
   border: none;
   padding: 0.5rem 1rem;
   font-family: Poppins;
@@ -84,7 +84,7 @@
 }
 
 .logout-button a {
-  color: white;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   display: inline-block;
 }

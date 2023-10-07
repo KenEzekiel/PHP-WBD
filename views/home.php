@@ -12,8 +12,8 @@
           echo "<br> Hi, User!";
         }
       }
-      if (isset($Msg)) {
-        echo "<br><br><p>$Msg</p>";
+      if (isset($msg)) {
+        echo "<br><br><p>$msg</p>";
       }
       ?></p>
   <div>
