@@ -73,7 +73,7 @@
 }
 
 .logout-button {
-  background-color: #ff6347;
+  background-color: #c61e00;
   border: none;
   padding: 0.5rem 1rem;
   font-family: Poppins;
@@ -84,7 +84,7 @@
 }
 
 .logout-button a {
-  color: white;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   display: inline-block;
 }
@@ -100,6 +100,8 @@ li {
 .navbar {
   background-color: black;
   overflow: hidden;
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -143,32 +145,44 @@ li {
 }
 
 @media screen and (max-width: 800px) {
-  .mobile-view {
+  .navbar {
     display: flex;
+    padding-top: 0.05rem;
+    padding-bottom: 0.05rem;
+    width: 100vw;
   }
-
-  .nav-links a {
+  .logo {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .logo img {
     display: none;
   }
 
-  .hamburger-menu {
-    display: block;
-    cursor: pointer;
+  .logo h1 {
+    font-size: large;
   }
 
-  .mobile-menu ul {
-    list-style: none;
+  .menu {
+    gap: 1rem;
   }
 
-  .mobile-menu li {
-    margin: 10px 0px;
+  .menu-item {
+    display: flex;
+    align-items: center;
   }
 
-  .mobile-menu a {
-    text-decoration: none;
+  .menu-item a {
+    font-size: medium;
+    align-items: center;
   }
 
-  .mobile-menu.active .menu-item a {
-    display: block;
+  .menu-item#home {
+    display: none;
+  }
+
+  .reg-button {
+    font-size: medium;
+    padding: 3px 5px;
   }
 }

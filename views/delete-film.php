@@ -45,14 +45,32 @@
       <input class="input" type="file" id="trailer-path" name="trailer-path">
     </div>
     <div class="form-group">
-      <button class="button no-margin-bot" ctype="submit">Update</button>
+      <button class="button" ctype="submit">Update</button>
     </div>
   </form>
   <form class="form" method="post" enctype="multipart/form-data">
-    <div class='form-group'>
-      <input type='hidden' name='action' value='delete'>
-      <input type='hidden' name='film_id' value='$film_id'>
-      <button type='submit' class='button-delete-update'>Delete</button>
-    </div>
+    <input type='hidden' name='action' value='delete'>
+    <input type='hidden' name='film_id' value='$film_id'>
+    <button type='submit' class='button-delete'>Delete</button>
+
   </form>
+</div>
+<div class="overlay">
+  <div class="popup">
+    <h1 class="header-title">Are you sure?</h1>
+    <p class="error-msg"><?php if (isset($errorMsg)) {
+                            echo "$errorMsg";
+                          } ?></p>
+    <p>Film <?= $title ?> will be deleted forever!</p>
+    <div>
+      <form method='post' enctype="multipart/form-data">
+        <input type='hidden' name='delete_confirm' value='yes'>
+        <button type="submit" class="button-delete  ">Delete</button>
+      </form>
+      <form method='post' enctype="multipart/form-data">
+        <input type='hidden' name='delete_confirm' value='no'>
+        <button type="submit" class="button-cancel">Cancel</button>
+      </form>
+    </div>
+  </div>
 </div>

@@ -20,10 +20,9 @@ class ProfileController extends BaseController
   {
 
     $user = $this->service->getById($_SESSION['user_id']);
-    $data = [];
-    $data['email'] = $user->email;
-    $data['username'] = $user->username;
-    parent::render($data, "profile", "layouts/base");
+    $urlParams['email'] = $user->email;
+    $urlParams['username'] = $user->username;
+    parent::render($urlParams, "profile", "layouts/base");
   }
 
   protected function post($urlParams)
@@ -32,14 +31,22 @@ class ProfileController extends BaseController
       $user = $this->service->getById($_SESSION['user_id']);
       $old_pass = $user->password;
 
+      $urlParams['email'] = $user->email;
+      $urlParams['username'] = $user->username;
+
       // Get data
       $email = $_POST['email'];
       $username = $_POST['username'];
       $password = $_POST['password'] ? $_POST['password'] : $old_pass;
       $confirm_password = $_POST['confirm-password'] ? $_POST['confirm-password'] : $old_pass;
 
+      // Check validity
       if ($this->service->isEmailExist($email) and $user->email != $email) {
         throw new BadRequestException("Email Already Exists!");
+      }
+
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new BadRequestException("Email is not valid!");
       }
 
       if ($this->service->isUsernameExist($username) and $user->username != $username) {
@@ -50,6 +57,7 @@ class ProfileController extends BaseController
         throw new BadRequestException("Password does not match!");
       }
 
+
       $user
         ->set('email', $email)
         ->set('username', $username)
@@ -57,17 +65,19 @@ class ProfileController extends BaseController
 
       // Call service
       $response = $this->service->update($user);
-      echo $response;
       $msg = "";
 
-      $_SESSION['username'] = $username;
-      $msg = "Successfully updated profile!";
+      if ($response != null) {
+        $_SESSION['username'] = $username;
+        $msg = "Successfully updated profile!";
+      }
 
       // Render response
-      parent::redirect("/", ["Msg" => $msg]);
+      parent::redirect("/", ["msg" => $msg]);
     } catch (Exception $e) {
       $msg = $e->getMessage();
-      parent::render(["errorMsg" => $msg], "profile", "layouts/base");
+      $urlParams['errorMsg'] = $msg;
+      parent::render($urlParams, "profile", "layouts/base");
     }
   }
 }

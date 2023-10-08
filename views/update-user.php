@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h2 class="header-title">Profile</h2>
+  <h2 class="header-title">Update User</h2>
   <p class="error-msg"><?php if (isset($errorMsg)) {
                           echo "$errorMsg";
                         } ?></p>
