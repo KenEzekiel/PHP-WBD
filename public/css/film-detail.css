@@ -2,10 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: black;
 }
 
 .insert-review {
-  background-color: black;
+  background-color: var(--neutral-black, #17181D);
   padding: 2rem 8rem;
 }
 
@@ -39,7 +40,8 @@
 
 .submit-btn button {
   background-color: #5360dc;
-  border-radius: 0.5rem;
+  border:none;
+  border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-style: normal;
@@ -60,13 +62,14 @@
 }
 
 .delete-btn button {
-  background-color: #404650;
-  border-radius: 0.5rem;
+  background-color: #de2727;
+  border:none;
+  border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  color: #FB4646;
+  color: #fff;
 }
 
 .stars {
