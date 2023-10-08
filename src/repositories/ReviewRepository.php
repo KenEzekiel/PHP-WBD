@@ -50,7 +50,6 @@ class ReviewRepository extends BaseRepository
         $review = $this->getById($user_id, $film_id);
         $reviewModel = new ReviewModel();
         $reviewModel->constructFromArray($review);
-        // var_dump($reviewModel);
         return $this->delete($reviewModel);
     }
 }

@@ -32,7 +32,6 @@ class ReviewService extends BaseService
     {
         $response = $this->repository->getById($user_id, $film_id);
         $review = new ReviewModel();
-        // var_dump($response);
         return $review->constructFromArray($response);
     }
 
@@ -41,7 +40,6 @@ class ReviewService extends BaseService
         $allReview = $this->repository->getByFilmId($film_id);
         // cek film_id nya harus sama
         $reviews = [];
-        // var_dump($allReview);
         foreach ($allReview as $reviewData) {
             $review = new ReviewModel();
             $reviews[] = $review->constructFromArray($reviewData);
