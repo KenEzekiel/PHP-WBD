@@ -132,8 +132,8 @@ class UpdateFilmController extends BaseController
             // Use uploaded file
             $image_tmp = $_FILES['image-path']['tmp_name'];
             $image_name = $_FILES['image-path']['name'];
-            move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/images/" . $image_name);
-            $image_path = "/public/files/images/" . $image_name;
+            move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/img/" . $image_name);
+            $image_path = "/public/files/img/" . $image_name;
             $data['image_path'] = $image_path;
 
             if (!$this->is_image($image_name)) {

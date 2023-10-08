@@ -66,8 +66,8 @@ class CreateFilmController extends BaseController
       if ($_FILES['image-path']['error'] == UPLOAD_ERR_OK) {
         $image_tmp = $_FILES['image-path']['tmp_name'];
         $image_name = $_FILES['image-path']['name'];
-        move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/images/" . $image_name);
-        $image_path = "/public/files/images/" . $image_name;
+        move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/img/" . $image_name);
+        $image_path = "/public/files/img/" . $image_name;
 
         if (!$this->is_image($image_name)) {
           throw new BadRequestException("Image file format is not valid");
