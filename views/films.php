@@ -42,7 +42,7 @@
         if (isset($data['films'])) {
             foreach ($data['films'] as $film) {
                 echo "<div class='film-card'>
-                    <a href='/update-film?film_id=$film->film_id'>
+                    <a href='/film-details?film_id=$film->film_id'>
                     <div class='film-image' style='background-image: url($film->image_path);'></div>
                     <div class='film-title'> $film->title </div>
                     </a>
