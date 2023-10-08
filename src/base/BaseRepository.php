@@ -229,7 +229,19 @@ abstract class BaseRepository
       $stmt->bindValue(":$key", $model->get($key), $value);
     }
 
-    $stmt->bindValue(":primaryKey", $model->get($primaryKey), PDO::PARAM_INT);
+    if (is_array($primaryKey)) {
+      $sql .= implode(" AND ", array_map(function ($key, $value) {
+        return "$value = :$value"; // Menggunakan nama parameter yang sesuai
+      }, array_keys($primaryKey), array_values($primaryKey)));
+
+      foreach ($primaryKey as $key => $value) {
+        $stmt->bindValue(":$value", $model->get($value), PDO::PARAM_STR); // Menggunakan nama parameter yang sesuai
+      }
+    } else {
+      $sql .= "$primaryKey = :primaryKey";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->bindValue(":primaryKey", $model->get($primaryKey), PDO::PARAM_INT);
+    }
 
     $stmt->execute();
     return $stmt->rowCount();
@@ -242,13 +254,13 @@ abstract class BaseRepository
     if (is_array($primaryKey)) {
       $sql .= implode(" AND ", array_map(function ($key, $value) {
         return "$value = :$value"; // Menggunakan nama parameter yang sesuai
-    }, array_keys($primaryKey), array_values($primaryKey)));
-    
-    $stmt = $this->pdo->prepare($sql);
-    
-    foreach ($primaryKey as $key => $value) {
+      }, array_keys($primaryKey), array_values($primaryKey)));
+
+      $stmt = $this->pdo->prepare($sql);
+
+      foreach ($primaryKey as $key => $value) {
         $stmt->bindValue(":$value", $model->get($value), PDO::PARAM_STR); // Menggunakan nama parameter yang sesuai
-    }    
+      }
     } else {
       $sql .= "$primaryKey = :primaryKey";
       $stmt = $this->pdo->prepare($sql);
