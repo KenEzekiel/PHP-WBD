@@ -10,6 +10,8 @@
   <link rel='stylesheet' href='/public/css/styles.css'>
   <link rel='stylesheet' href='/public/css/filmList.css'>
   <link rel='stylesheet' href='/public/css/film-detail.css'>
+  <link rel='stylesheet' href='/public/css/styles.css'>
+  <link rel='stylesheet' href='/public/css/film-detail.css'>
   <link rel='stylesheet' href='/public/css/profile.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
