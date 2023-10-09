@@ -114,4 +114,10 @@ class FilmService extends BaseService
   {
     return $this->repository->deleteById($film_id);
   }
+
+  public function countRowBySearchAndFilter($word, $genre = 'all', $released_year = 'all')
+  {
+      return $this->repository->countRowBySearchAndFilter($word, $genre, $released_year);
+  }
+
 }
