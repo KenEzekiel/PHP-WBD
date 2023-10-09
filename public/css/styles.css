@@ -425,6 +425,24 @@ textarea {
   cursor: pointer;
 }
 
+.right-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+
+.right-btns .button {
+  background-color: #5360DC;
+  padding: 0px 20px;
+  margin: 0px;
+  height: 2rem;
+}
+
+.right-btns .button:hover {
+  background-color: #969fed;
+}
+
 #fav {
   width: 2rem;
 }
@@ -472,6 +490,12 @@ textarea {
   color: white;
   
 
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 @media only screen and (max-width: 800px) {
