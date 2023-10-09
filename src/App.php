@@ -43,6 +43,8 @@ class App
     $this->router->addRoute('/add-film', CreateFilmController::class);
     $this->router->addRoute('/update-film', UpdateFilmController::class);
     $this->router->addRoute('/profile', ProfileController::class);
+    $this->router->addRoute('/my-favorites', ProfileController::class);
+    $this->router->addRoute('/my-reviews', ProfileController::class);
     $this->router->addRoute('/user-dashboard', UserDashboardController::class);
   }
 }
