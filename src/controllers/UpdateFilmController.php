@@ -132,8 +132,8 @@ class UpdateFilmController extends BaseController
             // Use uploaded file
             $image_tmp = $_FILES['image-path']['tmp_name'];
             $image_name = $_FILES['image-path']['name'];
-            move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/images/" . $image_name);
-            $image_path = "/public/files/images/" . $image_name;
+            move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/img/" . $image_name);
+            $image_path = "/files/img/" . $image_name;
             $data['image_path'] = $image_path;
 
             if (!$this->is_image($image_name)) {
@@ -153,7 +153,7 @@ class UpdateFilmController extends BaseController
             $trailer_tmp = $_FILES['trailer-path']['tmp_name'];
             $trailer_name = $_FILES['trailer-path']['name'];
             move_uploaded_file($trailer_tmp, __DIR__ . "/../../public/files/trailers/" . $trailer_name);
-            $trailer_path = "/public/files/trailers/" . $trailer_name;
+            $trailer_path = "/files/trailers/" . $trailer_name;
             $data['trailer_path'] = $trailer_path;
 
             if (!$this->is_trailer($trailer_name)) {

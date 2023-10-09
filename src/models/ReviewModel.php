@@ -16,12 +16,14 @@ class ReviewModel extends BaseModel {
     }
 
     public function constructFromArray($array) {
-        $this->user_id = $array['user_id'];
-        $this->film_id = $array['film_id'];
-        $this->rating = $array['rating'];
-        $this->notes = $array['notes'];
-        $this->published_time = $array['published_time'];
-        return $this;
+        if (isset($array['user_id'], $array['film_id'], $array['rating'], $array['notes'], $array['published_time'])) {
+            $this->user_id = $array['user_id'];
+            $this->film_id = $array['film_id'];
+            $this->rating = $array['rating'];
+            $this->notes = $array['notes'];
+            $this->published_time = $array['published_time'];
+            return $this;
+        }
     }
 
     public function toResponse() {
