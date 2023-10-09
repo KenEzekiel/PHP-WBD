@@ -27,6 +27,7 @@
     - [_Server Side_](#server-side)
     - [_Client Side_](#client-side)
     - [_Chores_](#chores)
+  - [_Completed Bonus_](#completed-bonus)
 
 ## Deskripsi Aplikasi
 
@@ -163,3 +164,13 @@
 | Wireframing                        | 13521094            |
 | Backend Structure + Design Pattern | 13521089            |
 | Navbar                             | 13521094            |
+
+## _Completed Bonus_
+
+1. Responsive Web Design
+   Aplikasi sudah di-*design* agar dapat beradaptasi dengan perubahan *viewport*
+2. Docker
+   Docker sudah di-*setup* dan juga dapat berjalan untuk menjalankan aplikasi web.
+3. Google Lighthouse
+![Google Lighthouse](./screenshots/gl-home.jpg)
+
