@@ -5,6 +5,7 @@ namespace app\services;
 use app\base\BaseService;
 use app\controllers\FilmController;
 use app\exceptions\BadRequestException;
+use app\models\FavoriteModel;
 use app\models\ReviewModel;
 use app\repositories\FavoriteRepository;
 use app\repositories\ReviewRepository;
@@ -30,6 +31,26 @@ class FavoriteService extends BaseService {
 
     public function getUserFavoriteFilms($user_id) {
         return $this->repository->getUserFavorites($user_id);
+    }
+
+    public function addToFavorite($user_id, $film_id) {
+        $favorite = new FavoriteModel();
+        $favorite->set('user_id', $user_id)->set('film_id', $film_id);
+        return $this->repository->insertFavorite($favorite);
+    }
+
+    public  function removeFromFavorite($user_id, $film_id) {
+        $favorite = new FavoriteModel();
+        $favorite->set('user_id', $user_id)->set('film_id', $film_id);
+        return $this->repository->deleteFavorite($favorite);
+    }
+
+    public function isUserFavorite($user_id, $film_id) {
+        $favorite = $this->repository->getById($user_id, $film_id);
+        if (count($favorite) == 0) {
+            return false;
+        }
+        return true;
     }
 
 }

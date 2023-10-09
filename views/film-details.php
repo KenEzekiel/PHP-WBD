@@ -18,11 +18,22 @@
                         echo "<a href='/update-film?film_id=$film->film_id '><button class='button'>Edit</button></a>";
                     }
                     ?>
+                    <?php if (isset($isFavorite) and $isFavorite): ?>
+                        <form method='post' enctype="multipart/form-data">
+                            <input type='hidden' name='add_favorite' value='no'>
+                            <button type="submit">
+                                <image src="/public/assets/favorite.svg"></image>
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        <form method='post' enctype="multipart/form-data">
+                            <input type='hidden' name='add_favorite' value='yes'>
+                            <button type="submit">
+                                <image src="/public/assets/no-favorite.svg"></image>
+                            </button>
+                        </form>
+                    <?php endif; ?>
 
-
-                    <button>
-                        <image id='fav' src="/public/assets/favorite.svg"></image>
-                    </button>
                 </div>
 
             </div>

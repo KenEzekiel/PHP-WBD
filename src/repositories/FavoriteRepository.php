@@ -20,8 +20,25 @@ class FavoriteRepository extends BaseRepository {
         return self::$instance;
     }
 
+    public function getById($user_id, $film_id) {
+        return $this->findAll(['user_id' => [$user_id, PDO::PARAM_INT], 'film_id' => [$film_id, PDO::PARAM_INT]]);
+    }
+
     public function getUserFavorites($user_id) {
         return $this->findAll(['user_id' => [$user_id, PDO::PARAM_INT]]);
+    }
+
+    public function insertFavorite($favorite)
+    {
+        $this->insert($favorite, array(
+            'user_id' => PDO::PARAM_INT,
+            'film_id' => PDO::PARAM_INT
+        ));
+    }
+
+    public function deleteFavorite($favorite)
+    {
+        $this->delete($favorite);
     }
 
 }
