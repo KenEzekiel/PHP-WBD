@@ -5,16 +5,15 @@
   <p>write your opinion about films</p>
   <p><?php
 
-      if (isset($Msg)) {
-        echo "<p>$Msg</p>";
-      }
-
       if (isset($_SESSION['user_id'])) {
         if ($_SESSION['role'] == "admin") {
           echo "<br> Hi, Admin!";
         } else {
           echo "<br> Hi, User!";
         }
+      }
+      if (isset($msg)) {
+        echo "<br><br><p>$msg</p>";
       }
       ?></p>
   <div>

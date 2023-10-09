@@ -179,6 +179,8 @@ textarea {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .nav-here p {
@@ -195,6 +197,305 @@ textarea {
   line-height: 20px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.overlay {
+  /* Position the overlay to cover the entire viewport */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Add background image or color for the overlay */
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.overlay .form {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 30px 40px 30px 40px;
+  width: 30%;
+  border-radius: 8px;
+  background: var(--neutral-grey-dark, #21252C);
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.popup p {
+  color: var(--neutral-grey-light, #BABDC3);
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+}
+
+.popup div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button-delete {
+  border:none;
+  border-radius: 8px;
+  background: #eb5050;
+  color: white;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 5px;
+  align-self: stretch;
+}
+
+.button-delete:hover {background-color: #ff9898}
+
+.button-delete:active {
+  background-color: #b63131;
+}
+
+.button-cancel {
+  border:none;
+  border-radius: 8px;
+  background: var(--primary-base, #5360DC);
+  color: white;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  align-self: stretch;
+}
+
+.button-cancel:hover {background-color: #7580e3}
+
+.button-cancel:active {
+  background-color: #313c9f;
+}
+
+.user-list {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.user-list td, .user-list th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.user-list tr:nth-child(even){background-color: #21252C;}
+
+.user-list tr:hover {background-color: #393c43;}
+
+.user-list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #252a28;
+}
+
+.buttons-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.buttons-form button {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.update-film {
+  width: 50%;
+}
+
+.button-delete-update {
+  border:none;
+  border-radius: 8px;
+  background: #eb5050;
+  color: white;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 20px;
+  align-self: stretch;
+}
+
+.button-delete-update:hover {background-color: #ff9898}
+
+.button-delete-update:active {
+  background-color: #b63131;
+}
+
+.no-margin-bot {
+  margin-bottom: 0px;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.center .error-msg {
+  border-radius: 6px;
+  text-align: center;
+  margin: 10px 10px 5px 10px;
+  font-size: medium;
+  padding: 10px;
+  background-color: #2c2e38;
+  font-weight: bold;
+}
+
+.notification {
+  border-radius: 6px;
+  text-align: center;
+  margin: 5px 10px 10px 10px;
+  font-size: medium;
+  padding: 10px;
+  background-color: #2c2e38;
+  font-weight: bold;
+}
+
+.back-button {
+  text-decoration: none;
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  padding: 20px;
+}
+
+
+.details {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.media {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  margin-top: 30px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background-color: var(--neutral-grey-dark, #21252C);
+  padding: 20px;
+  gap: 20px;
+}
+
+.title-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-header button {
+  border: none;
+  background-color: var(--neutral-grey-dark, #21252C);
+  cursor: pointer;
+}
+
+.right-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+
+.right-btns .button {
+  background-color: #5360DC;
+  padding: 0px 20px;
+  margin: 0px;
+  height: 2rem;
+}
+
+.right-btns .button:hover {
+  background-color: #969fed;
+}
+
+#fav {
+  width: 2rem;
+}
+
+#goBack:hover{
+  cursor:pointer;
+}
+
+#filmDetails {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-left: 100px;
+  width: 80%;
+  gap: 30px;
+}
+
+#poster {
+  width: 250px;
+  max-width: 50%;
+  height: auto;
+  border-radius: 8px;
+}
+
+#trailer {
+  width: 700px;
+  background-color: #393c43;
+  border-radius: 10px;
+}
+
+#cast {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+#castTitle {
+  font-weight: bold;
+}
+
+#link {
+  cursor: pointer;
+  padding-left: 15px;
+  margin-bottom: 20px;
+  color: white;
+  
+
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 @media only screen and (max-width: 800px) {

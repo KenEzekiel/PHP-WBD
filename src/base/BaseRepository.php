@@ -221,15 +221,29 @@ abstract class BaseRepository
       return "$key = :$key";
     }, array_keys($arrParams), array_values($arrParams)));
     $primaryKey = $model->get('_primary_key');
-    $sql .= " WHERE $primaryKey = :primaryKey";
 
-    $stmt = $this->pdo->prepare($sql);
+    if (is_array($primaryKey)) {
+      $sql .= " WHERE ";
+      $sql .= implode(" AND ", array_map(function ($key, $value) {
+        return "$value = :$value"; // Menggunakan nama parameter yang sesuai
+      }, array_keys($primaryKey), array_values($primaryKey)));
+
+      $stmt = $this->pdo->prepare($sql);
+
+      foreach ($primaryKey as $key => $value) {
+        $stmt->bindValue(":$value", $model->get($value), PDO::PARAM_STR); // Menggunakan nama parameter yang sesuai
+      }
+    } else {
+      $sql .= " WHERE ";
+      $sql .= "$primaryKey = :primaryKey";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->bindValue(":primaryKey", $model->get($primaryKey), PDO::PARAM_INT);
+    }
+
     // Hydrating and sanitizing
     foreach ($arrParams as $key => $value) {
       $stmt->bindValue(":$key", $model->get($key), $value);
     }
-
-    $stmt->bindValue(":primaryKey", $model->get($primaryKey), PDO::PARAM_INT);
 
     $stmt->execute();
     return $stmt->rowCount();
@@ -239,10 +253,22 @@ abstract class BaseRepository
   {
     $sql = "DELETE FROM $this->tableName WHERE ";
     $primaryKey = $model->get('_primary_key');
-    $sql .= "$primaryKey = :primaryKey";
+    if (is_array($primaryKey)) {
+      $sql .= implode(" AND ", array_map(function ($key, $value) {
+        return "$value = :$value"; // Menggunakan nama parameter yang sesuai
+      }, array_keys($primaryKey), array_values($primaryKey)));
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(":primaryKey", $model->get('$primaryKey'), PDO::PARAM_INT);
+      $stmt = $this->pdo->prepare($sql);
+
+      foreach ($primaryKey as $key => $value) {
+        $stmt->bindValue(":$value", $model->get($value), PDO::PARAM_STR); // Menggunakan nama parameter yang sesuai
+      }
+    } else {
+      $sql .= "$primaryKey = :primaryKey";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->bindValue(":primaryKey", $model->get($primaryKey), PDO::PARAM_INT);
+    }
+    // echo $sql;
 
     $stmt->execute();
     return $stmt->rowCount();

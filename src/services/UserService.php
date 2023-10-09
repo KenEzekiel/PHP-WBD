@@ -117,8 +117,11 @@ class UserService extends BaseService
 
   public function create($email, $username, $password, $role)
   {
-    // $user = (new UserModel())->set('nama', $nama)->set('username', $username)->set('email', $email)->set('password', password_hash($password, PASSWORD_DEFAULT));
     $user = new UserModel();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      throw new BadRequestException("Email is not valid!");
+    }
+
     $user
       ->set('email', $email)
       ->set('username', $username)
@@ -200,6 +203,11 @@ class UserService extends BaseService
     $arrParams['username'] = PDO::PARAM_STR;
     $arrParams['password'] = PDO::PARAM_STR;
     $arrParams['role'] = PDO::PARAM_STR;
-    $this->repository->update($user, $arrParams);
+    return $this->repository->update($user, $arrParams);
+  }
+
+  public function deleteById($user_id)
+  {
+    return $this->repository->deleteById($user_id);
   }
 }

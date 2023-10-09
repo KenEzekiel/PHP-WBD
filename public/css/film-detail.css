@@ -1,0 +1,180 @@
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.insert-review {
+  background-color: var(--neutral-black, #17181D);
+  padding: 2rem 8rem;
+}
+
+.insert-review h2 {
+  color: white;
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.review-group {
+  background-color: #21252c;
+  padding: 1rem;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+}
+
+.input {
+  background-color: #404650;
+  padding: 0.75rem;
+  text-align: top;
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.submit-btn button {
+  background-color: #5360dc;
+  border:none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  color: white;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  display: flex;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.delete-btn button {
+  background-color: #de2727;
+  border:none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  color: #fff;
+}
+
+.stars {
+  display: inline-block;
+  position: relative;
+  height: 35px;
+  line-height: 35px;
+  font-size: 35px;
+}
+
+.stars label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5%;
+  cursor: pointer;
+}
+
+.stars label:last-child {
+  position: static;
+}
+
+.stars label:nth-child(1) {
+  z-index: 5;
+}
+
+.stars label:nth-child(2) {
+  z-index: 4;
+}
+
+.stars label:nth-child(3) {
+  z-index: 3;
+}
+
+.stars label:nth-child(4) {
+  z-index: 2;
+}
+
+.stars label:nth-child(5) {
+  z-index: 1;
+}
+
+.stars label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.stars label .icon {
+  float: left;
+  color: transparent;
+}
+
+.stars label:last-child .icon {
+  color: #000;
+}
+
+.stars:not(:hover) label input:checked ~ .icon,
+.stars:hover label:hover input ~ .icon {
+  color: #fbde46;
+}
+
+.stars label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #fbde46;
+}
+
+.icon-rating {
+  color: #fbde46;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+.icon-rating-non {
+  color: #000;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+.review-info {
+  display: flex;
+  gap: 1rem;
+  color: white;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.review-result {
+  padding-top: 0.5rem;
+  color: white;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.time {
+  color: #BABDC3;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.25rem;
+}
+
+.review-form {
+  padding-top: 1rem;
+}

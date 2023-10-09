@@ -39,17 +39,17 @@ class CreateFilmController extends BaseController
   protected function get($urlParams)
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
-      // TODO: make error controller
+      // If not admin
       parent::redirect("/error", [], 401);
       return;
     }
-    parent::render($urlParams, "create_film", "layouts/base");
+    parent::render($urlParams, "create-film", "layouts/base");
   }
 
   protected function post($urlParams)
   {
     if (!isset($_SESSION['role']) or $_SESSION['role'] != 'admin') {
-      parent::redirect("/error", 401);
+      parent::redirect("/error", [], 401);
       return;
     }
     try {
@@ -66,8 +66,8 @@ class CreateFilmController extends BaseController
       if ($_FILES['image-path']['error'] == UPLOAD_ERR_OK) {
         $image_tmp = $_FILES['image-path']['tmp_name'];
         $image_name = $_FILES['image-path']['name'];
-        move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/images/" . $image_name);
-        $image_path = "/public/files/images/" . $image_name;
+        move_uploaded_file($image_tmp, __DIR__ . "/../../public/files/img/" . $image_name);
+        $image_path = "/files/img/" . $image_name;
 
         if (!$this->is_image($image_name)) {
           throw new BadRequestException("Image file format is not valid");
@@ -78,8 +78,8 @@ class CreateFilmController extends BaseController
       if ($_FILES['trailer-path']['error'] == UPLOAD_ERR_OK) {
         $trailer_tmp = $_FILES['trailer-path']['tmp_name'];
         $trailer_name = $_FILES['trailer-path']['name'];
-        move_uploaded_file($trailer_tmp, __DIR__ . "/../../public/files/trailers/" . $trailer_name);
-        $trailer_path = "/public/files/trailers/" . $trailer_name;
+        move_uploaded_file($trailer_tmp, __DIR__ . "/../../public/files/trailer/" . $trailer_name);
+        $trailer_path = "files/trailer/" . $trailer_name;
 
         if (!$this->is_trailer($trailer_name)) {
           throw new BadRequestException("Trailer file format is not valid");
@@ -90,12 +90,14 @@ class CreateFilmController extends BaseController
 
       // Call service
       $response = $this->service->add($image_path, $trailer_path, $title, $released_year, $director, $description, $cast, $genre);
+      $msg = "Create film unsuccessful!";
       if ($response) {
         $msg = "Successfully created film!";
+        $urlParams['msg'] = $msg;
       }
 
       // Render response
-      parent::render(["Msg" => $msg], "home", "layouts/base");
+      parent::redirect("/", $urlParams);
     } catch (Exception $e) {
       $msg = $e->getMessage();
       parent::render(["errorMsg" => $msg], "create_film", "layouts/base");
