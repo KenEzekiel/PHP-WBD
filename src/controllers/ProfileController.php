@@ -42,7 +42,7 @@ class ProfileController extends BaseController
           }
           else if ($uri == "/my-favorites")
           {
-              $favorites = $this->favoriteService->getUserFavoriteFilms(1);
+              $favorites = $this->favoriteService->getUserFavoriteFilms($_SESSION['user_id']);
               $films = [];
               foreach ($favorites as $fav) {
                   $films[] = $this->filmService->getById($fav["film_id"]);
@@ -59,7 +59,7 @@ class ProfileController extends BaseController
           {
               $user = $this->service->getById($_SESSION['user_id']);
               $data['username'] = $user->username;
-              $reviews = $this->reviewService->getUserReviews(2);
+              $reviews = $this->reviewService->getUserReviews($_SESSION['user_id']);
               $reviewsResp = [];
               foreach ($reviews as $review) {
                   $reviewsResp[] = $review->toResponse();
