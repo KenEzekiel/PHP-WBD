@@ -65,5 +65,16 @@ class ReviewService extends BaseService {
         return $review;
     }
 
+    public function getUserReviews($user_id) {
+        $reviews = [];
+        $response = $this->repository->getByUserId($user_id);
+        if ($response) {
+            $review = new ReviewModel();
+            $review->constructFromArray($response);
+            $reviews[] = $review;
+        }
+        return $reviews;
+    }
+
 
 }

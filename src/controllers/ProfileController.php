@@ -4,25 +4,62 @@ namespace app\controllers;
 
 use app\base\BaseController;
 use app\exceptions\BadRequestException;
+use app\models\FilmModel;
 use app\models\UserModel;
 use app\Request;
+use app\services\FavoriteService;
+use app\services\FilmService;
+use app\services\ReviewService;
 use app\services\UserService;
 use Exception;
 
 class ProfileController extends BaseController
 {
+    protected $favoriteService;
+    protected $reviewService;
+    protected $filmService;
   public function __construct()
   {
     parent::__construct(UserService::getInstance());
+    $this->favoriteService = FavoriteService::getInstance();
+    $this->reviewService = ReviewService::getInstance();
+    $this->filmService = FilmService::getInstance();
   }
 
   protected function get($urlParams)
   {
-
-    $user = $this->service->getById($_SESSION['user_id']);
-    $urlParams['email'] = $user->email;
-    $urlParams['username'] = $user->username;
-    parent::render($urlParams, "profile", "layouts/base");
+      try
+      {
+          $uri = Request::getURL();
+          $data = [];
+          if ($uri == "/profile-user")
+          {
+              $user = $this->service->getById($_SESSION['user_id']);
+              $data['email'] = $user->email;
+              $data['username'] = $user->username;
+          }
+          else if ($uri == "/profile-favorites")
+          {
+              $favorites = $this->favoriteService->getUserFavoriteFilms(1);
+              $films = [];
+              foreach ($favorites as $fav) {
+                  $films[] = $this->filmService->getById($fav["film_id"]);
+              }
+              $data["films"] = $films;
+          }
+          else if ($uri == "/profile-reviews")
+          {
+              $reviews = $this->reviewService->getUserReviews(1);
+              echo "tess";
+              var_dump($reviews);
+              $data["reviews"] = $reviews;
+          }
+          parent::render($data, "profile", "layouts/base");
+      } catch (Exception $e) {
+            $msg = $e->getMessage();
+            $urlParams['errorMsg'] = $msg;
+            parent::render($urlParams, "profile", "layouts/base");
+      }
   }
 
   protected function post($urlParams)

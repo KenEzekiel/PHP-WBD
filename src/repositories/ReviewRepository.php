@@ -32,4 +32,8 @@ class ReviewRepository extends BaseRepository {
     public function getByPublishedTime($published_time) {
         return $this->findAll(['published_time' => [$published_time, PDO::PARAM_STR]], null, null, null, false);
     }
+
+    public function  getByUserId($user_id) {
+        return $this->findAll(["user_id" => [$user_id, PDO::PARAM_INT]]);
+    }
 }
