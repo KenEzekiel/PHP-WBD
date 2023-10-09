@@ -82,13 +82,14 @@
             <div class="submit-btn">
                 <form method="post">
                     <input type="hidden" name="action" value="edit">
-                    <button type="submit">Edit Review</button>
+                    <button type="submit" class="submit-btn">Edit <span class="review-text">&nbsp;Review</span>
+                    </button>
                 </form>
             </div>
             <div class="delete-btn">
                 <form method="post">
                     <input type="hidden" name="action" value="delete">
-                    <button type="submit">Delete Review</button>
+                    <button type="submit" class="delete-btn">Delete <span class="review-text">&nbsp;Review</span></button>
                 </form>
             </div>
         </div>';

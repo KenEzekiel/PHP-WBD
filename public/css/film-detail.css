@@ -6,7 +6,7 @@
 }
 
 .insert-review {
-  background-color: var(--neutral-black, #17181D);
+  background-color: var(--neutral-black, #17181d);
   padding: 2rem 8rem;
 }
 
@@ -39,7 +39,7 @@
 
 .submit-btn button {
   background-color: #5360dc;
-  border:none;
+  border: none;
   border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -62,7 +62,7 @@
 
 .delete-btn button {
   background-color: #de2727;
-  border:none;
+  border: none;
   border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -169,7 +169,7 @@
 }
 
 .time {
-  color: #BABDC3;
+  color: #babdc3;
   display: flex;
   justify-content: flex-end;
   padding-top: 0.25rem;
@@ -177,4 +177,20 @@
 
 .review-form {
   padding-top: 1rem;
+}
+
+@media screen and (max-width: 800px) {
+  .submit-btn .review-text {
+    display: none; /* Menghilangkan teks "Review" saat di layar kecil */
+  }
+  .delete-btn .review-text {
+    display: none; /* Menghilangkan teks "Review" saat di layar kecil */
+  }
+  .insert-review {
+    background-color: var(--neutral-black, #17181d);
+    padding: 1rem 2rem;
+  }
+  .time {
+    font-size: small;
+  }
 }
