@@ -1,11 +1,5 @@
-<html>
-
-<head>
-    <link rel='stylesheet' href='/public/css/film-detail.css'>
-    <link rel='stylesheet' href='/public/css/styles.css'>
-</head>
-
-<body>
+<div class='reviews'>
+    <h2 id="goBack"><a class='back-button' href="/film-details?film_id=<?= $film_id ?>"><?php echo "< Back" ?></a></h2>
     <div class='insert-review'>
         <h2>Write your review</h2>
         <p class='error-msg'>
@@ -50,7 +44,7 @@
                 </label>
             </div>
             <br>
-            <input class="input" type="text" id="notes" name="notes" placeholder="Write review here..." value="' . (isset($notes) and $notes != "" ? $notes : "") . '"required>
+            <input class="input" type="text" id="notes" name="notes" placeholder="Write review here..." value="' . (isset($notes) && ($notes != "") ? $notes : "") . '" required>
             <br>
         </div>
         <div class="submit-btn">
@@ -152,6 +146,4 @@
             }
     ?>
     </div>
-</body>
-
-</html>
+</div>
