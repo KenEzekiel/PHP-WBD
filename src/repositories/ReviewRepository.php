@@ -45,6 +45,10 @@ class ReviewRepository extends BaseRepository
         return $this->findAll(['published_time' => [$published_time, PDO::PARAM_STR]], null, null, null, false);
     }
 
+    public function  getByUserId($user_id) {
+        return $this->findAll(["user_id" => [$user_id, PDO::PARAM_INT]]);
+    }
+
     public function deleteByUserFilmId($user_id, $film_id)
     {
         $review = $this->getById($user_id, $film_id);

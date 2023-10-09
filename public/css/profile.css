@@ -1,0 +1,45 @@
+.tab {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--neutral-white, #FCFCFC);
+    font-weight: normal;
+    transition: color 0.2s ease, border-bottom 0.2s ease, font-weight 0.2s ease;
+}
+
+.active-tab {
+    border-bottom: 2px solid #333;
+    font-weight: bold;
+    color: var(--neutral-white, #FCFCFC);
+}
+
+.tab:hover {
+    color: var(--primary-base);
+}
+
+.tab-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 24px;
+}
+
+.reviews-container {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 12px 0px 12px 0px;
+    width: 80%;
+    margin: auto;
+}
+
+.favorites-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 12px 0px 12px 0px;
+    border-radius: 8px;
+    margin: auto;
+}
