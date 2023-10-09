@@ -10,6 +10,19 @@
     background: var(--neutral-grey-base, #404650);
 }
 
+.search-filter {
+    display: flex;
+}
+
+.film-page-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px 12px 0px;
+    width: 80%;
+    margin: auto;
+}
+
 .sort-filter {
     display: flex;
     gap: 12px;

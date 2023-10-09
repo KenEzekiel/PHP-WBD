@@ -46,26 +46,28 @@ abstract class BaseRepository
   {
     $sql = "SELECT COUNT(*) FROM $this->tableName";
 
-    // Mapping where
-    if (count($where) > 0) {
-      foreach ($where as $key => $value) {
-        $columns = [$key];
-        if (isset($value[3]) and is_array(($value[3]))) {
-          $columns = [$key] + $value[3];
-        }
-        $subConditions = [];
-        foreach ($columns as $column) {
-          if (isset($value[2]) and $value[2] == 'LIKE') {
-            $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
-          } else {
-            $subConditions[] = "$column = :$column";
-          }
-        }
-        $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
-      }
+    $conditions = [];
 
-      $sql .= " WHERE " . implode(" AND ", $conditions);
-    }
+      // Mapping where
+      if (count($where) > 0) {
+          foreach ($where as $key => $value) {
+              $columns = [$key];
+              if (isset($value[3]) and is_array(($value[3]))) {
+                  $columns = [$key] + $value[3];
+              }
+              $subConditions = [];
+              foreach ($columns as $column) {
+                  if (isset($value[2]) and $value[2] == 'LIKE') {
+                      $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
+                  } else {
+                      $subConditions[] = "$column = :$column";
+                  }
+              }
+              $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
+          }
+
+          $sql .= " WHERE " . implode(" AND ", $conditions);
+      }
 
     // Hydrating statement, for sanitizing
     $stmt = $this->pdo->prepare($sql);
@@ -85,6 +87,8 @@ abstract class BaseRepository
     }
 
     $stmt->execute();
+
+
     return $stmt->fetchColumn();
   }
 
@@ -188,9 +192,6 @@ abstract class BaseRepository
         $stmt->bindValue(":$key", $value[0], $value[1]);
       }
     }
-
-    $stmt->execute();
-
     return $stmt->fetch();
   }
 

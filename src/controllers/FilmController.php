@@ -34,10 +34,12 @@ class FilmController extends BaseController
       $isDesc = $_GET['sort'] ?? "asc";
       $order = $_GET['order'] ?? 'title';
       $data = $this->service->searchAndFilter($word, $order, $isDesc, $genre, $released_year, $page);
+      $row_count = $this->service->countRowBySearchAndFilter($word, $genre, $released_year);
 
         if ($uri == "/films") {
             $data['genres'] = $this->service->getAllCategoryValues('genre');
             $data['released_years'] = $this->service->getAllCategoryValues('released_year');
+            $data['total_page'] = ceil($row_count/4);
 
             parent::render($data, 'films', "layouts/base");
         } elseif ($uri == '/film-details') {
@@ -52,6 +54,7 @@ class FilmController extends BaseController
                 $films[] = $film->toResponse();
             }
             $data['films'] = $films;
+            $data['total_page'] = ceil($row_count/4);
 
             response::send_json_response($data);
         }

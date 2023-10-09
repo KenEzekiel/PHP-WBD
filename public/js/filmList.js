@@ -4,10 +4,10 @@ const sort_order = document.getElementById("sort-order")
 const genre = document.getElementById("filter-genre")
 const released_year = document.getElementById("filter-year")
 const urlParams = new URLSearchParams(window.location.search);
+const paginationData = document.getElementById('pagination-data');
+let totalPageCount = paginationData.getAttribute('data-total-pages');
 let currentPage = parseInt(urlParams.get('page')) || 1;
 const film_cards = document.getElementById("film-card-list")
-const prev_page = document.getElementById("prev-page")
-const next_page = document.getElementById("next-page")
 
 const utils = new Utils()
 async function searchFilterHandler() {
@@ -23,6 +23,8 @@ async function searchFilterHandler() {
                 if (response.status === 200) {
                     const responseData = response.data;
                     updateFilmCards(responseData['films']);
+                    totalPageCount = responseData['total_page'];
+                    generatePaginationLinks()
                 } else {
                     console.error("Error:", response);
                 }
@@ -34,22 +36,54 @@ async function searchFilterHandler() {
     }
 }
 
+function generatePaginationLinks() {
+    const paginationContainer = document.getElementById("pagination-container")
+    paginationContainer.innerHTML = "";
+    console.log(totalPageCount)
+
+    for (let i = 1; i <= totalPageCount; i++) {
+        const pageLink = document.createElement("a");
+        pageLink.textContent = i;
+        pageLink.href = `?page=${i}`;
+        pageLink.classList.add("page-number");
+        if (i === currentPage) {
+            pageLink.classList.add("active");
+        }
+        pageLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentPage = i;
+            searchFilterHandler();
+        });
+
+        paginationContainer.appendChild(pageLink);
+    }
+}
+
 function updateFilmCards(films) {
     film_cards.innerHTML = ""
 
     film_cards.innerHTML = films.map((film) => `
         <div class='film-card'>
-            <div class='film-image' style='background-image: url(${film.image_path});'></div>
+            <div class='film-image' style="background-image: url('public/${film.image_path}');"></div>
             <div class='film-title'>${film.title}</div>
         </div>
     `).join('');
 }
 
+for (let i = 1; i <= totalPageCount; i++) {
+    const pageLink = document.getElementById(`page-${i}`);
+    if (pageLink) {
+        pageLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentPage = i;
+            searchFilterHandler();
+        });
+    }
+}
 
-search_bar.addEventListener('change', utils.debounce(searchFilterHandler, 300));
+search_bar.addEventListener('input', utils.debounce(searchFilterHandler, 300));
 sort_by.addEventListener('change', utils.debounce(searchFilterHandler, 300));
 sort_order.addEventListener('change', utils.debounce(searchFilterHandler, 300));
 genre.addEventListener('change', utils.debounce(searchFilterHandler, 300));
 released_year.addEventListener('change', utils.debounce(searchFilterHandler, 300));
-prev_page.addEventListener('click', utils.debounce(searchFilterHandler, 300));
-next_page.addEventListener('click', utils.debounce(searchFilterHandler, 300));
+generatePaginationLinks()
