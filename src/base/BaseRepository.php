@@ -192,6 +192,9 @@ abstract class BaseRepository
         $stmt->bindValue(":$key", $value[0], $value[1]);
       }
     }
+
+    $stmt->execute();
+
     return $stmt->fetch();
   }
 

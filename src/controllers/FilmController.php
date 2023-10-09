@@ -39,12 +39,18 @@ class FilmController extends BaseController
         if ($uri == "/films") {
             $data['genres'] = $this->service->getAllCategoryValues('genre');
             $data['released_years'] = $this->service->getAllCategoryValues('released_year');
-            $data['total_page'] = ceil($row_count/4);
+            $data['total_page'] = ceil($row_count/10);
 
             parent::render($data, 'films', "layouts/base");
         } elseif ($uri == '/film-details') {
             $data['film'] = $this->service->getById($_GET['film_id']);
-            $data['isFavorite'] = $this->favorite_handler->isUserFavorite($_SESSION['user_id'], $_GET['film_id']);
+            if (isset ($_SESSION['user_id']))
+            {
+                $data['isFavorite'] = $this->favorite_handler->isUserFavorite($_SESSION['user_id'], $_GET['film_id']);
+            }
+            else {
+                $data['isFavorite'] = false;
+            }
 
             parent::render($data, 'film-details', "layouts/base");
         } else {
@@ -54,7 +60,7 @@ class FilmController extends BaseController
                 $films[] = $film->toResponse();
             }
             $data['films'] = $films;
-            $data['total_page'] = ceil($row_count/4);
+            $data['total_page'] = ceil($row_count/10);
 
             response::send_json_response($data);
         }

@@ -64,6 +64,7 @@ function updateFilmCards(films) {
 
     film_cards.innerHTML = films.map((film) => `
         <div class='film-card'>
+            <a href='/film-details?film_id=${film.film_id}'>
             <div class='film-image' style="background-image: url('public/${film.image_path}');"></div>
             <div class='film-title'>${film.title}</div>
         </div>
