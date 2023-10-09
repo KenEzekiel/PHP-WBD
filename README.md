@@ -5,12 +5,28 @@
 
 ## Daftar Isi
 
-- [Deskripsi Aplikasi](#deskripsi-aplikasi)
-- [Daftar Requirement](#daftar-requirement)
-- [Cara Instalasi](#cara-instalasi)
-- [Cara Menjalankan _Server_](#cara-menjalankan-server)
-- [Screenshot Tampilan Aplikasi](#screenshot-tampilan-aplikasi)
-- [Pembagian Tugas](#pembagian-tugas)
+- [Letterpaw](#letterpaw)
+  - [Daftar Isi](#daftar-isi)
+  - [Deskripsi Aplikasi](#deskripsi-aplikasi)
+  - [Daftar Requirement](#daftar-requirement)
+  - [Cara Instalasi](#cara-instalasi)
+  - [Cara Menjalankan Server](#cara-menjalankan-server)
+  - [Screenshot Tampilan Aplikasi](#screenshot-tampilan-aplikasi)
+    - [Login](#login)
+    - [Register](#register)
+    - [Home](#home)
+    - [Daftar Film](#daftar-film)
+    - [Search, Sort, dan Filter](#search-sort-dan-filter)
+    - [Detail Film](#detail-film)
+    - [Edit Film](#edit-film)
+    - [Daftar Review](#daftar-review)
+    - [Edit Review](#edit-review)
+    - [Detail User](#detail-user)
+    - [Edit User](#edit-user)
+  - [Pembagian Tugas](#pembagian-tugas)
+    - [_Server Side_](#server-side)
+    - [_Client Side_](#client-side)
+    - [_Chores_](#chores)
 
 ## Deskripsi Aplikasi
 
@@ -36,6 +52,7 @@
 2. Pastikan komputer Anda telah menginstalasi dan menjalankan aplikasi Docker.
 3. Lakukan pembuatan _image_ Docker yang akan digunakan oleh aplikasi ini dengan menjalankan perintah `docker build.` pada terminal _directory_ aplikasi web.
 4. Buatlah sebuah file `.env` yang bersesuaian dengan penggunaan (contoh file tersebut dapat dilihat pada `.env.example`).
+5. Jalankan run.sh untuk windows
 
 ## Cara Menjalankan Server
 
@@ -109,11 +126,12 @@
 | ------------------------ | -------- |
 | Login                    | 13521089 |
 | Register                 | 13521089 |
-| Home                     | 13521089 |
+| Home + Routing           | 13521089 |
 | Daftar Film              | 13521094 |
 | Search, Sort, dan Filter | 13521094 |
-| Detail Film              | 13521110 |
-| Edit Film                | 13521110 |
+| Daftar + Tambah Favorit  | 13521094 |
+| Detail Film              | 13518110 |
+| Edit + Tambah Film       | 13521089 |
 | Daftar Review            | 13521084 |
 | Edit Review              | 13521084 |
 | Detail User              | 13521089 |
@@ -125,12 +143,23 @@
 | ------------------------ | -------- |
 | Login                    | 13521089 |
 | Register                 | 13521089 |
-| Home                     | 13521089 |
+| Home + Routing           | 13521089 |
 | Daftar Film              | 13521094 |
 | Search, Sort, dan Filter | 13521094 |
-| Detail Film              | 13521110 |
-| Edit Film                | 13521110 |
+| Daftar + Tambah Favorit  | 13521094 |
+| Detail Film              | 13518110 |
+| Edit + Tambah Film       | 13521089 |
 | Daftar Review            | 13521084 |
 | Edit Review              | 13521084 |
 | Detail User              | 13521089 |
 | Edit User                | 13521089 |
+
+### _Chores_
+
+| Job                                | NIM                 |
+| ---------------------------------- | ------------------- |
+| Docker                             | 13521084            |
+| Database Schema + Seeding          | 13521094            |
+| Wireframing                        | 13521094            |
+| Backend Structure + Design Pattern | 13521089            |
+| Navbar                             | 13521094            |
