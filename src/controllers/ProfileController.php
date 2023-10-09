@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\base\BaseController;
+use app\controllers\utils\response;
 use app\exceptions\BadRequestException;
 use app\models\FilmModel;
 use app\models\UserModel;
@@ -32,29 +33,41 @@ class ProfileController extends BaseController
       {
           $uri = Request::getURL();
           $data = [];
-          if ($uri == "/profile-user")
+          if ($uri == "/profile")
           {
               $user = $this->service->getById($_SESSION['user_id']);
               $data['email'] = $user->email;
               $data['username'] = $user->username;
+              parent::render($data, "profile", "layouts/base");
           }
-          else if ($uri == "/profile-favorites")
+          else if ($uri == "/my-favorites")
           {
               $favorites = $this->favoriteService->getUserFavoriteFilms(1);
               $films = [];
               foreach ($favorites as $fav) {
                   $films[] = $this->filmService->getById($fav["film_id"]);
               }
-              $data["films"] = $films;
+              $filmsResp = [];
+              foreach ($films as $film) {
+                  $filmsResp[] = $film->toResponse();
+              }
+              $data['films'] = $filmsResp;
+
+              response::send_json_response($data);
           }
-          else if ($uri == "/profile-reviews")
+          else if ($uri == "/my-reviews")
           {
-              $reviews = $this->reviewService->getUserReviews(1);
-              echo "tess";
-              var_dump($reviews);
-              $data["reviews"] = $reviews;
+              $user = $this->service->getById($_SESSION['user_id']);
+              $data['username'] = $user->username;
+              $reviews = $this->reviewService->getUserReviews(2);
+              $reviewsResp = [];
+              foreach ($reviews as $review) {
+                  $reviewsResp[] = $review->toResponse();
+              }
+              $data["reviews"] = $reviewsResp;
+              response::send_json_response($data);
           }
-          parent::render($data, "profile", "layouts/base");
+
       } catch (Exception $e) {
             $msg = $e->getMessage();
             $urlParams['errorMsg'] = $msg;
