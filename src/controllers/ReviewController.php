@@ -30,12 +30,28 @@ class ReviewController extends BaseController
         }
         $urlParams["reviews"] = $reviews;
         if (isset($_SESSION['user_id'])) {
+
             if (isset($urlParams['isset']) and $urlParams['isset'] == 'yes') {
-                unset($urlParams['errorMsg']);
-                $user_id = $_SESSION['user_id'];
-                $user_review = $this->service->getReviewByUserFilmId($user_id, $film_id);
-                if (isset($user_review->user_id, $user_review->film_id)) {
-                    $urlParams["user_review"] = $user_review;
+                // Only if review is set
+                if (isset($urlParams['action']) and $urlParams['action'] == 'delete') {
+                    unset($urlParams['errorMsg']);
+                    $user_id = $_SESSION['user_id'];
+                    $user_review = $this->service->getReviewByUserFilmId($user_id, $film_id);
+                    if (isset($user_review->user_id, $user_review->film_id)) {
+                        $urlParams["user_review"] = $user_review;
+                        parent::render($urlParams, 'delete-review', 'layouts/base');
+                    } else {
+                        unset($urlParams['action']);
+                        unset($urlParams['reviews']);
+                        parent::redirect("/review", $urlParams);
+                    }
+                } else {
+                    unset($urlParams['errorMsg']);
+                    $user_id = $_SESSION['user_id'];
+                    $user_review = $this->service->getReviewByUserFilmId($user_id, $film_id);
+                    if (isset($user_review->user_id, $user_review->film_id)) {
+                        $urlParams["user_review"] = $user_review;
+                    }
                 }
             } else {
                 if (isset($urlParams['isset']) and $urlParams['isset'] == 'no') {
@@ -56,84 +72,85 @@ class ReviewController extends BaseController
 
     protected function post($urlParams)
     {
-        if (isset($_SESSION['user_id'])) {
-            if (isset($_POST['action'])) {
-                $action = $_POST['action'];
-                if ($action == 'edit') {
-                    try {
-                        $data = [];
-                        $data['film_id'] = $urlParams['film_id'];
-                        $data['isset'] = 'no';
-                        parent::redirect('/review', $data);
-                    } catch (Exception $e) {
-                        $msg = $e->getMessage();
-                        $urlParams['errorMsg'] = $msg;
-                        parent::redirect("/review", $urlParams);
-                    }
-                } elseif ($action == 'delete') {
-                    try {
-                        $user_id = $_SESSION['user_id'];
-                        $film_id = $urlParams['film_id'];
-                        $notes = $this->service->getReviewByUserFilmId($user_id, $film_id);
-                        $response = $this->service->deleteByUserFilmId($notes->user_id, $notes->film_id);
-                        if ($response == 1) {
-                            $msg = "Review deleted successfully";
-                            $urlParams['msg'] = $msg;
-                            $urlParams['isset'] = 'no';
-                        }
-                        parent::redirect("/review", $urlParams);
-                        // parent::render($urlParams, 'review', 'layouts/base');
-                    } catch (Exception $e) {
-                        $msg = $e->getMessage();
-                        $urlParams['errorMsg'] = $msg;
-                        parent::redirect("/review", $urlParams);
-                    }
-                }
-            } else {
-                try {
+        if (!isset($_SESSION['user_id'])) {
+            parent::redirect("/login");
+        }
+        try {
+            if (isset($_POST['delete_confirm'])) {
+                // Delete page
+                if ($_POST['delete_confirm'] == 'yes') {
+                    // Confirm deletion
                     $user_id = $_SESSION['user_id'];
                     $film_id = $urlParams['film_id'];
-                    $review = $this->service->getReviewByUserFilmId($user_id, $film_id);
-                    if (!isset($_POST['notes']) or !isset($_POST['rating'])) {
-                        throw new BadRequestException("Rating or notes can't be empty!");
+                    $notes = $this->service->getReviewByUserFilmId($user_id, $film_id);
+                    $response = $this->service->deleteByUserFilmId($notes->user_id, $notes->film_id);
+                    if ($response == 1) {
+                        $msg = "Review deleted successfully";
+                        $urlParams['msg'] = $msg;
+                        $urlParams['isset'] = 'no';
                     }
-                    if ($review == null) {
-                        // No review, user review is empty
-                        // GET DATA
-                        $rating = $_POST['rating'];
-                        $notes = $_POST['notes'];
-                        date_default_timezone_set('Asia/Jakarta');
-                        $published_time = date('Y-m-d H:i:s');
-                        $response = $this->service->create($user_id, $film_id, $rating, $notes, $published_time);
-                        unset($urlParams['msg']);
-                        $urlParams['isset'] = 'yes';
-                        unset($urlParams['errorMsg']);
-                        parent::redirect('review', $urlParams);
-                    } else {
-                        // Has a review, want to update
-                        // GET DATA
-                        $rating = $_POST['rating'];
-                        $notes = $_POST['notes'];
-                        $published_time = $review->published_time;
-                        $review->set('rating', $rating)->set('notes', $notes)->set('published_time', $published_time);
-                        $response = $this->service->update($review);
-                        if ($response == 1) {
-                            $msg = "Review updated successfully!";
-                            $urlParams['msg'] = $msg;
-                        }
-                        $urlParams['isset'] = 'yes';
-                        unset($urlParams['errorMsg']);
-                        parent::redirect('/review', $urlParams);
-                    }
-                } catch (Exception $e) {
-                    $msg = $e->getMessage();
-                    $urlParams['errorMsg'] = $msg;
+                }
+                // Unset the parameters
+                unset($urlParams['action']);
+                unset($urlParams['delete_confirm']);
+                unset($urlParams['errorMsg']);
+                unset($urlParams['msg']);
+                // Redirect to own link
+                parent::redirect("/review", $urlParams);
+            } else if (isset($_POST['action'])) {
+                $action = $_POST['action'];
+                if ($action == 'edit') {
+
+                    $data = [];
+                    $data['film_id'] = $urlParams['film_id'];
+                    $data['isset'] = 'no';
+                    parent::redirect('/review', $data);
+                } elseif ($action == 'delete') {
+
+                    $urlParams['action'] = 'delete';
                     parent::redirect("/review", $urlParams);
                 }
+            } else {
+
+                $user_id = $_SESSION['user_id'];
+                $film_id = $urlParams['film_id'];
+                $review = $this->service->getReviewByUserFilmId($user_id, $film_id);
+                if (!isset($_POST['notes']) or !isset($_POST['rating'])) {
+                    throw new BadRequestException("Rating or notes can't be empty!");
+                }
+                if ($review == null) {
+                    // No review, user review is empty
+                    // GET DATA
+                    $rating = $_POST['rating'];
+                    $notes = $_POST['notes'];
+                    date_default_timezone_set('Asia/Jakarta');
+                    $published_time = date('Y-m-d H:i:s');
+                    $response = $this->service->create($user_id, $film_id, $rating, $notes, $published_time);
+                    unset($urlParams['msg']);
+                    $urlParams['isset'] = 'yes';
+                    unset($urlParams['errorMsg']);
+                    parent::redirect('review', $urlParams);
+                } else {
+                    // Has a review, want to update
+                    // GET DATA
+                    $rating = $_POST['rating'];
+                    $notes = $_POST['notes'];
+                    $published_time = $review->published_time;
+                    $review->set('rating', $rating)->set('notes', $notes)->set('published_time', $published_time);
+                    $response = $this->service->update($review);
+                    if ($response == 1) {
+                        $msg = "Review updated successfully!";
+                        $urlParams['msg'] = $msg;
+                    }
+                    $urlParams['isset'] = 'yes';
+                    unset($urlParams['errorMsg']);
+                    parent::redirect('/review', $urlParams);
+                }
             }
-        } else {
-            // parent::render($urlParams, 'login', 'layouts/base');
-            parent::redirect("/login");
+        } catch (Exception $e) {
+            $msg = $e->getMessage();
+            $urlParams['errorMsg'] = $msg;
+            parent::redirect("/review", $urlParams);
         }
     }
 }
