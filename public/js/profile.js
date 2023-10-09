@@ -83,7 +83,7 @@ function updateFavorites(films) {
 
     favoritesContainer.innerHTML = films.map((film) => `
         <div class='film-card'>
-            <div class='film-image'></div>
+            <div class='film-image' style='background-image: url(${film.image_path});'></div>
             <div class='film-title'>${film.title}</div>
         </div>
     `).join('');
