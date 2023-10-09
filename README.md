@@ -1,20 +1,135 @@
-## Panduan Pengerjaan
-Berikut adalah hal yang harus diperhatikan untuk pengumpulan tugas ini:
-1. Buatlah grup pada Gitlab dengan format "IF3110-2023-KXX-01-YY", dengan XX adalah nomor kelas dan YY adalah nomor kelompok.
-2. Tambahkan anggota tim pada grup anda.
-3. **Fork** pada repository ini dengan organisasi yang telah dibuat.
-4. Ubah hak akses repository hasil Fork anda menjadi **private**.
-5. Hal-hal yang harus diperhatikan.
-    * Silakan commit pada repository anda (hasil fork)
-    * Lakukan beberapa commit dengan pesan yang bermakna, contoh: “add register form”, “fix logout bug”, jangan seperti “final”, “benerin dikit”, “fix bug”.
-    * Disarankan untuk tidak melakukan commit dengan perubahan yang besar karena akan mempengaruhi penilaian (contoh: hanya melakukan satu commit kemudian dikumpulkan).
-    * Commit dari setiap anggota tim akan mempengaruhi penilaian.
-    * Jadi, setiap anggota tim harus melakukan commit yang berpengaruh terhadap proses pembuatan aplikasi.
-    * Sebagai panduan bisa mengikuti [semantic commit](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716).
-6. Buatlah file README yang berisi:
-    * Deskripsi aplikasi web
-    * Daftar requirement
-    * Cara instalasi
-    * Cara menjalankan server
-    * Screenshot tampilan aplikasi (tidak perlu semua kasus, minimal 1 per halaman), dan 
-    * Penjelasan mengenai pembagian tugas masing-masing anggota (lihat formatnya pada bagian pembagian tugas).
+# Letterpaw
+
+> Disusun untuk memenuhi Tugas Besar IF3110 Pengembangan Aplikasi Berbasis Web
+> Milestone 1 - Monolithic PHP & Vanilla Web Application
+
+## Daftar Isi
+
+-   [Deskripsi Aplikasi](#deskripsi-aplikasi)
+-   [Daftar Requirement](#daftar-requirement)
+-   [Cara Instalasi](#cara-instalasi)
+-   [Cara Menjalankan _Server_](#cara-menjalankan-server)
+-   [Screenshot Tampilan Aplikasi](#screenshot-tampilan-aplikasi)
+-   [Pembagian Tugas](#pembagian-tugas)
+
+## Deskripsi Aplikasi
+
+**Letterpaw** adalah sebuah platform sosial yang dirancang khusus untuk pecinta film. Platform ini memungkinkan pengguna untuk membuat memilih film yang mereka telah tonton, memberikan peringkat, dan menulis ulasan tentang film tersebut.
+
+## Daftar Requirement
+
+1. Login
+2. Register
+3. Home
+4. Daftar Film
+5. Search, Sort, dan Filter
+7. Detail Film
+6. Edit Film
+8. Daftar Review
+9. Edit Review
+10. Detail User
+11. Edit User
+
+## Cara Instalasi
+
+1. Lakukan pengunduhan _repository_ ini dengan menggunakan perintah `git clone https://gitlab.informatika.org/if3110-2023-k02-01-02/tugas-besar-1.git` pada terminal komputer Anda.
+2. Pastikan komputer Anda telah menginstalasi dan menjalankan aplikasi Docker.
+3. Lakukan pembuatan _image_ Docker yang akan digunakan oleh aplikasi ini dengan menjalankan perintah `docker build -t tubes-1:latest .` pada terminal _directory_ aplikasi web.
+4. Buatlah sebuah file `.env` yang bersesuaian dengan penggunaan (contoh file tersebut dapat dilihat pada `.env.example`).
+
+## Cara Menjalankan Server
+
+1. Anda dapat menjalankan program ini dengan menjalankan perintah `docker-compose up` pada terminal _directory_ aplikasi web.
+2. Aplikasi web dapat diakses dengan menggunakan browser pada URL `http://localhost:8080/`.
+3. Aplikasi web dapat dihentikan dengan menjalankan perintah perintah `docker-compose down` pada terminal _directory_ aplikasi web.
+
+## Screenshot Tampilan Aplikasi
+
+### Login
+
+![Login Page](./screenshots/login.png)
+
+### Register
+
+![Register Page](./screenshots/register.png)
+
+### Home
+
+![Home Page](./screenshots/home.png)
+
+### Daftar Film
+
+![Film List Page](./screenshots/list-album-1.png)
+
+### Search, Sort, dan Filter
+
+![Search, Sort, dan Filter Page](./screenshots/search-sort-filter-1.png)
+
+### Detail Film
+
+![Detail Film Page](./screenshots/detail-film.png)
+
+### Edit Film
+
+![Edit Film Page](./screenshots/edit-album-1.png)
+
+### Daftar Review
+
+![Review List Page](./screenshots/detail-review.png)
+
+### Edit Review
+
+![Add Album Page](./screenshots/add-album-1.png)
+
+### Detail User
+
+![User List Page](./screenshots/detail-user.png)
+
+### Edit User
+
+![Edit User Page](./screenshots/edit-user.png)
+
+## Pembagian Tugas
+
+1. Login
+2. Register
+3. Home
+4. Daftar Film
+5. Search, Sort, dan Filter
+7. Detail Film
+6. Edit Film
+8. Daftar Review
+9. Edit Review
+10. Detail User
+11. Edit User
+### _Server Side_
+
+| Fitur                    | NIM      |
+| ------------------------ | -------- |
+| Login                    | 13521089 |
+| Register                 | 13521089 |
+| Home                     | 13521089 |
+| Daftar Film              | 13521094 |
+| Search, Sort, dan Filter | 13521094 |
+| Detail Film              | 13521110 |
+| Edit Film                | 13521110 |
+| Daftar Review            | 13521084 |
+| Edit Review              | 13521084 |
+| Detail User              | 13521089 |
+| Edit User                | 13521089 |
+
+### _Client Side_
+
+| Fitur                    | NIM      |
+| ------------------------ | -------- |
+| Login                    | 13521089 |
+| Register                 | 13521089 |
+| Home                     | 13521089 |
+| Daftar Film              | 13521094 |
+| Search, Sort, dan Filter | 13521094 |
+| Detail Film              | 13521110 |
+| Edit Film                | 13521110 |
+| Daftar Review            | 13521084 |
+| Edit Review              | 13521084 |
+| Detail User              | 13521089 |
+| Edit User                | 13521089 |
