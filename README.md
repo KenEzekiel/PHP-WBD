@@ -5,12 +5,12 @@
 
 ## Daftar Isi
 
--   [Deskripsi Aplikasi](#deskripsi-aplikasi)
--   [Daftar Requirement](#daftar-requirement)
--   [Cara Instalasi](#cara-instalasi)
--   [Cara Menjalankan _Server_](#cara-menjalankan-server)
--   [Screenshot Tampilan Aplikasi](#screenshot-tampilan-aplikasi)
--   [Pembagian Tugas](#pembagian-tugas)
+- [Deskripsi Aplikasi](#deskripsi-aplikasi)
+- [Daftar Requirement](#daftar-requirement)
+- [Cara Instalasi](#cara-instalasi)
+- [Cara Menjalankan _Server_](#cara-menjalankan-server)
+- [Screenshot Tampilan Aplikasi](#screenshot-tampilan-aplikasi)
+- [Pembagian Tugas](#pembagian-tugas)
 
 ## Deskripsi Aplikasi
 
@@ -23,8 +23,8 @@
 3. Home
 4. Daftar Film
 5. Search, Sort, dan Filter
-7. Detail Film
-6. Edit Film
+6. Detail Film
+7. Edit Film
 8. Daftar Review
 9. Edit Review
 10. Detail User
@@ -34,7 +34,7 @@
 
 1. Lakukan pengunduhan _repository_ ini dengan menggunakan perintah `git clone https://gitlab.informatika.org/if3110-2023-k02-01-02/tugas-besar-1.git` pada terminal komputer Anda.
 2. Pastikan komputer Anda telah menginstalasi dan menjalankan aplikasi Docker.
-3. Lakukan pembuatan _image_ Docker yang akan digunakan oleh aplikasi ini dengan menjalankan perintah `docker build -t tubes-1:latest .` pada terminal _directory_ aplikasi web.
+3. Lakukan pembuatan _image_ Docker yang akan digunakan oleh aplikasi ini dengan menjalankan perintah `docker build.` pada terminal _directory_ aplikasi web.
 4. Buatlah sebuah file `.env` yang bersesuaian dengan penggunaan (contoh file tersebut dapat dilihat pada `.env.example`).
 
 ## Cara Menjalankan Server
@@ -71,7 +71,7 @@
 
 ### Edit Film
 
-![Edit Film Page](./screenshots/edit-album-1.png)
+![Edit Film Page](./screenshots/edit-film.jpg)
 
 ### Daftar Review
 
@@ -79,7 +79,7 @@
 
 ### Edit Review
 
-![Add Album Page](./screenshots/add-album-1.png)
+![Add Album Page](./screenshots/edit-review.jpg)
 
 ### Detail User
 
@@ -87,7 +87,7 @@
 
 ### Edit User
 
-![Edit User Page](./screenshots/edit-user.png)
+![Edit User Page](./screenshots/edit-user.jpg)
 
 ## Pembagian Tugas
 
@@ -96,12 +96,13 @@
 3. Home
 4. Daftar Film
 5. Search, Sort, dan Filter
-7. Detail Film
-6. Edit Film
+6. Detail Film
+7. Edit Film
 8. Daftar Review
 9. Edit Review
 10. Detail User
 11. Edit User
+
 ### _Server Side_
 
 | Fitur                    | NIM      |
