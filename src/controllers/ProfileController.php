@@ -3,26 +3,76 @@
 namespace app\controllers;
 
 use app\base\BaseController;
+use app\controllers\utils\response;
 use app\exceptions\BadRequestException;
+use app\models\FilmModel;
 use app\models\UserModel;
 use app\Request;
+use app\services\FavoriteService;
+use app\services\FilmService;
+use app\services\ReviewService;
 use app\services\UserService;
 use Exception;
 
 class ProfileController extends BaseController
 {
+    protected $favoriteService;
+    protected $reviewService;
+    protected $filmService;
   public function __construct()
   {
     parent::__construct(UserService::getInstance());
+    $this->favoriteService = FavoriteService::getInstance();
+    $this->reviewService = ReviewService::getInstance();
+    $this->filmService = FilmService::getInstance();
   }
 
   protected function get($urlParams)
   {
+      try
+      {
+          $uri = Request::getURL();
+          $data = [];
+          if ($uri == "/profile")
+          {
+              $user = $this->service->getById($_SESSION['user_id']);
+              $data['email'] = $user->email;
+              $data['username'] = $user->username;
+              parent::render($data, "profile", "layouts/base");
+          }
+          else if ($uri == "/my-favorites")
+          {
+              $favorites = $this->favoriteService->getUserFavoriteFilms($_SESSION['user_id']);
+              $films = [];
+              foreach ($favorites as $fav) {
+                  $films[] = $this->filmService->getById($fav["film_id"]);
+              }
+              $filmsResp = [];
+              foreach ($films as $film) {
+                  $filmsResp[] = $film->toResponse();
+              }
+              $data['films'] = $filmsResp;
 
-    $user = $this->service->getById($_SESSION['user_id']);
-    $urlParams['email'] = $user->email;
-    $urlParams['username'] = $user->username;
-    parent::render($urlParams, "profile", "layouts/base");
+              response::send_json_response($data);
+          }
+          else if ($uri == "/my-reviews")
+          {
+              $user = $this->service->getById($_SESSION['user_id']);
+              $data['username'] = $user->username;
+              $reviews = $this->reviewService->getUserReviews($_SESSION['user_id']);
+              $reviewsResp = [];
+              foreach ($reviews as $review) {
+                  $reviewsResp[] = $review->toResponse();
+              }
+              $data["reviews"] = $reviewsResp;
+              response::send_json_response($data);
+          }
+
+      } catch (Exception $e) {
+            $msg = $e->getMessage();
+            $urlParams['errorMsg'] = $msg;
+            parent::render($urlParams, "profile", "layouts/base");
+      }
   }
 
   protected function post($urlParams)
