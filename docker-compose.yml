@@ -32,7 +32,7 @@ services:
       - MYSQL_PASSWORD=${password}
       - USE_DOCKER_CONFIG=true
     ports:
-      - "9907:3306"
+      - "9907:3307"
   phpmyadmin:
     container_name: tubes-1-phpmyadmin
     image: phpmyadmin/phpmyadmin

@@ -6,6 +6,7 @@ use app\base\BaseController;
 use app\Request;
 use app\services\UserService;
 use Exception;
+use SoapHeader;
 
 class LoginController extends BaseController
 {
@@ -16,6 +17,26 @@ class LoginController extends BaseController
 
   protected function get($urlParams)
   {
+    $apikey = getenv('api_key');
+    // Stream context to add HTTP headers
+    $streamContext = stream_context_create([
+      'http' => [
+        'header' => "Authorization: Bearer $apikey",
+      ],
+    ]);
+    // Options for the SOAP client
+    $options = [
+      'stream_context' => $streamContext,
+      'trace' => 1, // Enable trace to view request and response headers
+      'cache_wsdl' => WSDL_CACHE_NONE
+    ];
+    $soapclient = new \SoapClient(getenv('soap_url'), $options);
+    $params = ["userId" => 1];
+    $check_example = $soapclient->cancelRegister($params);
+    echo "<pre>";
+    var_dump($check_example);
+    echo "</pre>";
+    // var_dump(phpinfo());
 
     $uri = Request::getURL();
     if ($uri == "/login") {
