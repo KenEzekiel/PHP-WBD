@@ -34,6 +34,7 @@ class App
 
     $this->router->addRoute('/', MainController::class);
     $this->router->addRoute('/login', LoginController::class);
+    $this->router->addRoute('/login-premium', LoginController::class);
     $this->router->addRoute('/review', ReviewController::class);
     $this->router->addRoute('/logout', LoginController::class);
     $this->router->addRoute('/register', RegisterController::class);

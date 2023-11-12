@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\base\BaseController;
+use app\controllers\utils\response;
 use app\Request;
 use app\services\UserService;
 use Exception;
@@ -17,27 +18,6 @@ class LoginController extends BaseController
 
   protected function get($urlParams)
   {
-    $apikey = getenv('api_key');
-    // Stream context to add HTTP headers
-    $streamContext = stream_context_create([
-      'http' => [
-        'header' => "Authorization: Bearer $apikey",
-      ],
-    ]);
-    // Options for the SOAP client
-    $options = [
-      'stream_context' => $streamContext,
-      'trace' => 1, // Enable trace to view request and response headers
-      'cache_wsdl' => WSDL_CACHE_NONE
-    ];
-    $soapclient = new \SoapClient(getenv('soap_url'), $options);
-    $params = ["userId" => 1];
-    $check_example = $soapclient->cancelRegister($params);
-    echo "<pre>";
-    var_dump($check_example);
-    echo "</pre>";
-    // var_dump(phpinfo());
-
     $uri = Request::getURL();
     if ($uri == "/login") {
       if (isset($_SESSION['user_id'])) {
@@ -53,17 +33,30 @@ class LoginController extends BaseController
   }
   protected function post($urlParams)
   {
+    $uri = Request::getURL();
     $username_email = $_POST['username-email'];
     $password = $_POST['password'];
     try {
-      $this->service->login($username_email, $password);
+      if ($uri == '/login') {
+        $this->service->login($username_email, $password);
+        if (isset($_SESSION['user_id'])) {
+          // redirect
+          parent::redirect("/");
+        }
+      }
+      else {
+        $data = $this->service->loginPremium($username_email, $password);
+        response::send_json_response($data);
+      }
     } catch (Exception $e) {
       $msg = $e->getMessage();
-      parent::render(["errorMsg" => $msg], "login", "layouts/base");
+      if ($uri == '/login') {
+        parent::render(["errorMsg" => $msg], "login", "layouts/base");
+      }
+      else {
+        $data["error_code"] = $msg;
+        response::send_json_response($data, 401);
+      }
     }
-    if (isset($_SESSION['user_id'])) {
-      // redirect
-      parent::redirect("/");
-    }
-  }
+}
 }
