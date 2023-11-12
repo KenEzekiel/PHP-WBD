@@ -106,6 +106,68 @@ class UserService extends BaseService
     return $user;
   }
 
+  public function loginPremium($email_or_username, $password) {
+    $user = null;
+
+    // Check email first
+    $userEmail = $this->getByEmail($email_or_username);
+    if ($userEmail and !is_null($userEmail->get('user_id'))) {
+      $user = $userEmail;
+    }
+
+    // Check for username
+    if (is_null($user)) {
+      $userUsername = $this->getByUsername($email_or_username);
+      if ($userUsername and !is_null($userUsername->get('user_id'))) {
+        $user = $userUsername;
+      }
+    }
+
+    if (is_null($user)) {
+      throw new BadRequestException("EMAIL_USERNAME_NOT_FOUND");
+    }
+
+    if (!password_verify($password, $user->get('password'))) {
+      throw new BadRequestException("INVALID_PASSWORD");
+    }
+
+    $apikey = getenv('api_key');
+    // Stream context to add HTTP headers
+    $streamContext = stream_context_create([
+      'http' => [
+        'header' => "Authorization: Bearer $apikey",
+      ],
+    ]);
+    // Options for the SOAP client
+    $options = [
+      'stream_context' => $streamContext,
+      'trace' => 1, 
+      'cache_wsdl' => WSDL_CACHE_NONE
+    ];
+    $soapclient = new \SoapClient(getenv('soap_url'), $options);
+    $params = ["userId" => $user->get('user_id')];
+    $response = $soapclient->checkStatus($params);
+
+    if (!isset($response)) {
+      throw new BadRequestException("SOAP_SERVICE_ERROR");
+    }
+    if ($response->userStatus == "UNREGISTERED") {
+      throw new BadRequestException("UNREGISTERED_PREMIUM");
+    }
+    else if($response->userStatus == "PENDING") {
+      throw new BadRequestException("PENDING_PREMIUM");
+    }
+    else if($response->userStatus == "REJECTED"){
+      throw new BadRequestException("REJECTED_PREMIUM");
+    }
+
+    $userResponse["user_id"] = $user->get('user_id');
+    $userResponse["username"] = $user->get('username');
+    $userResponse["email"] = $user->get('email');
+    $userResponse["role"] = $user->get('role');
+    return $userResponse;
+}
+
   public function logout()
   {
     if (isset($_SESSION['user_id']) and isset($_SESSION['role'])) {
