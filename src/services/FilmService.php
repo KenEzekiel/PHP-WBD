@@ -3,6 +3,7 @@
 namespace app\services;
 
 use app\base\BaseService;
+use app\exceptions\BadRequestException;
 use app\models\FilmModel;
 use app\repositories\FilmRepository;
 use PDO;
@@ -72,6 +73,20 @@ class FilmService extends BaseService
     }
 
     return null;
+  }
+
+  public function getImagePath($film_id)
+  {
+    if (!$film_id) {
+      throw new BadRequestException("INVALID_ID");
+    }
+    $film = $this->repository->getById($film_id);
+
+    if ($film) {
+      return "public/" . $film["image_path"]; 
+    }
+
+    throw new BadRequestException("IMAGE_NOT_FOUND");
   }
 
   public function update($film)

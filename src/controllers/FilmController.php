@@ -9,6 +9,7 @@ use app\services\FavoriteService;
 use app\services\FilmService;
 use app\services\ReviewService;
 use app\services\UserService;
+use Exception;
 
 class FilmController extends BaseController
 {
@@ -67,13 +68,34 @@ class FilmController extends BaseController
             parent::render($data, 'film-details', "layouts/base");
         } else if ($uri == '/film-polling') {
             $isInitialSync = $_GET['initial'] ?? 'no';
-            error_log($isInitialSync);
             $data = $this->service->polling($isInitialSync);
             $films = [];
             foreach ($data as $film) {
-                $films[] = $film->toResponse();
+                $films[] = array(
+                    'film_id' => $film->film_id,
+                    'image_path' => $film->image_path,
+                    'title' => $film->title);
             }
             response::send_json_response($films);
+        } else if ($uri == '/film-image') {
+            try {
+                $filmID = $_GET['id'];
+                $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $this->service->getImagePath($filmID);
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: inline; filename="' . basename($imagePath) . '"');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($imagePath));
+                readfile($imagePath);
+                exit;
+            }
+            catch (Exception $e) {
+                $msg = $e->getMessage();
+                $data["error_code"] = $msg;
+                response::send_json_response($data, 400);
+            }
         }
     }
 
