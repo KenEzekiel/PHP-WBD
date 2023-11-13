@@ -9,6 +9,7 @@ use app\services\FavoriteService;
 use app\services\FilmService;
 use app\services\ReviewService;
 use app\services\UserService;
+use Exception;
 
 class FilmController extends BaseController
 {
@@ -27,21 +28,35 @@ class FilmController extends BaseController
     protected function get($urlParams)
     {
         $uri = Request::getURL();
-        $page = (isset($_GET['page']) and (int) $_GET['page'] >= 1) ? $_GET['page'] : 1;
-        $word = $_GET['q'] ?? "";
-        $genre = $_GET['genre'] ?? 'all';
-        $released_year = $_GET['year'] ?? 'all';
-        $isDesc = $_GET['sort'] ?? "asc";
-        $order = $_GET['order'] ?? 'title';
-        $data = $this->service->searchAndFilter($word, $order, $isDesc, $genre, $released_year, $page);
-        $row_count = $this->service->countRowBySearchAndFilter($word, $genre, $released_year);
+        
+        if ($uri == "/films" || $uri == '/search') {
+            $page = (isset($_GET['page']) and (int) $_GET['page'] >= 1) ? $_GET['page'] : 1;
+            $word = $_GET['q'] ?? "";
+            $genre = $_GET['genre'] ?? 'all';
+            $released_year = $_GET['year'] ?? 'all';
+            $isDesc = $_GET['sort'] ?? "asc";
+            $order = $_GET['order'] ?? 'title';
+            $data = $this->service->searchAndFilter($word, $order, $isDesc, $genre, $released_year, $page);
+            $row_count = $this->service->countRowBySearchAndFilter($word, $genre, $released_year);
 
-        if ($uri == "/films") {
-            $data['genres'] = $this->service->getAllCategoryValues('genre');
-            $data['released_years'] = $this->service->getAllCategoryValues('released_year');
-            $data['total_page'] = ceil($row_count / 10);
+            if ($uri == '/films') {
+                $data['genres'] = $this->service->getAllCategoryValues('genre');
+                $data['released_years'] = $this->service->getAllCategoryValues('released_year');
+                $data['total_page'] = ceil($row_count / 10);
+                parent::render($data, 'films', "layouts/base");
+            }
+            else {
+                $films = [];
+    
+                foreach ($data['films'] as $film) {
+                    $films[] = $film->toResponse();
+                }
+                $data['films'] = $films;
+                $data['total_page'] = ceil($row_count / 10);
+    
+                response::send_json_response($data);
+            }
 
-            parent::render($data, 'films', "layouts/base");
         } elseif ($uri == '/film-details') {
             $data['film'] = $this->service->getById($_GET['film_id']);
             if (isset($_SESSION['user_id'])) {
@@ -51,16 +66,36 @@ class FilmController extends BaseController
             }
 
             parent::render($data, 'film-details', "layouts/base");
-        } else {
+        } else if ($uri == '/film-polling') {
+            $isInitialSync = $_GET['initial'] ?? 'no';
+            $data = $this->service->polling($isInitialSync);
             $films = [];
-
-            foreach ($data['films'] as $film) {
-                $films[] = $film->toResponse();
+            foreach ($data as $film) {
+                $films[] = array(
+                    'film_id' => $film->film_id,
+                    'image_path' => $film->image_path,
+                    'title' => $film->title);
             }
-            $data['films'] = $films;
-            $data['total_page'] = ceil($row_count / 10);
-
-            response::send_json_response($data);
+            response::send_json_response($films);
+        } else if ($uri == '/film-image') {
+            try {
+                $filmID = $_GET['id'];
+                $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $this->service->getImagePath($filmID);
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: inline; filename="' . basename($imagePath) . '"');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($imagePath));
+                readfile($imagePath);
+                exit;
+            }
+            catch (Exception $e) {
+                $msg = $e->getMessage();
+                $data["error_code"] = $msg;
+                response::send_json_response($data, 400);
+            }
         }
     }
 

@@ -165,6 +165,9 @@ class UpdateFilmController extends BaseController
         }
 
         // Call service
+        $currentDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+        $formattedDateTime = $currentDateTime->format("Y-m-d H:i:s"); 
+        $data["last_updated"] = $formattedDateTime;
         $filmModel = new FilmModel();
         $filmModel->constructFromArray($data);
         $response = $this->service->update($filmModel);

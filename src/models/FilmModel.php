@@ -15,6 +15,7 @@ class FilmModel extends BaseModel
   public $description;
   public $cast;
   public $genre;
+  public $last_updated;
 
   public function __construct()
   {
@@ -33,6 +34,7 @@ class FilmModel extends BaseModel
     $this->description = $array['description'];
     $this->cast = $array['cast'];
     $this->genre = $array['genre'];
+    $this->last_updated = $array['last_updated'];
     return $this;
   }
 
@@ -48,6 +50,7 @@ class FilmModel extends BaseModel
         'description' => $this->description,
         'cast' => $this->cast,
         'genre' => $this->genre,
+        'last_updated' => $this->last_updated
     );
   }
 }
