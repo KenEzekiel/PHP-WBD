@@ -98,6 +98,7 @@ abstract class BaseRepository
     $pageNo = null,
     $pageSize = null,
     $sort = "asc",
+    $isInitialSync = "no"
   ) {
     $sql = "SELECT * FROM $this->tableName";
 
@@ -123,6 +124,21 @@ abstract class BaseRepository
 
       $sql .= " WHERE " . implode(" AND ", $conditions);
     }
+
+    if ($isInitialSync == "no") {
+      $pollingDurationMinutes = intval(getenv('POLLING_DURATION_MINUTES'));
+      $pollingSql = "";
+      if (count($where) == 0) {
+        $pollingSql .= " WHERE ";
+      }
+      if ($pollingDurationMinutes !== false && is_numeric($pollingDurationMinutes) && $pollingDurationMinutes) {
+          $pollingSql .= "last_updated >= DATE_SUB(NOW(), INTERVAL $pollingDurationMinutes MINUTE)";
+      } else {
+          $pollingSql .= "last_updated >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)";
+      }
+      $sql .= $pollingSql;
+    }
+
 
     if ($order) {
       $sql .= " ORDER BY $order";

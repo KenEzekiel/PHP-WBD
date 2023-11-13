@@ -36,7 +36,8 @@ class FilmRepository extends BaseRepository
     $genre = 'all',
     $released_year = 'all',
     $pageNo = 1,
-    $limit = 10
+    $limit = 10,
+    $isInitialSync = "no"
   ) {
     $where = [];
 
@@ -47,10 +48,13 @@ class FilmRepository extends BaseRepository
       $where['released_year'] = [$released_year, PDO::PARAM_INT];
     }
     if (isset($word) and !empty($word)) {
-      $where['title'] = [$genre, PDO::PARAM_STR, 'LIKE', ['director']];
+      $where['title'] = [$word, PDO::PARAM_STR, 'LIKE', ['director']];
     }
 
-    return $this->findAll($where, $order, $pageNo, $limit, $isDesc);
+    $data = $this->findAll($where, $order, $pageNo, $limit, $isDesc, $isInitialSync);
+    error_log(count($data));
+
+    return $this->findAll($where, $order, $pageNo, $limit, $isDesc, $isInitialSync);
   }
 
   public function countRowBySearchAndFilter($word, $genre = 'all', $released_year = 'all')
@@ -64,7 +68,7 @@ class FilmRepository extends BaseRepository
       $where['released_year'] = [$released_year, PDO::PARAM_INT];
     }
     if (isset($word) and !empty($word)) {
-      $where['title'] = [$genre, PDO::PARAM_STR, 'LIKE', ['director']];
+      $where['title'] = [$word, PDO::PARAM_STR, 'LIKE', ['director']];
     }
 
     return $this->countRow($where);
