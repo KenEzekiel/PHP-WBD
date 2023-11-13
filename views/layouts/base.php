@@ -33,6 +33,7 @@
     <ul class='nav-links menu'>
       <li class='menu-item' id='home'><a href='/'>Home</a></li>
       <li class='menu-item'><a href='/films'>Films</a></li>
+      <li class='menu-item'><a href='/premium-status'>Premium Status</a></li>
 
       <?php
 

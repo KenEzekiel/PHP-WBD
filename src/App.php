@@ -13,6 +13,7 @@ use app\controllers\ReviewController;
 use app\controllers\RegisterController;
 use app\controllers\UpdateFilmController;
 use app\controllers\UserDashboardController;
+use app\controllers\SoapPremiumController;
 use app\repositories\UserRepository;
 use app\repositories\ReviewRepository;
 use app\services\UserService;
@@ -49,5 +50,6 @@ class App
     $this->router->addRoute('/my-favorites', ProfileController::class);
     $this->router->addRoute('/my-reviews', ProfileController::class);
     $this->router->addRoute('/user-dashboard', UserDashboardController::class);
+    $this->router->addRoute('/premium-status', SoapPremiumController::class);
   }
 }
