@@ -3,6 +3,7 @@
 namespace app\services;
 
 use app\base\BaseService;
+use app\exceptions\BadRequestException;
 use app\models\FilmModel;
 use app\repositories\FilmRepository;
 use PDO;
@@ -29,6 +30,8 @@ class FilmService extends BaseService
 
   public function add($image_path, $trailer_path, $title, $released_year, $director, $description, $cast, $genre)
   {
+    $currentDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+    $formattedDateTime = $currentDateTime->format("Y-m-d H:i:s"); 
     $film = new FilmModel();
     $film
       ->set('image_path', $image_path)
@@ -39,7 +42,8 @@ class FilmService extends BaseService
       ->set('trailer_path', $trailer_path)
       ->set('description', $description)
       ->set('cast', $cast)
-      ->set('genre', $genre);
+      ->set('genre', $genre)
+      ->set('last_updated', $formattedDateTime);
 
     $id = $this->repository->insert($film, array(
       'image_path' => PDO::PARAM_STR,
@@ -50,6 +54,7 @@ class FilmService extends BaseService
       'description' => PDO::PARAM_STR,
       'cast' => PDO::PARAM_STR,
       'genre' => PDO::PARAM_STR,
+      'last_updated'=> PDO::PARAM_STR,
     ));
 
     $response = $this->repository->getById($id);
@@ -70,6 +75,20 @@ class FilmService extends BaseService
     return null;
   }
 
+  public function getImagePath($film_id)
+  {
+    if (!$film_id) {
+      throw new BadRequestException("INVALID_ID");
+    }
+    $film = $this->repository->getById($film_id);
+
+    if ($film) {
+      return "public/" . $film["image_path"]; 
+    }
+
+    throw new BadRequestException("IMAGE_NOT_FOUND");
+  }
+
   public function update($film)
   {
     $arrParams = [];
@@ -81,6 +100,7 @@ class FilmService extends BaseService
     $arrParams['description'] = PDO::PARAM_STR;
     $arrParams['cast'] = PDO::PARAM_STR;
     $arrParams['genre'] = PDO::PARAM_STR;
+    $arrParams['last_updated'] = PDO::PARAM_STR;
 
     return $this->repository->update($film, $arrParams);
   }
@@ -103,6 +123,17 @@ class FilmService extends BaseService
     $data['total_page'] = $total_page;
 
     return $data;
+  }
+
+  public function polling($isInitialSync)
+  {
+    $response = $this->repository->getAllBySearchAndFilter(null, null, null, null, null, null, null, $isInitialSync);
+    $films = [];
+    foreach ($response as $resp) {
+      $film = new FilmModel();
+      $films[] = $film->constructFromArray($resp);
+    }
+    return $films;
   }
 
   public function getAllCategoryValues($category)

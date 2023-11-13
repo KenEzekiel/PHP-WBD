@@ -27,8 +27,8 @@ CREATE TABLE `favorite` (
   `film_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`,`film_id`),
   KEY `film_id` (`film_id`),
-  CONSTRAINT `favorite_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `favorite_ibfk_2` FOREIGN KEY (`film_id`) REFERENCES `film` (`film_id`)
+  CONSTRAINT `favorite_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
+  CONSTRAINT `favorite_ibfk_2` FOREIGN KEY (`film_id`) REFERENCES `film` (`film_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,6 +59,7 @@ CREATE TABLE `film` (
   `description` text DEFAULT NULL,
   `cast` varchar(255) NOT NULL,
   `genre` varchar(255) NOT NULL,
+  `last_updated` datetime NOT NULL,
   PRIMARY KEY (`film_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -69,7 +70,7 @@ CREATE TABLE `film` (
 
 LOCK TABLES `film` WRITE;
 /*!40000 ALTER TABLE `film` DISABLE KEYS */;
-INSERT INTO `film` VALUES (1,'files/img/film1.jpg','files/trailer/film1.mp4','The Shawshank Redemption',1994,'Frank Darabont','Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.','Tim Robbins, Morgan Freeman','Drama'),(2,'files/img/film2.jpg','files/trailer/film2.mp4','The Godfather',1972,'Francis Ford Coppola','An organized crime dynasty\'s aging patriarch transfers control of his clandestine empire to his reluctant son.','Marlon Brando, Al Pacino','Crime'),(3,'files/img/film3.jpg','files/trailer/film3.mp4','Pulp Fiction',1994,'Quentin Tarantino','The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.','John Travolta, Uma Thurman','Crime'),(4,'files/img/film4.jpg','files/trailer/film4.mp4','The Dark Knight',2008,'Christopher Nolan','When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.','Christian Bale, Heath Ledger','Action'),(5,'files/img/film5.jpg','files/trailer/film5.mp4','Forrest Gump',1994,'Robert Zemeckis','The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.','Tom Hanks, Robin Wright','Drama'),(6,'files/img/film6.jpg','files/trailer/film6.mp4','The Matrix',1999,'Lana Wachowski, Lilly Wachowski','A computer programmer discovers that reality as he knows it is a simulation created by machines to subjugate humanity.','Keanu Reeves, Laurence Fishburne','Action'),(7,'files/img/film7.jpg','files/trailer/film7.mp4','Schindler\'s List',1993,'Steven Spielberg','In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.','Liam Neeson, Ralph Fiennes','Biography'),(8,'files/img/film8.jpg','files/trailer/film8.mp4','Fight Club',1999,'David Fincher','An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.','Brad Pitt, Edward Norton','Drama'),(9,'files/img/film9.jpg','files/trailer/film9.mp4','Inception',2010,'Christopher Nolan','A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.','Leonardo DiCaprio, Joseph Gordon-Levitt','Action'),(10,'files/img/film10.jpg','files/trailer/film10.mp4','The Lord of the Rings: The Return of the King',2003,'Peter Jackson','Gandalf and Aragorn lead the World of Men against Sauron\'s army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.','Elijah Wood, Ian McKellen','Adventure');
+INSERT INTO `film` VALUES (1,'files/img/film1.jpg','files/trailer/film1.mp4','The Shawshank Redemption',1994,'Frank Darabont','Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.','Tim Robbins, Morgan Freeman','Drama','2023-11-13 19:32:23'),(2,'files/img/film2.jpg','files/trailer/film2.mp4','The Godfather',1972,'Francis Ford Coppola','An organized crime dynasty\'s aging patriarch transfers control of his clandestine empire to his reluctant son.','Marlon Brando, Al Pacino','Crime','2023-11-13 19:32:23'),(3,'files/img/film3.jpg','files/trailer/film3.mp4','Pulp Fiction',1994,'Quentin Tarantino','The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.','John Travolta, Uma Thurman','Crime','2023-11-13 19:32:23'),(4,'files/img/film4.jpg','files/trailer/film4.mp4','The Dark Knight',2008,'Christopher Nolan','When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.','Christian Bale, Heath Ledger','Action','2023-11-13 19:32:23'),(5,'files/img/film5.jpg','files/trailer/film5.mp4','Forrest Gump',1994,'Robert Zemeckis','The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.','Tom Hanks, Robin Wright','Drama','2023-11-13 19:32:23'),(6,'files/img/film6.jpg','files/trailer/film6.mp4','The Matrix',1999,'Lana Wachowski, Lilly Wachowski','A computer programmer discovers that reality as he knows it is a simulation created by machines to subjugate humanity.','Keanu Reeves, Laurence Fishburne','Action','2023-11-13 19:32:23'),(7,'files/img/film7.jpg','files/trailer/film7.mp4','Schindler\'s List',1993,'Steven Spielberg','In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.','Liam Neeson, Ralph Fiennes','Biography','2023-11-13 19:32:23'),(8,'files/img/film8.jpg','files/trailer/film8.mp4','Fight Club',1999,'David Fincher','An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.','Brad Pitt, Edward Norton','Drama','2023-11-13 19:32:23'),(9,'files/img/film9.jpg','files/trailer/film9.mp4','Inception',2010,'Christopher Nolan','A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.','Leonardo DiCaprio, Joseph Gordon-Levitt','Action','2023-11-13 19:32:23'),(10,'files/img/film10.jpg','files/trailer/film10.mp4','The Lord of the Rings: The Return of the King',2003,'Peter Jackson','Gandalf and Aragorn lead the World of Men against Sauron\'s army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.','Elijah Wood, Ian McKellen','Adventure','2023-11-13 19:32:23');
 /*!40000 ALTER TABLE `film` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,8 +89,8 @@ CREATE TABLE `review` (
   `published_time` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`user_id`,`film_id`),
   KEY `film_id` (`film_id`),
-  CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `review_ibfk_2` FOREIGN KEY (`film_id`) REFERENCES `film` (`film_id`)
+  CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
+  CONSTRAINT `review_ibfk_2` FOREIGN KEY (`film_id`) REFERENCES `film` (`film_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-30  4:45:06
+-- Dump completed on 2023-11-13 19:44:16
