@@ -27,21 +27,35 @@ class FilmController extends BaseController
     protected function get($urlParams)
     {
         $uri = Request::getURL();
-        $page = (isset($_GET['page']) and (int) $_GET['page'] >= 1) ? $_GET['page'] : 1;
-        $word = $_GET['q'] ?? "";
-        $genre = $_GET['genre'] ?? 'all';
-        $released_year = $_GET['year'] ?? 'all';
-        $isDesc = $_GET['sort'] ?? "asc";
-        $order = $_GET['order'] ?? 'title';
-        $data = $this->service->searchAndFilter($word, $order, $isDesc, $genre, $released_year, $page);
-        $row_count = $this->service->countRowBySearchAndFilter($word, $genre, $released_year);
+        
+        if ($uri == "/films" || $uri == '/search') {
+            $page = (isset($_GET['page']) and (int) $_GET['page'] >= 1) ? $_GET['page'] : 1;
+            $word = $_GET['q'] ?? "";
+            $genre = $_GET['genre'] ?? 'all';
+            $released_year = $_GET['year'] ?? 'all';
+            $isDesc = $_GET['sort'] ?? "asc";
+            $order = $_GET['order'] ?? 'title';
+            $data = $this->service->searchAndFilter($word, $order, $isDesc, $genre, $released_year, $page);
+            $row_count = $this->service->countRowBySearchAndFilter($word, $genre, $released_year);
 
-        if ($uri == "/films") {
-            $data['genres'] = $this->service->getAllCategoryValues('genre');
-            $data['released_years'] = $this->service->getAllCategoryValues('released_year');
-            $data['total_page'] = ceil($row_count / 10);
+            if ($uri == '/films') {
+                $data['genres'] = $this->service->getAllCategoryValues('genre');
+                $data['released_years'] = $this->service->getAllCategoryValues('released_year');
+                $data['total_page'] = ceil($row_count / 10);
+                parent::render($data, 'films', "layouts/base");
+            }
+            else {
+                $films = [];
+    
+                foreach ($data['films'] as $film) {
+                    $films[] = $film->toResponse();
+                }
+                $data['films'] = $films;
+                $data['total_page'] = ceil($row_count / 10);
+    
+                response::send_json_response($data);
+            }
 
-            parent::render($data, 'films', "layouts/base");
         } elseif ($uri == '/film-details') {
             $data['film'] = $this->service->getById($_GET['film_id']);
             if (isset($_SESSION['user_id'])) {
@@ -51,16 +65,15 @@ class FilmController extends BaseController
             }
 
             parent::render($data, 'film-details', "layouts/base");
-        } else {
+        } else if ($uri == '/film-polling') {
+            $isInitialSync = $_GET['initial'] ?? 'no';
+            error_log($isInitialSync);
+            $data = $this->service->polling($isInitialSync);
             $films = [];
-
-            foreach ($data['films'] as $film) {
+            foreach ($data as $film) {
                 $films[] = $film->toResponse();
             }
-            $data['films'] = $films;
-            $data['total_page'] = ceil($row_count / 10);
-
-            response::send_json_response($data);
+            response::send_json_response($films);
         }
     }
 

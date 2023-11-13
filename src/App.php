@@ -40,6 +40,7 @@ class App
     $this->router->addRoute('/register', RegisterController::class);
     $this->router->addRoute('/films', FilmController::class);
     $this->router->addRoute('/film-details', FilmController::class);
+    $this->router->addRoute('/film-polling', FilmController::class);
     $this->router->addRoute('/search', FilmController::class);
     $this->router->addRoute('/add-film', CreateFilmController::class);
     $this->router->addRoute('/update-film', UpdateFilmController::class);
