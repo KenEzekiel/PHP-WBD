@@ -34,10 +34,10 @@ class LoginController extends BaseController
   protected function post($urlParams)
   {
     $uri = Request::getURL();
-    $username_email = $_POST['username-email'];
-    $password = $_POST['password'];
     try {
       if ($uri == '/login') {
+        $username_email = $_POST['username-email'];
+        $password = $_POST['password'];
         $this->service->login($username_email, $password);
         if (isset($_SESSION['user_id'])) {
           // redirect
@@ -45,6 +45,10 @@ class LoginController extends BaseController
         }
       }
       else {
+        $rawData = file_get_contents('php://input');
+        $jsonData = json_decode($rawData, true);
+        $username_email = $jsonData['username-email'];
+        $password = $jsonData['password'];
         $data = $this->service->loginPremium($username_email, $password);
         response::send_json_response($data);
       }
