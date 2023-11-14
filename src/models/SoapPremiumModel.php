@@ -30,20 +30,24 @@
             }
             return self::$instance;
         }
-        // public function getSoapClient()
-        // {
-        //     return $this->soapclient;
-        // }
+        public function registerPremium($params)
+        {
+            return $this->soapclient->registerPremium($params);
+        }
         public function checkStatus($params)
         {
             return $this->soapclient->checkStatus($params);
         }
-        // public function getFunctions()
-        // {
-        //     return $this->soapclient->__getFunctions();
-        // }
-        // public function getTypes()
-        // {
-        //     return $this->soapclient->__getTypes();
-        // }
+        public function cancelRegister($params){
+            return $this->soapclient->cancelRegister($params);
+        }
+        public function approvePremium($params){
+            return $this->soapclient->approvePremium($params);
+        }
+        public function getAllPremium($params){
+            return $this->soapclient->getAllPremium($params);
+        }
+        public function getAllPending($params){
+            return $this->soapclient->getAllPending($params);
+        }
     }

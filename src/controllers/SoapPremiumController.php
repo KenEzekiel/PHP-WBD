@@ -8,12 +8,10 @@ use app\models\SoapPremiumModel;
 use Exception;
 
 class SoapPremiumController extends BaseController {
-    public $model;
-    // public $soap_client;
+    private $model;
 
     public function __construct() {
         $this->model = SoapPremiumModel::getInstance();
-        // $this->soap_client = $this->model->getSoapClient();
     }
 
     public function checkStatus($params){
@@ -25,9 +23,8 @@ class SoapPremiumController extends BaseController {
         $uri = Request::getURL();
         
         if($uri == '/premium-status'){
-            $params = ["userId" => 1];
+            $params = ["userId" => $_SESSION['user_id']];
             $result = $this->checkStatus($params);
-            // response::send_json_response($result->userStatus);
             $data['userStatus'] = $result->userStatus;
 
             parent::render($data, 'premium-status', "layouts/base");
@@ -39,6 +36,18 @@ class SoapPremiumController extends BaseController {
 
     protected function post($urlParams)
     {
-        
+        if(isset($_POST['email'])){
+            $params = ["userId" => $_SESSION['user_id'], "email" => $_POST['email']];
+            $result = $this->model->registerPremium($params);
+            if($result->status == "success"){
+                header("Location: /premium-status");
+            }
+            else{
+                throw new Exception("Invalid Email");
+            }
+        }
+        else{
+            throw new Exception("Invalid URL");
+        }
     }
 }

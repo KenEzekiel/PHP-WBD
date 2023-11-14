@@ -1,8 +1,20 @@
-<div class='details'>
+<div class='premium-status'>
     <h2 id="goBack"><a class='back-button' href="/films"><?php echo "< Films" ?></a></h2>
     <h1>Premium Status<h1>
-    <?php echo $data["userStatus"]?>
-
-</div>
-    
+    <br>
+    <p>Current: <?php $result = $data["userStatus"]; echo $result;?></p>
+    <br>
+    <?php 
+    if($result == "REJECTED" || $result == "UNREGISTERED") { ?>
+        <form method="post" action="/premium-status">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit">Register for Premium</button>
+        </form>
+    <?php } elseif($result == "PENDING") { ?>
+        <div class="pending">
+            <p>Your request is pending. Please wait for the admin to approve your request.</p>
+            <p>Click <a href="/premium-status">here</a> to refresh the page.</p>
+        </div>
+    <?php } ?>
 </div>
