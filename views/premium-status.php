@@ -9,8 +9,26 @@
                 </tr>
             </thead>
             <tbody>
-                <?php var_dump($data["premium_users"][0]); ?>
-                <?php foreach($data["premium_users"] as $user) { ?>
+                <?php if(is_array($data["premium_users"])) foreach($data["premium_users"] as $user) { ?>
+                    <tr>
+                        <td><?php echo $user->userEmail; ?></td>
+                        <td>
+                            <?php if($user->premiumStatus == "ACCEPTED") { ?>
+                                <form method="post" action="/cancel-premium">
+                                    <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
+                                    <button type="submit">Cancel Premium</button>
+                                </form>
+                            <?php } elseif($user->premiumStatus == "PENDING") { ?>
+                                <p>Pending</p>
+                            <?php } else { ?>
+                                <form method="post" action="/register-premium">
+                                    <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
+                                    <button type="submit">Accept Premium</button>
+                                </form>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                <?php } else { $user = $data["premium_users"];?>
                     <tr>
                         <td><?php echo $user->userEmail; ?></td>
                         <td>

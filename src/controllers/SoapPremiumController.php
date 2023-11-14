@@ -25,7 +25,6 @@ class SoapPremiumController extends BaseController {
         if($uri == '/premium-status'){
             if (isset($_SESSION['role']) and $_SESSION['role'] == 'admin'){
                 $data["premium_users"] = $this->model->getAllPremium()->listUserPremium;
-                $data["pending_users"] = $this->model->getAllPending()->listUserPending;
                 parent::render($data, 'premium-status', "layouts/base");
             }
             else{
