@@ -44,10 +44,10 @@
         public function approvePremium($params){
             return $this->soapclient->approvePremium($params);
         }
-        public function getAllPremium($params){
-            return $this->soapclient->getAllPremium($params);
+        public function getAllPremium(){
+            return $this->soapclient->getAllPremium();
         }
-        public function getAllPending($params){
-            return $this->soapclient->getAllPending($params);
+        public function getAllPending(){
+            return $this->soapclient->getAllPending();
         }
     }

@@ -23,11 +23,18 @@ class SoapPremiumController extends BaseController {
         $uri = Request::getURL();
         
         if($uri == '/premium-status'){
-            $params = ["userId" => $_SESSION['user_id']];
-            $result = $this->checkStatus($params);
-            $data['userStatus'] = $result->userStatus;
+            if (isset($_SESSION['role']) and $_SESSION['role'] == 'admin'){
+                $data["premium_users"] = $this->model->getAllPremium()->listUserPremium;
+                $data["pending_users"] = $this->model->getAllPending()->listUserPending;
+                parent::render($data, 'premium-status', "layouts/base");
+            }
+            else{
+                $params = ["userId" => $_SESSION['user_id']];
+                $result = $this->checkStatus($params);
+                $data['userStatus'] = $result->userStatus;
 
-            parent::render($data, 'premium-status', "layouts/base");
+                parent::render($data, 'premium-status', "layouts/base");
+            }
         }
         else{
             throw new Exception("Invalid URL");
