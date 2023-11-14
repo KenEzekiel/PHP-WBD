@@ -51,5 +51,7 @@ class App
     $this->router->addRoute('/my-reviews', ProfileController::class);
     $this->router->addRoute('/user-dashboard', UserDashboardController::class);
     $this->router->addRoute('/premium-status', SoapPremiumController::class);
+    $this->router->addRoute('/register-premium', SoapPremiumController::class);
+    $this->router->addRoute('/cancel-premium', SoapPremiumController::class);
   }
 }

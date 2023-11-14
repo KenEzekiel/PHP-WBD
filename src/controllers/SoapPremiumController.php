@@ -36,18 +36,34 @@ class SoapPremiumController extends BaseController {
 
     protected function post($urlParams)
     {
-        if(isset($_POST['email'])){
-            $params = ["userId" => $_SESSION['user_id'], "email" => $_POST['email']];
-            $result = $this->model->registerPremium($params);
-            if($result->status == "success"){
-                header("Location: /premium-status");
+        $uri = Request::getURL();
+        
+        if($uri == '/register-premium'){
+            if(isset($_POST['email'])){
+                $params = ["userId" => $_SESSION['user_id'], "email" => $_POST['email']];
+                $result = $this->model->registerPremium($params);
+                // if($result->status == "success"){
+                    header("Location: /premium-status");
+                // }
+                // else{
+                //     throw new Exception("Invalid Email");
+                // }
             }
             else{
-                throw new Exception("Invalid Email");
+                throw new Exception("Invalid URL");
             }
         }
-        else{
-            throw new Exception("Invalid URL");
+
+        if($uri == '/cancel-premium'){
+            $params = ["userId" => $_SESSION['user_id']];
+            $result = $this->model->cancelRegister($params);
+            // if($result->status == "success"){
+                $data['premiumCancelMessage'] = $result->responseCancel;
+                header("Location: /premium-status");
+            // }
+            // else{
+            //     throw new Exception("Invalid URL");
+            // }
         }
     }
 }

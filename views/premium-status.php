@@ -4,9 +4,13 @@
     <br>
     <p>Current: <?php $result = $data["userStatus"]; echo $result;?></p>
     <br>
+    <p>Click <a href="/premium-status">here</a> to refresh the page.</p>
+    <?php if(isset($data["premiumCancelMessage"])) { ?>
+        <p><?php echo $data["premiumCancelMessage"]; unset($data["premiumCancelMessage"]);?></p>
+    <?php } ?>
     <?php 
     if($result == "REJECTED" || $result == "UNREGISTERED") { ?>
-        <form method="post" action="/premium-status">
+        <form method="post" action="/register-premium">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <button type="submit">Register for Premium</button>
