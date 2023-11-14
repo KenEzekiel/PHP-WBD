@@ -60,8 +60,12 @@ class SoapPremiumController extends BaseController {
             }
         }
 
-        if($uri == '/cancel-premium'){
-            $params = ["userId" => $_SESSION['user_id']];
+        elseif($uri == '/cancel-premium'){
+            $params;
+            if (isset($_SESSION['role']) and $_SESSION['role'] == 'admin')
+                $params = ["userId" => $_POST['user_id']];
+            else 
+                $params = ["userId" => $_SESSION['user_id']];
             $result = $this->model->cancelRegister($params);
             // if($result->status == "success"){
                 $data['premiumCancelMessage'] = $result->responseCancel;
