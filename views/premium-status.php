@@ -16,5 +16,10 @@
             <p>Your request is pending. Please wait for the admin to approve your request.</p>
             <p>Click <a href="/premium-status">here</a> to refresh the page.</p>
         </div>
+    <?php } elseif($result == "ACCEPTED") { ?>
+        <form method="post" action="/cancel-premium">
+            <button type="submit">Cancel Premium</button>
+        </form>
     <?php } ?>
+    
 </div>
