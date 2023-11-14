@@ -1,6 +1,6 @@
 <?php if (isset($_SESSION['role']) and $_SESSION['role'] == 'admin') { ?>
+    <!-- ADMIN USERS -->
     <div class='premium-status-admin'>
-        <h2 id="goBack"><a class='back-button' href="/admin-dashboard"><?php echo "< Admin Dashboard" ?></a></h2>
         <table>
             <thead>
                 <tr>
@@ -18,40 +18,46 @@
                                     <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
                                     <button type="submit">Cancel Premium</button>
                                 </form>
-                            <?php } elseif($user->premiumStatus == "PENDING") { ?>
-                                <p>Pending</p>
-                            <?php } else { ?>
-                                <form method="post" action="/register-premium">
-                                    <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
-                                    <button type="submit">Accept Premium</button>
-                                </form>
                             <?php } ?>
                         </td>
                     </tr>
-                <?php } else { $user = $data["premium_users"];?>
-                    <tr>
-                        <td><?php echo $user->userEmail; ?></td>
-                        <td>
-                            <?php if($user->premiumStatus == "ACCEPTED") { ?>
-                                <form method="post" action="/cancel-premium">
-                                    <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
-                                    <button type="submit">Cancel Premium</button>
-                                </form>
-                            <?php } elseif($user->premiumStatus == "PENDING") { ?>
-                                <p>Pending</p>
-                            <?php } else { ?>
-                                <form method="post" action="/register-premium">
-                                    <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
-                                    <button type="submit">Accept Premium</button>
-                                </form>
-                            <?php } ?>
-                        </td>
-                    </tr>
-                <?php } ?>
+                <?php }?>
+            </tbody>
+        </table>
+        <br><p>Pending Users</p><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(isset($data["pending_users"])) { ?>
+                    <?php var_dump($data["pending_users"]); ?>
+                    <?php if(is_array($data["pending_users"])) foreach($data["pending_users"] as $user) { ?>
+                        <tr>
+                            <td><?php echo $user->userEmail; ?></td>
+                            <td>
+                                <?php if($user->premiumStatus == "PENDING") { ?>
+                                    <form method="post" action="/approve-premium">
+                                        <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
+                                        <button type="submit">Accept Premium</button>
+                                    </form>
+                                    <form method="post" action="/reject-premium">
+                                        <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
+                                        <button type="submit">Reject Premium</button>
+                                    </form>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                <?php } unset($data["pending_users"]);?>
             </tbody>
         </table>
     </div>
 <?php } else { ?>
+    <!-- REGULAR USERS -->
     <div class='premium-status'>
         <h2 id="goBack"><a class='back-button' href="/films"><?php echo "< Films" ?></a></h2>
         <h1>Premium Status<h1>

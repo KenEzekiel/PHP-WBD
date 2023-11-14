@@ -53,5 +53,7 @@ class App
     $this->router->addRoute('/premium-status', SoapPremiumController::class);
     $this->router->addRoute('/register-premium', SoapPremiumController::class);
     $this->router->addRoute('/cancel-premium', SoapPremiumController::class);
+    $this->router->addRoute('/approve-premium', SoapPremiumController::class);
+    $this->router->addRoute('/reject-premium', SoapPremiumController::class);
   }
 }

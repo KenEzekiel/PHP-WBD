@@ -24,7 +24,27 @@ class SoapPremiumController extends BaseController {
         
         if($uri == '/premium-status'){
             if (isset($_SESSION['role']) and $_SESSION['role'] == 'admin'){
-                $data["premium_users"] = $this->model->getAllPremium()->listUserPremium;
+                $premiumTemp = $this->model->getAllPremium()->listUserPremium;
+                if(!empty($premiumTemp)){
+                    if(!is_array($premiumTemp)){
+                        $premiumTemp = [$premiumTemp];
+                    }
+                    else{
+                        $premiumTemp = $premiumTemp;
+                    }
+                    $data["premium_users"] = $premiumTemp;
+                }
+
+                $pendingTemp = $this->model->getAllPending()->listUserPending;
+                if(!empty($pendingTemp)){
+                    if(!is_array($pendingTemp)){
+                        $pendingTemp = [$pendingTemp];
+                    }
+                    else{
+                        $pendingTemp = $pendingTemp;
+                    }
+                    $data["pending_users"] = $pendingTemp;
+                }
                 parent::render($data, 'premium-status', "layouts/base");
             }
             else{
@@ -69,6 +89,28 @@ class SoapPremiumController extends BaseController {
             $result = $this->model->cancelRegister($params);
             // if($result->status == "success"){
                 $data['premiumCancelMessage'] = $result->responseCancel;
+                header("Location: /premium-status");
+            // }
+            // else{
+            //     throw new Exception("Invalid URL");
+            // }
+        }
+        elseif($uri == '/approve-premium'){
+            $params = ["userId" => $_POST['user_id']];
+            $result = $this->model->approvePremium($params);
+            // if($result->status == "success"){
+                $data['premiumAcceptMessage'] = $result->approvalResponse;
+                header("Location: /premium-status");
+            // }
+            // else{
+            //     throw new Exception("Invalid URL");
+            // }
+        }
+        elseif($uri == '/reject-premium'){
+            $params = ["userId" => $_POST['user_id']];
+            $result = $this->model->rejectPremium($params);
+            // if($result->status == "success"){
+                $data['premiumRejectMessage'] = $result->rejectionResponse;
                 header("Location: /premium-status");
             // }
             // else{
