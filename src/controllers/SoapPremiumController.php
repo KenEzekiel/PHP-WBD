@@ -21,7 +21,7 @@ class SoapPremiumController extends BaseController
     protected function get($urlParams)
     {
         // Get page for requesting premium
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] == 'admin') {
             parent::redirect("/", $urlParams);
         } else {
             $registered = $this->soap_client->checkStatus(["userId" => (int)$_SESSION['user_id']]);
