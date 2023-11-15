@@ -102,11 +102,13 @@ class UserService extends BaseService
     $_SESSION["user_id"] = $user->get('user_id');
     $_SESSION["role"] = $user->get('role');
     $_SESSION["username"] = $user->get('username');
+    $_SESSION["user_email"] = $user->get('email');
 
     return $user;
   }
 
-  public function loginPremium($email_or_username, $password) {
+  public function loginPremium($email_or_username, $password)
+  {
     $user = null;
 
     // Check email first
@@ -141,7 +143,7 @@ class UserService extends BaseService
     // Options for the SOAP client
     $options = [
       'stream_context' => $streamContext,
-      'trace' => 1, 
+      'trace' => 1,
       'cache_wsdl' => WSDL_CACHE_NONE
     ];
     $soapclient = new \SoapClient(getenv('soap_url'), $options);
@@ -153,11 +155,9 @@ class UserService extends BaseService
     }
     if ($response->userStatus == "UNREGISTERED") {
       throw new BadRequestException("UNREGISTERED_PREMIUM");
-    }
-    else if($response->userStatus == "PENDING") {
+    } else if ($response->userStatus == "PENDING") {
       throw new BadRequestException("PENDING_PREMIUM");
-    }
-    else if($response->userStatus == "REJECTED"){
+    } else if ($response->userStatus == "REJECTED") {
       throw new BadRequestException("REJECTED_PREMIUM");
     }
 
@@ -166,7 +166,7 @@ class UserService extends BaseService
     $userResponse["email"] = $user->get('email');
     $userResponse["role"] = $user->get('role');
     return $userResponse;
-}
+  }
 
   public function logout()
   {

@@ -28,7 +28,7 @@ class FilmController extends BaseController
     protected function get($urlParams)
     {
         $uri = Request::getURL();
-        
+
         if ($uri == "/films" || $uri == '/search') {
             $page = (isset($_GET['page']) and (int) $_GET['page'] >= 1) ? $_GET['page'] : 1;
             $word = $_GET['q'] ?? "";
@@ -44,19 +44,17 @@ class FilmController extends BaseController
                 $data['released_years'] = $this->service->getAllCategoryValues('released_year');
                 $data['total_page'] = ceil($row_count / 10);
                 parent::render($data, 'films', "layouts/base");
-            }
-            else {
+            } else {
                 $films = [];
-    
+
                 foreach ($data['films'] as $film) {
                     $films[] = $film->toResponse();
                 }
                 $data['films'] = $films;
                 $data['total_page'] = ceil($row_count / 10);
-    
+
                 response::send_json_response($data);
             }
-
         } elseif ($uri == '/film-details') {
             $data['film'] = $this->service->getById($_GET['film_id']);
             if (isset($_SESSION['user_id'])) {
@@ -74,7 +72,8 @@ class FilmController extends BaseController
                 $films[] = array(
                     'film_id' => $film->film_id,
                     'image_path' => $film->image_path,
-                    'title' => $film->title);
+                    'title' => $film->title
+                );
             }
             response::send_json_response($films);
         } else if ($uri == '/film-image') {
@@ -90,8 +89,7 @@ class FilmController extends BaseController
                 header('Content-Length: ' . filesize($imagePath));
                 readfile($imagePath);
                 exit;
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 $msg = $e->getMessage();
                 $data["error_code"] = $msg;
                 response::send_json_response($data, 400);

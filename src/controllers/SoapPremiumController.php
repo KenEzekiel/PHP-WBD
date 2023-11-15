@@ -1,121 +1,58 @@
 <?php
 
 namespace app\controllers;
+
 use app\base\BaseController;
 use app\controllers\utils\response;
+use app\client\SoapClient;
 use app\Request;
 use app\models\SoapPremiumModel;
 use Exception;
 
-class SoapPremiumController extends BaseController {
-    private $model;
+class SoapPremiumController extends BaseController
+{
+    private $soap_client;
 
-    public function __construct() {
-        $this->model = SoapPremiumModel::getInstance();
-    }
-
-    public function checkStatus($params){
-        return $this->model->checkStatus($params);
+    public function __construct()
+    {
+        parent::__construct(null);
+        $this->soap_client = new SoapClient();
     }
 
     protected function get($urlParams)
     {
-        $uri = Request::getURL();
-        
-        if($uri == '/premium-status'){
-            if (isset($_SESSION['role']) and $_SESSION['role'] == 'admin'){
-                $premiumTemp = $this->model->getAllPremium()->listUserPremium;
-                if(!empty($premiumTemp)){
-                    if(!is_array($premiumTemp)){
-                        $premiumTemp = [$premiumTemp];
-                    }
-                    else{
-                        $premiumTemp = $premiumTemp;
-                    }
-                    $data["premium_users"] = $premiumTemp;
-                }
-
-                $pendingTemp = $this->model->getAllPending()->listUserPending;
-                if(!empty($pendingTemp)){
-                    if(!is_array($pendingTemp)){
-                        $pendingTemp = [$pendingTemp];
-                    }
-                    else{
-                        $pendingTemp = $pendingTemp;
-                    }
-                    $data["pending_users"] = $pendingTemp;
-                }
-                parent::render($data, 'premium-status', "layouts/base");
+        // Get page for requesting premium
+        if (!isset($_SESSION['user_id'])) {
+            parent::redirect("/", $urlParams);
+        } else {
+            $registered = $this->soap_client->checkStatus(["userId" => (int)$_SESSION['user_id']]);
+            if ($registered->userStatus == "UNREGISTERED") {
+                $urlParams['registered'] = false;
+            } else {
+                $urlParams['registered'] = true;
             }
-            else{
-                $params = ["userId" => $_SESSION['user_id']];
-                $result = $this->checkStatus($params);
-                $data['userStatus'] = $result->userStatus;
-
-                parent::render($data, 'premium-status', "layouts/base");
-            }
-        }
-        else{
-            throw new Exception("Invalid URL");
+            parent::render($urlParams, "premium-status", "layouts/base");
         }
     }
 
     protected function post($urlParams)
     {
-        $uri = Request::getURL();
-        
-        if($uri == '/register-premium'){
-            if(isset($_POST['email'])){
-                $params = ["userId" => $_SESSION['user_id'], "email" => $_POST['email']];
-                $result = $this->model->registerPremium($params);
-                // if($result->status == "success"){
-                    header("Location: /premium-status");
-                // }
-                // else{
-                //     throw new Exception("Invalid Email");
-                // }
+        $action = $_POST['action'];
+        if ($action == 'register') {
+            $response = $this->soap_client->registerPremium(["userId" => (int)$_SESSION['user_id'], "email" => (string)$_SESSION['user_email']]);
+            if ($response->premiumRequest == "SUCCESS") {
+                $urlParams['msg'] = "Registration successful";
+            } else {
+                $urlParams['msg'] = "Registration failed";
             }
-            else{
-                throw new Exception("Invalid URL");
+        } else if ($action == 'cancel') {
+            $response = $this->soap_client->cancelRegister(["userId" => (int)$_SESSION['user_id']]);
+            if ($response->responseCancel == "SUCCESS") {
+                $urlParams['msg'] = "Cancel premium request successful";
+            } else {
+                $urlParams['msg'] = "Cancel premium request failed";
             }
         }
-
-        elseif($uri == '/cancel-premium'){
-            $params;
-            if (isset($_SESSION['role']) and $_SESSION['role'] == 'admin')
-                $params = ["userId" => $_POST['user_id']];
-            else 
-                $params = ["userId" => $_SESSION['user_id']];
-            $result = $this->model->cancelRegister($params);
-            // if($result->status == "success"){
-                $data['premiumCancelMessage'] = $result->responseCancel;
-                header("Location: /premium-status");
-            // }
-            // else{
-            //     throw new Exception("Invalid URL");
-            // }
-        }
-        elseif($uri == '/approve-premium'){
-            $params = ["userId" => $_POST['user_id']];
-            $result = $this->model->approvePremium($params);
-            // if($result->status == "success"){
-                $data['premiumAcceptMessage'] = $result->approvalResponse;
-                header("Location: /premium-status");
-            // }
-            // else{
-            //     throw new Exception("Invalid URL");
-            // }
-        }
-        elseif($uri == '/reject-premium'){
-            $params = ["userId" => $_POST['user_id']];
-            $result = $this->model->rejectPremium($params);
-            // if($result->status == "success"){
-                $data['premiumRejectMessage'] = $result->rejectionResponse;
-                header("Location: /premium-status");
-            // }
-            // else{
-            //     throw new Exception("Invalid URL");
-            // }
-        }
+        parent::redirect("/premium-status", $urlParams);
     }
 }
