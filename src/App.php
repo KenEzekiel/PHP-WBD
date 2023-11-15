@@ -14,6 +14,7 @@ use app\controllers\RegisterController;
 use app\controllers\UpdateFilmController;
 use app\controllers\UserDashboardController;
 use app\controllers\SoapPremiumController;
+use app\controllers\AdminController;
 use app\repositories\UserRepository;
 use app\repositories\ReviewRepository;
 use app\services\UserService;
@@ -55,5 +56,6 @@ class App
     $this->router->addRoute('/cancel-premium', SoapPremiumController::class);
     $this->router->addRoute('/approve-premium', SoapPremiumController::class);
     $this->router->addRoute('/reject-premium', SoapPremiumController::class);
+    $this->router->addRoute('/admins', AdminController::class);
   }
 }

@@ -6,7 +6,6 @@ use app\base\BaseController;
 use app\controllers\utils\response;
 use app\client\SoapClient;
 use app\Request;
-use app\models\SoapPremiumModel;
 use Exception;
 
 class SoapPremiumController extends BaseController

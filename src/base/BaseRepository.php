@@ -48,26 +48,26 @@ abstract class BaseRepository
 
     $conditions = [];
 
-      // Mapping where
-      if (count($where) > 0) {
-          foreach ($where as $key => $value) {
-              $columns = [$key];
-              if (isset($value[3]) and is_array(($value[3]))) {
-                  $columns = [$key] + $value[3];
-              }
-              $subConditions = [];
-              foreach ($columns as $column) {
-                  if (isset($value[2]) and $value[2] == 'LIKE') {
-                      $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
-                  } else {
-                      $subConditions[] = "$column = :$column";
-                  }
-              }
-              $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
+    // Mapping where
+    if (count($where) > 0) {
+      foreach ($where as $key => $value) {
+        $columns = [$key];
+        if (isset($value[3]) and is_array(($value[3]))) {
+          $columns = [$key] + $value[3];
+        }
+        $subConditions = [];
+        foreach ($columns as $column) {
+          if (isset($value[2]) and $value[2] == 'LIKE') {
+            $subConditions[] = "LOWER($column) LIKE LOWER(:$column)";
+          } else {
+            $subConditions[] = "$column = :$column";
           }
-
-          $sql .= " WHERE " . implode(" AND ", $conditions);
+        }
+        $conditions[] = "(" . implode(" OR ", $subConditions) . ")";
       }
+
+      $sql .= " WHERE " . implode(" AND ", $conditions);
+    }
 
     // Hydrating statement, for sanitizing
     $stmt = $this->pdo->prepare($sql);
@@ -98,7 +98,7 @@ abstract class BaseRepository
     $pageNo = null,
     $pageSize = null,
     $sort = "asc",
-    $isInitialSync = "no"
+    $isInitialSync = "yes"
   ) {
     $sql = "SELECT * FROM $this->tableName";
 
@@ -132,9 +132,9 @@ abstract class BaseRepository
         $pollingSql .= " WHERE ";
       }
       if ($pollingDurationMinutes !== false && is_numeric($pollingDurationMinutes) && $pollingDurationMinutes) {
-          $pollingSql .= "last_updated >= DATE_SUB(NOW(), INTERVAL $pollingDurationMinutes MINUTE)";
+        $pollingSql .= "last_updated >= DATE_SUB(NOW(), INTERVAL $pollingDurationMinutes MINUTE)";
       } else {
-          $pollingSql .= "last_updated >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)";
+        $pollingSql .= "last_updated >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)";
       }
       $sql .= $pollingSql;
     }

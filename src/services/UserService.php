@@ -272,4 +272,9 @@ class UserService extends BaseService
   {
     return $this->repository->deleteById($user_id);
   }
+
+  public function getAllAdmin()
+  {
+    return $this->repository->findAll(['role' => ['admin', PDO::PARAM_STR, "="]]);
+  }
 }
