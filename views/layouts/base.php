@@ -34,7 +34,7 @@
       <li class='menu-item' id='home'><a href='/'>Home</a></li>
       <li class='menu-item'><a href='/films'>Films</a></li>
       <?php
-      if (isset($_SESSION['user_id'])) {
+      if (isset($_SESSION['user_id']) && isset($_SESSION['role']) && $_SESSION['role'] != 'admin') {
         echo "<li class='menu-item'><a href='/premium-status'>Premium</a></li>";
       }
       ?>
