@@ -39,11 +39,12 @@ function generatePaginationLinks() {
 
   for (let i = 1; i <= totalPageCount; i++) {
     const pageLink = document.createElement("a");
+    pageLink.setAttribute("class", "page-number");
     pageLink.textContent = i;
     pageLink.href = `?page=${i}`;
     pageLink.classList.add("page-number");
     if (i === currentPage) {
-      pageLink.classList.add("active");
+      pageLink.setAttribute("class", "page-number active");
     }
     pageLink.addEventListener("click", (e) => {
       e.preventDefault();
@@ -61,11 +62,12 @@ function updateFilmCards(films) {
   film_cards.innerHTML = films
     .map(
       (film) => `
+      <a href='/film-details?film_id=${film.film_id}'>
         <div class='film-card'>
-            <a href='/film-details?film_id=${film.film_id}'>
             <div class='film-image' style="background-image: url('public/${film.image_path}');"></div>
             <div class='film-title'>${film.title}</div>
         </div>
+      </a>
     `
     )
     .join("");

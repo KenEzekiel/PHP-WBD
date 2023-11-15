@@ -1,3 +1,6 @@
+<div class='header'>
+    <h1>Film List</h1>
+</div>
 <div class="film-page-container">
     <div class="search-filter">
         <div class="search-bar" id="search-bar">
@@ -36,7 +39,14 @@
                 }
                 ?>
             </select>
+
+
         </div>
+        <?
+        if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+            echo "<a href='/add-film'><button class='button'>add film</button></a>";
+        }
+        ?>
     </div>
 
 
@@ -45,12 +55,15 @@
         <?php
         if (isset($data['films'])) {
             foreach ($data['films'] as $film) {
-                echo "<div class='film-card'>
-                    <a href='/film-details?film_id=$film->film_id'>
+                echo "
+                <a href='/film-details?film_id=$film->film_id'>
+                <div class='film-card'>
+                    
                     <div class='film-image' style='background-image: url(public/$film->image_path);'></div>
                     <div class='film-title'> $film->title </div>
-                    </a>
-                </div>";
+                    
+                </div>
+                </a>";
             }
         }
         ?>

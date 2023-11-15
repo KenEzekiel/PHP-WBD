@@ -37,7 +37,7 @@ class FilmRepository extends BaseRepository
     $released_year = 'all',
     $pageNo = 1,
     $limit = 10,
-    $isInitialSync = "no"
+    $isInitialSync = "yes"
   ) {
     $where = [];
 
@@ -52,7 +52,6 @@ class FilmRepository extends BaseRepository
     }
 
     $data = $this->findAll($where, $order, $pageNo, $limit, $isDesc, $isInitialSync);
-    error_log(count($data));
 
     return $this->findAll($where, $order, $pageNo, $limit, $isDesc, $isInitialSync);
   }
