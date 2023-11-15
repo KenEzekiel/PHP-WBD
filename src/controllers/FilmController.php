@@ -57,6 +57,9 @@ class FilmController extends BaseController
             }
         } elseif ($uri == '/film-details') {
             $data['film'] = $this->service->getById($_GET['film_id']);
+            if (!$data['film']) {
+                parent::redirect("/", []);
+            }
             if (isset($_SESSION['user_id'])) {
                 $data['isFavorite'] = $this->favorite_handler->isUserFavorite($_SESSION['user_id'], $_GET['film_id']);
             } else {
