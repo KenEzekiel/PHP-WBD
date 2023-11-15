@@ -128,8 +128,8 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'user1@example.com','user1','password1','user'),(2,'user2@example.com','user2','password2','user'),(3,'admin@example.com','admin','adminpassword','admin');
-insert into user values(4, 'adm@email.com', 'adm', '$2y$10$gRlxyhscKHw7pB0IkgjxZOBVQStt2ZibucW5/RQVpQxuv4de8Bcm.', 'admin');
+INSERT INTO `user` VALUES (1,'user1@example.com','user1','password1','user'),(2,'user2@example.com','user2','password2','user'),(3,'ken35kiel@gmail.com','admin','adminpassword','admin');
+insert into user values(4, '13521094@std.stei.itb.ac.id', 'adm', '$2y$10$gRlxyhscKHw7pB0IkgjxZOBVQStt2ZibucW5/RQVpQxuv4de8Bcm.', 'admin');
 insert into user values(5, 'user@email.com', 'user', '$2y$10$X8g3G.L0hrdUMbvMrBhXDulbjeYV5XgBTg/CMYzlMpC/jUht9ZYB2', 'user');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
