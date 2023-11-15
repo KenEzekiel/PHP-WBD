@@ -117,7 +117,7 @@ class UserDashboardController extends BaseController
           $confirm_delete = $_POST['delete_confirm'];
 
           // If user has confirmed deletion
-          if ($confirm_delete == 'yes') {
+          if ($confirm_delete == 'yes' && $user->user_id != $_SESSION['user_id']) {
             // Call service
             $response = $this->service->deleteById($user->user_id);
             if ($response == 1) {
@@ -139,6 +139,9 @@ class UserDashboardController extends BaseController
             unset($urlParams['user_id']);
             unset($urlParams['delete_confirm']);
             unset($urlParams['errorMsg']);
+            if ($user->user_id == $_SESSION['user_id']) {
+              $urlParams['msg'] = "Cannot delete own account";
+            }
             // Redirect to own link, but with no params
             parent::redirect("/user-dashboard", $urlParams);
           }
