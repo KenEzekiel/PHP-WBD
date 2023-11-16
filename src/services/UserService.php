@@ -133,32 +133,34 @@ class UserService extends BaseService
       throw new BadRequestException("INVALID_PASSWORD");
     }
 
-    $apikey = getenv('api_key');
-    // Stream context to add HTTP headers
-    $streamContext = stream_context_create([
-      'http' => [
-        'header' => "Authorization: Bearer $apikey",
-      ],
-    ]);
-    // Options for the SOAP client
-    $options = [
-      'stream_context' => $streamContext,
-      'trace' => 1,
-      'cache_wsdl' => WSDL_CACHE_NONE
-    ];
-    $soapclient = new \SoapClient(getenv('soap_url'), $options);
-    $params = ["userId" => $user->get('user_id')];
-    $response = $soapclient->checkStatus($params);
+    if ($user->role != "admin") {
+      $apikey = getenv('api_key');
+      // Stream context to add HTTP headers
+      $streamContext = stream_context_create([
+        'http' => [
+          'header' => "Authorization: Bearer $apikey",
+        ],
+      ]);
+      // Options for the SOAP client
+      $options = [
+        'stream_context' => $streamContext,
+        'trace' => 1,
+        'cache_wsdl' => WSDL_CACHE_NONE
+      ];
+      $soapclient = new \SoapClient(getenv('soap_url'), $options);
+      $params = ["userId" => $user->get('user_id')];
+      $response = $soapclient->checkStatus($params);
 
-    if (!isset($response)) {
-      throw new BadRequestException("SOAP_SERVICE_ERROR");
-    }
-    if ($response->userStatus == "UNREGISTERED") {
-      throw new BadRequestException("UNREGISTERED_PREMIUM");
-    } else if ($response->userStatus == "PENDING") {
-      throw new BadRequestException("PENDING_PREMIUM");
-    } else if ($response->userStatus == "REJECTED") {
-      throw new BadRequestException("REJECTED_PREMIUM");
+      if (!isset($response)) {
+        throw new BadRequestException("SOAP_SERVICE_ERROR");
+      }
+      if ($response->userStatus == "UNREGISTERED") {
+        throw new BadRequestException("UNREGISTERED_PREMIUM");
+      } else if ($response->userStatus == "PENDING") {
+        throw new BadRequestException("PENDING_PREMIUM");
+      } else if ($response->userStatus == "REJECTED") {
+        throw new BadRequestException("REJECTED_PREMIUM");
+      }
     }
 
     $userResponse["user_id"] = $user->get('user_id');
