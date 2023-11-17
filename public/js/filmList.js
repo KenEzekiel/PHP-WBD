@@ -33,27 +33,67 @@ async function searchFilterHandler() {
 }
 
 function generatePaginationLinks() {
+  console.log(totalPageCount);
   const paginationContainer = document.getElementById("pagination-container");
   paginationContainer.innerHTML = "";
-  console.log(totalPageCount);
 
-  for (let i = 1; i <= totalPageCount; i++) {
-    const pageLink = document.createElement("a");
-    pageLink.setAttribute("class", "page-number");
-    pageLink.textContent = i;
-    pageLink.href = `?page=${i}`;
-    pageLink.classList.add("page-number");
-    if (i === currentPage) {
-      pageLink.setAttribute("class", "page-number active");
-    }
-    pageLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      currentPage = i;
-      searchFilterHandler();
-    });
+  const maxVisiblePages = 8; // Set the maximum number of visible pages
+  const halfVisiblePages = Math.floor(maxVisiblePages / 2);
 
+  let startPage = Math.max(currentPage - halfVisiblePages, 1);
+  let endPage = Math.min(startPage + maxVisiblePages - 1, totalPageCount);
+
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(endPage - maxVisiblePages + 1, 1);
+  }
+
+  if (startPage > 1) {
+    const firstPageLink = createPageLink(1, "First");
+    paginationContainer.appendChild(firstPageLink);
+
+    const ellipsis = createEllipsis();
+    paginationContainer.appendChild(ellipsis);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    const pageLink = createPageLink(i);
     paginationContainer.appendChild(pageLink);
   }
+
+  if (endPage < totalPageCount) {
+    const ellipsis = createEllipsis();
+    paginationContainer.appendChild(ellipsis);
+
+    const lastPageLink = createPageLink(totalPageCount, "Last");
+    paginationContainer.appendChild(lastPageLink);
+  }
+}
+
+function createPageLink(pageNumber, text = "") {
+  const pageLink = document.createElement("a");
+  pageLink.setAttribute("class", "page-number");
+  pageLink.textContent = text || pageNumber;
+  pageLink.href = `?page=${pageNumber}`;
+  pageLink.classList.add("page-number");
+
+  if (pageNumber === currentPage) {
+    pageLink.setAttribute("class", "page-number active");
+  }
+
+  pageLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    currentPage = pageNumber;
+    searchFilterHandler();
+  });
+
+  return pageLink;
+}
+
+function createEllipsis() {
+  const ellipsis = document.createElement("span");
+  ellipsis.textContent = "...";
+  ellipsis.classList.add("ellipsis");
+  return ellipsis;
 }
 
 function updateFilmCards(films) {
