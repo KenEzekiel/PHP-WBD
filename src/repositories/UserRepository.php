@@ -43,7 +43,29 @@ class UserRepository extends BaseRepository
     $user = $this->getById($user_id);
     $userModel = new UserModel();
     $userModel->constructFromArray($user);
-    $this->CallAPI("deleteURL", getenv('rest_url') . "/user/{$user_id}", ["user_id" => $user_id]);
+    $apiUrl = getenv("rest_url");
+    $apiKey = getenv("rest_api_key");
+
+    $queryParams = [
+        'id' => $user_id,
+    ];
+    $ch = curl_init();
+
+    $fullUrl = $apiUrl . '/auth/user?' . http_build_query($queryParams);
+
+    curl_setopt($ch, CURLOPT_URL, $fullUrl);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $headers = [
+      'Authorization: Bearer ' . $apiKey,
+  ];
+  
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $response = curl_exec($ch);
+    
+    curl_close($ch);
     return $this->delete($userModel);
   }
 
