@@ -23,6 +23,7 @@
     - [Edit Review](#edit-review)
     - [Detail User](#detail-user)
     - [Edit User](#edit-user)
+  - [Pembagian Tugas Milestone 2](#pembagian-tugas-milestone-2)
   - [Pembagian Tugas](#pembagian-tugas)
     - [_Server Side_](#server-side)
     - [_Client Side_](#client-side)
@@ -106,6 +107,14 @@
 ### Edit User
 
 ![Edit User Page](./screenshots/edit-user.jpg)
+
+## Pembagian Tugas Milestone 2
+
+| Task                   | Assignee           |
+| ---------------------- | ------------------ |
+| Page Request Premium   | 13518110, 13521089 |
+| Endpoint login-premium | 13518110, 13521094 |
+| Endpoint admins        | 13521089           |
 
 ## Pembagian Tugas
 

@@ -8,7 +8,7 @@ services:
     image: tubes-1:latest
     command: --default-authentification-plugin=mysql_native_password
     depends_on:
-      - db
+      - php-db
     ports:
       - 8008:80
     environment:
@@ -17,9 +17,10 @@ services:
       - MYSQL_USER=${nama}
       - MYSQL_PASSWORD=${password}
       - USE_DOCKER_CONFIG=true
+      - DB_HOST=php-db
     volumes:
       - .:/var/www/html/
-  db:
+  php-db:
     env_file:
       - .env
     container_name: tubes-1-database
@@ -33,13 +34,15 @@ services:
       - USE_DOCKER_CONFIG=true
     ports:
       - "9907:3307"
+    volumes:
+      - ./script/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql 
   phpmyadmin:
     container_name: tubes-1-phpmyadmin
     image: phpmyadmin/phpmyadmin
     depends_on:
-      - db
+      - php-db
     environment:
-      PMA_HOST: db
+      PMA_HOST: php-db
     restart: unless-stopped
     ports:
       - "8088:80"

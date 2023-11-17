@@ -1,5 +1,4 @@
 FROM php:8.0-apache
-EXPOSE 8008
 
 # (php mysql)
 RUN rm -f /etc/apt/apt.conf.d/docker-clean \
@@ -8,6 +7,9 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean \
     && docker-php-ext-install soap
 
 RUN docker-php-ext-install pdo pdo_mysql
+
+COPY . /var/www/html/
+RUN chown -R www-data:www-data /var/www/html
 
 COPY ./php.ini /usr/local/etc/php/php.ini
 RUN a2enmod rewrite
